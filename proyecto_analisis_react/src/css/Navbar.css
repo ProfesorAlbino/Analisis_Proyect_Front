@@ -1,0 +1,12 @@
+.navbar-custom {
+    background-color: #672e65; 
+}
+
+.navbar-custom .navbar-brand {
+    color: white; 
+}
+
+.navbar-custom .btn {
+    background-color: #672e65; 
+    color: white; 
+}
