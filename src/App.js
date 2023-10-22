@@ -6,6 +6,9 @@ import User from './page/User/User';
 import ListTitles from './page/Title/ListTitles';
 import AddTitle from './page/Title/AddTitle';
 import ModifyTitle from './page/Title/ModifyTitle';
+import AddCopy from './page/Copy/AddCopy';
+import ListCopy from './page/Copy/ListCopy';
+import ModifyCopy from './page/Copy/ModifyCopy';
 
 
 
@@ -21,6 +24,9 @@ function App() {
           <Route exact path="/listTitles" element={<ListTitles />} />
           <Route exact path="/addTitle" element={<AddTitle />} />
           <Route exact path="/editTitle/:idTitle" element={<ModifyTitle />} />
+          <Route exact path="/addCopy/:idTitle" element={<AddCopy />} />
+          <Route exact path="/listCopy/:idTitle" element={<ListCopy />} />
+          <Route exact path="/editCopy/:idTitle" element={<ModifyCopy />} />
         </Routes>
       </Router>
     </div>

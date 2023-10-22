@@ -52,6 +52,7 @@ export default function ModifyTitle() {
 
         updateTitle(title)
             .then((result) => {
+                window.location.href = `/listTitles`;
                 console.log(result + "Libro actualizado exitosamente");
             })
             .catch(() => {

@@ -39,3 +39,12 @@ export async function updateTitle(data) {
   }
 }
 
+export async function deleteTitle(id) {
+  try {
+    const response = await axios.delete(url + 'Titles/delete/'+id);
+    return response.data;
+  } catch (error) {
+    console.error('Error al modificar los datos:', error);
+    throw error;
+  }
+}
