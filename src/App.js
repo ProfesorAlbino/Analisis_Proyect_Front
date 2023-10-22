@@ -19,12 +19,7 @@ function App() {
     <div className="App">
       <Router>
         <Navbar />
-        <Routes>
-
-
-
-
-          
+        <Routes>     
           <Route exact path="/users" element={<User />} />
           <Route exact path="/studyRooms" element={<StudyRoom />} />
           <Route exact path="/studyRooms/create" element={<FormViewStudyRoom />} />
