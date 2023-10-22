@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
-import { getUserrs, deleteUserr } from '../../service/Api';
+import { getUserrs, deleteUserr } from '../../service/UsersApi/UserApi';
 
 function User() {
 
@@ -8,8 +8,9 @@ function User() {
 
     const getUsers = async () => {
         const res = await getUserrs();
-        setUsers(res);
-        console.log(res);
+        if (res) {
+            setUsers(res);
+        }
     }
 
     useEffect(() => {
@@ -17,12 +18,22 @@ function User() {
     }, []);
 
     function deleteUser(id) {
-        console.log(id);
         deleteUserr(id);
+        getUsers();
+        window.location.reload();
     }
 
     function editUser(id) {
-        console.log(id);
+        localStorage.setItem("id", id);
+        window.location.href = "/users/create/";
+    }
+
+    function formatDate(isoDate) {
+        const date = new Date(isoDate);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear().toString();
+        return `${day}-${month}-${year}`;
     }
 
     return (
@@ -55,7 +66,7 @@ function User() {
                                 <td>{user.role}</td>
                                 <td>{user.phone}</td>
                                 <td>{user.career}</td>
-                                <td>{user.creationDate}</td>
+                                <td>{formatDate(user.creationDate)}</td>
                                 <td>
                                     <Button variant="primary" onClick={() => editUser(user.id)}>Editar</Button>
                                     <Button variant="danger" onClick={() => deleteUser(user.id)}>Eliminar</Button>
