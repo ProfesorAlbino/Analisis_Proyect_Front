@@ -1,0 +1,102 @@
+import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { deleteStudyRoom, getStudyRoom } from "../../service/StudyRoomService";
+import { Button, Table } from 'react-bootstrap';
+import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+function StudyRoom() {
+    const [studyRoom, setStudyRoom] = useState([]);
+    const navigate = useNavigate();
+    useEffect(() => {
+        (async () => {
+            const response = await getStudyRoom();
+            setStudyRoom(response);
+            console.log(response);
+        })();
+    }, []);
+
+    async function deleteStudy(id) {
+        console.log("eliminar" + id);
+        //deleteStudyRoom(id);
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "No podrás revertir esto.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminarlo!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    '¡Eliminado!',
+                    'Tu cita ha sido eliminada.',
+                    'success'
+                )
+                await deleteStudyRoom(id).then(async (data) => {
+                    const response = await getStudyRoom();
+                    setStudyRoom(response);
+                })
+                    .catch((error) => {
+                        console.log('error', error)
+                    })
+            } else {
+
+                Swal.fire
+                    (
+                        'Error',
+                        'No se pudo eliminar la cita.',
+                        'error'
+                    );
+            }
+        })
+    }
+
+    function editStudyRoom(id) {
+        console.log("id=" + id);
+        navigate("/studyRooms/edit/" + id);
+        console.log(id);
+    }
+    return (
+
+        <div className='container pt-5'>
+            <Button variant="primary" href="/studyRooms/create">Crear Sala de estudio</Button>
+            <Table >
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Capacidad</th>
+                        <th>Disponibilidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        studyRoom.filter(res => { return res.active == 1 }).map((study, index) => (
+                            <tr key={study.id}>
+                                <td>{study.id}</td>
+                                <td>{study.name}</td>
+                                <td>{study.capacity}</td>
+                                <td>{study.isAvailable ? 'Sí' : 'No'}</td>
+                                <td>
+                                    <Button variant="primary" onClick={() => editStudyRoom(study.id)}>Editar</Button>
+                                    <Button variant="danger" onClick={() => deleteStudy(study.id)}>Eliminar</Button>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </Table >
+            <select className='form-select'>
+                {studyRoom.filter(res => { return res.active == 1 }).map((study, index) => {
+                    return(<option id={study.id} key={index}>{study.name}</option>);
+                })
+                }
+            </select>
+        </div>
+    );
+
+}
+export default StudyRoom;
