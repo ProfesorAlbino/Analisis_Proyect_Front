@@ -12,7 +12,9 @@ import FormViewEditStudyRoom from './page/StudyRoom/FormViewEdit';
 import UserAdd from './page/User/UserAdd';
 import Inventory from './page/Inventory/Inventory';
 import InventoryAdd from './page/Inventory/InventoryAdd';
-
+import ClassRoom from './page/ClassRooms/ClassRoom';
+import RegisterClassRoom from './page/ClassRooms/RegisterClassRoom';
+import EditClassRoom from './page/ClassRooms/EditClassRoom';
 
 function App() {
   return (
@@ -27,6 +29,10 @@ function App() {
           <Route exact path="/users/create" element={<UserAdd />} />
           <Route exact path="/inventory" element={<Inventory />} />
           <Route exact path="/inventory/create" element={<InventoryAdd />} />
+          <Route exat path="/classRoom" element={<ClassRoom/>}/>
+          <Route exat path="/classRoom/RegisterClassRoom" element={<RegisterClassRoom/>}/>
+          <Route exat path="/classRoom/EditClassRoom" element={<EditClassRoom/>}/>
+
           {/* <Route exact path="/" element={<Home />} /> */}
 
         </Routes>
