@@ -1,5 +1,5 @@
 import axios from 'axios';
-import url from './ApiPublic';
+import url from '../ApiPublic';
 
 const link = url();
 

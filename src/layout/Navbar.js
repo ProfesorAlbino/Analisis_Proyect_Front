@@ -10,8 +10,9 @@ export default function Navbar() {
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <Link type="button" className="btn btn-outline-light" to="/addForm">Agrega las opciones de los demas aqui</Link>
+                
                 <Link type="button" className="btn btn-outline-light" to="/studyRooms">Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-light" to="/furnitures">Muebles</Link>
             </nav>
         </div>
     )

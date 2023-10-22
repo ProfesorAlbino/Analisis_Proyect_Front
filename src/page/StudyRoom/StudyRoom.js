@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import { deleteStudyRoom, getStudyRoom } from "../../service/StudyRoomService";
+import { deleteStudyRoom, getStudyRoom } from "../../service/StudyRoom/StudyRoomService";
 import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -31,7 +31,7 @@ function StudyRoom() {
             if (result.isConfirmed) {
                 Swal.fire(
                     '¡Eliminado!',
-                    'Tu cita ha sido eliminada.',
+                    'La sala de estudio ha sido eliminada.',
                     'success'
                 )
                 await deleteStudyRoom(id).then(async (data) => {
@@ -46,7 +46,7 @@ function StudyRoom() {
                 Swal.fire
                     (
                         'Error',
-                        'No se pudo eliminar la cita.',
+                        'No se pudo eliminar la sala de estudio.',
                         'error'
                     );
             }
@@ -89,12 +89,7 @@ function StudyRoom() {
                     }
                 </tbody>
             </Table >
-            <select className='form-select'>
-                {studyRoom.filter(res => { return res.active == 1 }).map((study, index) => {
-                    return(<option id={study.id} key={index}>{study.name}</option>);
-                })
-                }
-            </select>
+            
         </div>
     );
 

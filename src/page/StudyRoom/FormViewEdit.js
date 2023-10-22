@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { createStudyRoom, getStudyRoomById, updateStudyRoom} from "../../service/StudyRoomService";
+import { createStudyRoom, getStudyRoomById, updateStudyRoom} from "../../service/StudyRoom/StudyRoomService";
 
 function FormViewEditStudyRoom() {
     const { id } = useParams();
@@ -57,7 +57,7 @@ function FormViewEditStudyRoom() {
 
             Swal.fire(
                 '¡Guardado!',
-                'Cita editada con éxito',
+                'Sala de estudio editada con éxito',
                 'success'
             )
 
@@ -70,7 +70,7 @@ function FormViewEditStudyRoom() {
                     <h1>Formulario para crear salas de estudio</h1>
                     <div className="col-sm-6 text-start">
                         <label>Nombre:</label>
-                        <input type="text" className="form-control" name="name" value={formStudyRoom.name} onChange={(event) => { setObject(event) }} />
+                        <input type="text" className="form-control" name="name" value={formStudyRoom.name} onChange={(event) => { setObject(event) }}/>
                     </div>
                     <div className="col-sm-12"></div>
 
