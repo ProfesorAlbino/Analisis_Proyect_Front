@@ -11,6 +11,7 @@ export default function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <Link type="button" className="btn btn-outline-light" to="/addForm">Agrega las opciones de los demas aqui</Link>
+                <Link type="button" className="btn btn-outline-light" to="/studyRooms">Salas de estudio</Link>
             </nav>
         </div>
     )
