@@ -2,6 +2,9 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './layout/Navbar';
+
+
+
 import User from './page/User/User';
 import UserAdd from './page/User/UserAdd';
 import Inventory from './page/Inventory/Inventory';
@@ -14,6 +17,11 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
+
+
+
+
+          
           <Route exact path="/users" element={<User />} />
           <Route exact path="/users/create" element={<UserAdd />} />
           <Route exact path="/inventory" element={<Inventory />} />
