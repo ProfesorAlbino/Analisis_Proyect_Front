@@ -14,7 +14,6 @@ import InventoryType from './page/Inventory/Inventory_type';
 import InventoryTypeAdd from './page/Inventory/Inventory_typeAdd';
 import Area from './page/Inventory/Area';
 import AreaAdd from './page/Inventory/AreaAdd';
-import User from './page/User/User';
 import ListTitles from './page/Title/ListTitles';
 import AddTitle from './page/Title/AddTitle';
 import ModifyTitle from './page/Title/ModifyTitle';
