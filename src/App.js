@@ -19,7 +19,7 @@ import AddTitle from './page/Title/AddTitle';
 import ModifyTitle from './page/Title/ModifyTitle';
 import AddCopy from './page/Copy/AddCopy';
 import ListCopy from './page/Copy/ListCopy';
-import ModifyCopy from './page/Copy/ModifyCopyHH';
+import ModifyCopy from './page/Copy/ModifyCopy';
 
 function App() {
   return (
