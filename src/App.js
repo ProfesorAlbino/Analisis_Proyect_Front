@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './layout/Navbar';
 
 import User from './page/User/User';
-import  StudyRoom from './page/StudyRoom/StudyRoom';
+import StudyRoom from './page/StudyRoom/StudyRoom';
 import FormViewStudyRoom from './page/StudyRoom/FormViewStudyRoom';
 import FormViewEditStudyRoom from './page/StudyRoom/FormViewEdit';
 import UserAdd from './page/User/UserAdd';
@@ -20,6 +20,11 @@ import ModifyTitle from './page/Title/ModifyTitle';
 import AddCopy from './page/Copy/AddCopy';
 import ListCopy from './page/Copy/ListCopy';
 import ModifyCopy from './page/Copy/ModifyCopy';
+import ComputerEquipments from './page/ComputerEquipments/ListComputerEquipments';
+import ModifyComputerEquipments from './page/ComputerEquipments/ModifyComputerEquipments';
+import AddComputerEquipments from './page/ComputerEquipments/AddComputerEquipments';
+import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
+import AddSanctionsReport from './page/SanctionsReport/AddSanctionsReport';
 
 function App() {
   return (
@@ -28,6 +33,7 @@ function App() {
         <Navbar />
         <Routes>     
           <Route exact path="/users" element={<User />} />
+
           <Route exact path="/studyRooms" element={<StudyRoom />} />
           <Route exact path="/studyRooms/create" element={<FormViewStudyRoom />} />
           <Route exact path="/studyRooms/edit/:id" element={<FormViewEditStudyRoom />} />
@@ -38,6 +44,12 @@ function App() {
           <Route exact path="/inventory/inventoryType/create" element={<InventoryTypeAdd />} />
           <Route exact path="/inventory/area" element={<Area />} />
           <Route exact path="/inventory/area/create" element={<AreaAdd />} />
+          <Route exact path="/ListComputerEquipments" element={<ComputerEquipments />} />
+          <Route exact path="/ModifyComputerEquipments" element={<ModifyComputerEquipments />} />
+          <Route exact path="/AddComputerEquipments" element={<AddComputerEquipments />} />
+          <Route exact path="/ListSanctionsReport" element={<ListSanctionsReport />} />
+          <Route exact path="/AddSanctionsReport" element={<AddSanctionsReport />} />
+
           {/* <Route exact path="/" element={<Home />} /> */}
           <Route exact path="/listTitles" element={<ListTitles />} />
           <Route exact path="/addTitle" element={<AddTitle />} />
