@@ -10,6 +10,21 @@ import FormViewEditStudyRoom from './page/StudyRoom/FormViewEdit';
 import UserAdd from './page/User/UserAdd';
 import Inventory from './page/Inventory/Inventory';
 import InventoryAdd from './page/Inventory/InventoryAdd';
+import InventoryType from './page/Inventory/Inventory_type';
+import InventoryTypeAdd from './page/Inventory/Inventory_typeAdd';
+import Area from './page/Inventory/Area';
+import AreaAdd from './page/Inventory/AreaAdd';
+import ListTitles from './page/Title/ListTitles';
+import AddTitle from './page/Title/AddTitle';
+import ModifyTitle from './page/Title/ModifyTitle';
+import AddCopy from './page/Copy/AddCopy';
+import ListCopy from './page/Copy/ListCopy';
+import ModifyCopy from './page/Copy/ModifyCopy';
+import ComputerEquipments from './page/ComputerEquipments/ListComputerEquipments';
+import ModifyComputerEquipments from './page/ComputerEquipments/ModifyComputerEquipments';
+import AddComputerEquipments from './page/ComputerEquipments/AddComputerEquipments';
+import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
+import AddSanctionsReport from './page/SanctionsReport/AddSanctionsReport';
 import ClassRoom from './page/ClassRooms/ClassRoom';
 import RegisterClassRoom from './page/ClassRooms/RegisterClassRoom';
 import EditClassRoom from './page/ClassRooms/EditClassRoom';
@@ -28,6 +43,9 @@ function App() {
           <Route exact path="/users/create" element={<UserAdd />} />
           <Route exact path="/inventory" element={<Inventory />} />
           <Route exact path="/inventory/create" element={<InventoryAdd />} />
+          <Route exat path="/classRoom" element={<ClassRoom/>}/>
+          <Route exat path="/classRoom/RegisterClassRoom" element={<RegisterClassRoom/>}/>
+          <Route exat path="/classRoom/EditClassRoom" element={<EditClassRoom/>}/>
           <Route exact path="/inventory/inventoryType" element={<InventoryType />} />
           <Route exact path="/inventory/inventoryType/create" element={<InventoryTypeAdd />} />
           <Route exact path="/inventory/area" element={<Area />} />

@@ -14,6 +14,7 @@ export default function Navbar() {
                 <Link type="button" className="btn btn-outline-light" to="/users">Usuarios</Link>
                 <Link type="button" className="btn btn-outline-light" to="/inventory">Inventario</Link>
                 <Link type="button" className="btn btn-outline-light" to="/studyRooms">Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-light" to="/classRoom">Aula y laboratorios</Link>
                 <Link type="button" className="btn btn-outline-light" to="/listTitles">Ver Libros</Link>
                 <Link type="button" className="btn btn-outline-light" to="/addForm">info</Link>
                 <Link type="button" className="btn btn-outline-light" to="/ListComputerEquipments">Equipo informatico</Link>
