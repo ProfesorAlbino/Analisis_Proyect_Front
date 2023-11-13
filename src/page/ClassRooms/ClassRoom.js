@@ -64,7 +64,7 @@ function ClassRoom() {
                 <thead>
                     <tr>
                         <th>Tipo</th>
-                        <th>Detalles</th>
+                        <th>Descripcion</th>
                         <th>cantidad</th>
                         <th>numeracion</th>
 
@@ -75,7 +75,7 @@ function ClassRoom() {
                         classRoom.map((classRooms, index) => (
                             <tr key={classRooms.id}>
                                 <td>{classRooms.type}</td>
-                                <td>{classRooms.requirements}</td>
+                                <td>{classRooms.description}</td>
                                 <td>{classRooms.quantity}</td>
                                 <td>{classRooms.numeration}</td>
                                 <td>
