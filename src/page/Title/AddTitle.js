@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { createTitle } from '../../service/TitlesApi/TitleApi';
 import { Toaster, toast } from "sonner";
 
@@ -20,9 +20,6 @@ export default function AddTitle() {
         GeneralSubjectSubdivision: '',
         active: true
     });
-
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
         createTitle(title)
@@ -36,7 +33,6 @@ export default function AddTitle() {
             .catch(() => {
                 console.log("Error al crear el libro");
             });
-        console.log(title);
     };
 
     return (
@@ -44,7 +40,7 @@ export default function AddTitle() {
             <form onSubmit={handleSubmit}>
                 <h2 className="text-center">Registrar Libro</h2>
                 <div className="container py-4">
-                    <div className='row'>
+                    <div className='row' >
                         {/* AUTOR */}
                         <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <input type="text"
@@ -139,6 +135,8 @@ export default function AddTitle() {
                             <input type="number"
                                 className="form-control border border-primary"
                                 required
+                                min="1"
+                                pattern='/^[0-9]+$/'
                                 onChange={(e) => setTitle({ ...title, Number: e.target.value })} />
                             <label className="ms-2 form-label">Número</label>
                         </div>
