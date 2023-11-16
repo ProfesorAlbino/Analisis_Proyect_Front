@@ -11,13 +11,14 @@ export default function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
   
-                <Link type="button" className="btn btn-outline-light" to="/users">Usuarios</Link>
-                <Link type="button" className="btn btn-outline-light" to="/inventory">Inventario</Link>
-                <Link type="button" className="btn btn-outline-light" to="/studyRooms">Salas de estudio</Link>
-                <Link type="button" className="btn btn-outline-light" to="/listTitles">Ver Libros</Link>
-                <Link type="button" className="btn btn-outline-light" to="/addForm">info</Link>
-                <Link type="button" className="btn btn-outline-light" to="/ListComputerEquipments">Equipo informatico</Link>
-                <Link type="button" className="btn btn-outline-light" to="/ListSanctionsReport">Sanciones</Link>
+                {/* <Link type="button" className="btn btn-outline-light" to="/users">Usuarios</Link> */}
+                {/* <Link type="button" className="btn btn-outline-light" to="/inventory">Inventario</Link> */}
+                {/* <Link type="button" className="btn btn-outline-light" to="/studyRooms">Salas de estudio</Link> */}
+                {/* <Link type="button" className="btn btn-outline-light" to="/listTitles">Ver Libros</Link> */}
+                {/* <Link type="button" className="btn btn-outline-light" to="/addForm">info</Link> */}
+                {/* <Link type="button" className="btn btn-outline-light" to="/ListComputerEquipments">Equipo informatico</Link> */}
+                {/* <Link type="button" className="btn btn-outline-light" to="/ListSanctionsReport">Sanciones</Link> */}
+                {/* <Link type="button" className="btn btn-outline-light" to="/loanBook">Prestamo de libros</Link> */}
 
             </nav>
         </div>
