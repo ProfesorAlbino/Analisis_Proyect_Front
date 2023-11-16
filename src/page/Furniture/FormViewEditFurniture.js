@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { createFurniture, getFurnitureById, updateFurniture} from "../../service/Furnitures/FurnituresService";
+import {  getFurnitureById, updateFurniture} from "../../service/Furnitures/FurnituresService";
 import { getStudyRoom } from "../../service/StudyRoom/StudyRoomService";
 
 function FormViewEditFurniture() {

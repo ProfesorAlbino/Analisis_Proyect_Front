@@ -9,6 +9,10 @@ import FormViewEditStudyRoom from './page/StudyRoom/FormViewEdit';
 import Furniture from './page/Furniture/Furniture';
 import FormViewEditFurniture from  "./page/Furniture/FormViewEditFurniture"
 import FormViewFurniture from  "./page/Furniture/FormViewFurniture"
+import FormViewStudyRoomSchedule from './page/StudyRoomSchedule/FormViewStudyRoomSchedule';
+import StudyRoomSchedule from './page/StudyRoomSchedule/StudyRoomSchedule';
+import FormViewEditStudyRoomSchedule from './page/StudyRoomSchedule/FormViewEditStudyRoomSchedule';
+
 
 function App() {
   return (
@@ -23,6 +27,9 @@ function App() {
           <Route exact path="/furnitures" element={<Furniture/>} />
           <Route exact path="/furnitures/create" element={<FormViewFurniture/>} />
           <Route exact path="/furnitures/edit/:id" element={<FormViewEditFurniture />} />
+          <Route exact path="/studyRoomsSchedule" element={<StudyRoomSchedule />} />
+          <Route exact path="/studyRoomsSchedule/create" element={<FormViewStudyRoomSchedule />} />
+          <Route exact path="/studyRoomsSchedule/edit/:id" element={<FormViewEditStudyRoomSchedule />} />
           {/* <Route exact path="/" element={<Home />} /> */}
 
         </Routes>

@@ -73,7 +73,7 @@ function Furniture() {
             <Table >
                 <thead>
                     <tr>
-                        <th>Id</th>
+                       
                         <th>Pertenece a</th>
                         <th>Mueble</th>
                         <th>Capacidad</th>
@@ -86,13 +86,13 @@ function Furniture() {
                     {
                         furniture.filter(res => { return res.active == 1 }).map((f, index) => (
                             <tr key={f.id}>
-                                <td>{f.id}</td>
+                               
                                 <td>{getStudyRoomById(f.id_study_room)}</td>
                                 <td>{f.furniture}</td>
                                 <td>{f.capacity}</td>
 
                                 <td>
-                                    <Button variant="primary" onClick={() => editFurniture(f.id)}>Editar</Button>
+                                    <Button variant="primary" onClick={() => editFurniture(f.id)} style={{marginRight:'5px'}}>Editar</Button>
                                     <Button variant="danger" onClick={() => deleteFurnitures(f.id)}>Eliminar</Button>
                                 </td>
                             </tr>

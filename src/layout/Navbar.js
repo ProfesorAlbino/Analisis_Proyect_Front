@@ -13,6 +13,8 @@ export default function Navbar() {
                 
                 <Link type="button" className="btn btn-outline-light" to="/studyRooms">Salas de estudio</Link>
                 <Link type="button" className="btn btn-outline-light" to="/furnitures">Muebles</Link>
+                <Link type="button" className="btn btn-outline-light" to="/studyRoomsSchedule">Horario de Sala de Estudio</Link>
+                
             </nav>
         </div>
     )
