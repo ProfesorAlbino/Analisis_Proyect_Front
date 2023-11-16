@@ -1,5 +1,5 @@
 import axios from 'axios';
-import url from './ApiPublic';
+import url from '../ApiPublic';
 
 const link = url();
 
@@ -29,7 +29,9 @@ export async function createStudyRoom(data){
     return await axios.post(link+"api/StudyRooms/createStudyRoom",newStudyRoom)
 }
 export async function getStudyRoomById(id){
-    return await axios.get(link+"api/StudyRooms/getStudyRoom/"+id);
+    let i= await axios.get(link+"api/StudyRooms/getStudyRoom/"+id);
+    
+    return i.data;
 }
 export async function updateStudyRoom(data){
     console.log('service',data)

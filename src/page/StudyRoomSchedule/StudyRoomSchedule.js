@@ -1,17 +1,30 @@
+//VERIFICAR
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import { deleteStudyRoom, getStudyRoom } from "../../service/StudyRoom/StudyRoomService";
+import { deleteStudyRoomSchedule, getStudyRoomSchedule, getStudyRoomScheduleById } from "../../service/StudyRoomSchedule/StudyRoomScheduleService";
 import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-function StudyRoom() {
-    const [studyRoom, setStudyRoom] = useState([]);
+import { getStudyRoomById } from "../../service/StudyRoom/StudyRoomService";
+function StudyRoomSchedule() {
+    const [studyRoomSchedule, setStudyRoomSchedule] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
         (async () => {
-            const response = await getStudyRoom();
-            setStudyRoom(response);
-            console.log(response);
+            const response = await getStudyRoomSchedule();
+        
+            let temporal=[];
+            for(let i=0;i<response.length;i++){
+                response[i].name = "";
+             }
+             for(let i=0;i<response.length;i++){
+                let res = await getStudyRoomById(response[i].idStudyRoom);
+              
+                response[i].name = res.name;
+             }
+           
+            setStudyRoomSchedule(response);
+           
         })();
     }, []);
 
@@ -31,12 +44,12 @@ function StudyRoom() {
             if (result.isConfirmed) {
                 Swal.fire(
                     '¡Eliminado!',
-                    'La sala de estudio ha sido eliminada.',
+                    'El horario de la sala de estudio ha sido eliminada.',
                     'success'
                 )
-                await deleteStudyRoom(id).then(async (data) => {
-                    const response = await getStudyRoom();
-                    setStudyRoom(response);
+                await deleteStudyRoomSchedule(id).then(async (data) => {
+                    const response = await getStudyRoomSchedule();
+                    setStudyRoomSchedule(response);
                 })
                     .catch((error) => {
                         console.log('error', error)
@@ -46,7 +59,7 @@ function StudyRoom() {
                 Swal.fire
                     (
                         'Error',
-                        'No se pudo eliminar la sala de estudio.',
+                        'No se pudo eliminar el horario de la sala de estudio.',
                         'error'
                     );
             }
@@ -54,32 +67,32 @@ function StudyRoom() {
     }
 
     function editStudyRoom(id) {
-        console.log("id=" + id);
-        navigate("/studyRooms/edit/" + id);
-        console.log(id);
+    
+        navigate("/studyRoomsSchedule/edit/" + id);
+       
     }
     return (
 
         <div className='container pt-5'>
-            <Button variant="primary" href="/studyRooms/create">Crear Sala de estudio</Button>
+            <Button variant="primary" href="/studyRoomsSchedule/create">Crear el horario  de la sala de estudio</Button>
             <Table >
                 <thead>
                     <tr>
-                        
-                        <th>Nombre</th>
-                        <th>Capacidad</th>
-                        <th>Disponibilidad</th>
+                        <th>Día</th>
+                        <th>Sala de estudio</th>
+                        <th>Hora inicio</th>
+                        <th>Hora fin</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        studyRoom.filter(res => { return res.active == 1 }).map((study, index) => (
+                        studyRoomSchedule.filter(res => { return res.active == 1 }).map((study, index) => (
                             <tr key={study.id}>
-                                
+                                <td>{study.day}</td>
                                 <td>{study.name}</td>
-                                <td>{study.capacity}</td>
-                                <td>{study.isAvailable ? 'Sí' : 'No'}</td>
+                                <td>{study.startHour}</td>
+                                <td>{study.endHour}</td>
                                 <td>
                                     <Button variant="primary" onClick={() => editStudyRoom(study.id)} style={{marginRight:'5px'}}>Editar</Button>
                                     <Button variant="danger" onClick={() => deleteStudy(study.id)}>Eliminar</Button>
@@ -94,4 +107,4 @@ function StudyRoom() {
     );
 
 }
-export default StudyRoom;
+export default StudyRoomSchedule;

@@ -27,6 +27,13 @@ import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
 import AddSanctionsReport from './page/SanctionsReport/AddSanctionsReport';
 import LoanBook from './page/LoanBook/AddLoanBook';
 import Example from '../src/layout/Dashboard';
+import Furniture from './page/Furniture/Furniture';
+import FormViewEditFurniture from  "./page/Furniture/FormViewEditFurniture"
+import FormViewFurniture from  "./page/Furniture/FormViewFurniture"
+import FormViewStudyRoomSchedule from './page/StudyRoomSchedule/FormViewStudyRoomSchedule';
+import StudyRoomSchedule from './page/StudyRoomSchedule/StudyRoomSchedule';
+import FormViewEditStudyRoomSchedule from './page/StudyRoomSchedule/FormViewEditStudyRoomSchedule';
+
 
 function App() {
   return (
@@ -59,6 +66,14 @@ function App() {
           <Route exact path="/listCopy/:idTitle" element={<ListCopy />} />
           <Route exact path="/editCopy/:idTitle" element={<ModifyCopy />} />
           <Route exact path="/loanBook" element={<LoanBook />} />
+          <Route exact path="/furnitures" element={<Furniture/>} />
+          <Route exact path="/furnitures/create" element={<FormViewFurniture/>} />
+          <Route exact path="/furnitures/edit/:id" element={<FormViewEditFurniture />} />
+          <Route exact path="/studyRoomsSchedule" element={<StudyRoomSchedule />} />
+          <Route exact path="/studyRoomsSchedule/create" element={<FormViewStudyRoomSchedule />} />
+          <Route exact path="/studyRoomsSchedule/edit/:id" element={<FormViewEditStudyRoomSchedule />} />
+          {/* <Route exact path="/" element={<Home />} /> */}
+
         </Routes>
       </Router>
     </div>
