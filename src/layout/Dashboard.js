@@ -73,6 +73,8 @@ function OffCanvasExample({ name, ...props }) {
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListSanctionsReport">Sanciones</Link>
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Equipo informatico</Link>
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Adiministrar Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Adiministrar Horario de Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Adiministrar Muebles de Salas de estudio</Link>
                 </div>
               </Accordion.Body>
             </Accordion.Item>
