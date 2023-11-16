@@ -25,12 +25,15 @@ import ModifyComputerEquipments from './page/ComputerEquipments/ModifyComputerEq
 import AddComputerEquipments from './page/ComputerEquipments/AddComputerEquipments';
 import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
 import AddSanctionsReport from './page/SanctionsReport/AddSanctionsReport';
+import LoanBook from './page/LoanBook/AddLoanBook';
+import Example from '../src/layout/Dashboard';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        {/* <Navbar /> */}
+        <Example />
         <Routes>     
           <Route exact path="/users" element={<User />} />
 
@@ -49,14 +52,13 @@ function App() {
           <Route exact path="/AddComputerEquipments" element={<AddComputerEquipments />} />
           <Route exact path="/ListSanctionsReport" element={<ListSanctionsReport />} />
           <Route exact path="/AddSanctionsReport" element={<AddSanctionsReport />} />
-
-          {/* <Route exact path="/" element={<Home />} /> */}
           <Route exact path="/listTitles" element={<ListTitles />} />
           <Route exact path="/addTitle" element={<AddTitle />} />
           <Route exact path="/editTitle/:idTitle" element={<ModifyTitle />} />
           <Route exact path="/addCopy/:idTitle" element={<AddCopy />} />
           <Route exact path="/listCopy/:idTitle" element={<ListCopy />} />
           <Route exact path="/editCopy/:idTitle" element={<ModifyCopy />} />
+          <Route exact path="/loanBook" element={<LoanBook />} />
         </Routes>
       </Router>
     </div>

@@ -1,5 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { getAll, deleteTitle } from '../../service/TitlesApi/TitleApi';
+import { FormatterDate } from '../../scripts/FormatterDate';
+import { FaList, FaRegEdit, FaTrashAlt } from 'react-icons/fa';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 function ListTitles() {
     const bodyRef = useRef();
@@ -29,46 +32,67 @@ function ListTitles() {
 
     return (
         <div className="container">
+
+            <h1>Listado de libros</h1>
+            <a href="/addTitle" className="btn btn-primary">Agregar Libro</a>
             <div className="py-4">
-                <h1>Listado de libros</h1>
-                <a href="/addTitle" className="btn btn-primary">Agregar Libro</a>
-                <table className="table border shadow">
+                <table className="table border shadow py-4">
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>#</th>
                             <th>Título</th>
                             <th>Nombre del Autor</th>
                             <th>Nombre del Editor</th>
                             <th>Fecha de Publicación</th>
                             <th>ISBN</th>
-                            <th colSpan={3}>Acciones</th>
+                            <th>Ver Ejemplares</th>
+                            <th colSpan={2}>Acciones</th>
                         </tr>
                     </thead>
                     <tbody ref={bodyRef}>
                         {titles
                             .filter(element => element.active)
-                            .map(element => (
+                            .sort((a, b) => a.title1 - b.title1)
+                            // .reverse() esto es interesante
+                            .map((element, index) => (
                                 <tr key={element.id}> {/* Agrega una clave única para cada elemento */}
-                                    <td>{element.id}</td>
+                                    <td>{index + 1}</td>
                                     <td>{element.title1}</td>
                                     <td>{element.personName}</td>
                                     <td>{element.publisherName}</td>
-                                    <td>{element.publicationDate}</td>
+                                    <td>{FormatterDate(element.publicationDate)}</td>
                                     <td>{element.isbn}</td>
                                     <td>
-                                        <a href={`/listCopy/${element.id}`} className="btn btn-primary">
-                                            Ver Ejemplares
-                                        </a>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Ejemplares de {element.title1}</Tooltip>}
+                                        >
+                                            <a href={`/listCopy/${element.id}`} className="btn btn-primary">
+                                                <FaList />
+                                            </a>
+                                        </OverlayTrigger>
                                     </td>
                                     <td>
-                                        <a href={`/editTitle/${element.id}`} className="btn btn-warning">
-                                            Editar
-                                        </a>
+                                        <td>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Eliminar</Tooltip>}
+                                            >
+                                                <button className="btn btn-danger" onClick={() => handleDeleteTitle(element.id)}>
+                                                    <FaTrashAlt />
+                                                </button>
+                                            </OverlayTrigger>
+                                        </td>
                                     </td>
                                     <td>
-                                        <button className="btn btn-danger" onClick={() => handleDeleteTitle(element.id)}>
-                                            Eliminar
-                                        </button>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Editar</Tooltip>}
+                                        >
+                                            <a href={`/editTitle/${element.id}`} className="btn btn-warning">
+                                                <FaRegEdit />
+                                            </a>
+                                        </OverlayTrigger>
                                     </td>
                                 </tr>
                             ))}
