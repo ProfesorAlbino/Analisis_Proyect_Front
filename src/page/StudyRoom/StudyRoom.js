@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import { deleteStudyRoom, getStudyRoom } from "../../service/StudyRoomService";
+import { deleteStudyRoom, getStudyRoom } from "../../service/StudyRoom/StudyRoomService";
 import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -31,7 +31,7 @@ function StudyRoom() {
             if (result.isConfirmed) {
                 Swal.fire(
                     '¡Eliminado!',
-                    'Tu cita ha sido eliminada.',
+                    'La sala de estudio ha sido eliminada.',
                     'success'
                 )
                 await deleteStudyRoom(id).then(async (data) => {
@@ -46,7 +46,7 @@ function StudyRoom() {
                 Swal.fire
                     (
                         'Error',
-                        'No se pudo eliminar la cita.',
+                        'No se pudo eliminar la sala de estudio.',
                         'error'
                     );
             }
@@ -65,7 +65,7 @@ function StudyRoom() {
             <Table >
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        
                         <th>Nombre</th>
                         <th>Capacidad</th>
                         <th>Disponibilidad</th>
@@ -76,12 +76,12 @@ function StudyRoom() {
                     {
                         studyRoom.filter(res => { return res.active == 1 }).map((study, index) => (
                             <tr key={study.id}>
-                                <td>{study.id}</td>
+                                
                                 <td>{study.name}</td>
                                 <td>{study.capacity}</td>
                                 <td>{study.isAvailable ? 'Sí' : 'No'}</td>
                                 <td>
-                                    <Button variant="primary" onClick={() => editStudyRoom(study.id)}>Editar</Button>
+                                    <Button variant="primary" onClick={() => editStudyRoom(study.id)} style={{marginRight:'5px'}}>Editar</Button>
                                     <Button variant="danger" onClick={() => deleteStudy(study.id)}>Eliminar</Button>
                                 </td>
                             </tr>
@@ -89,12 +89,7 @@ function StudyRoom() {
                     }
                 </tbody>
             </Table >
-            <select className='form-select'>
-                {studyRoom.filter(res => { return res.active == 1 }).map((study, index) => {
-                    return(<option id={study.id} key={index}>{study.name}</option>);
-                })
-                }
-            </select>
+            
         </div>
     );
 

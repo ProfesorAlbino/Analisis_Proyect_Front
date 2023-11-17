@@ -29,53 +29,109 @@ export default function AddComputerEquipments() {
 
     return (
         <div>
-            <form onSubmit={(e) => onSubmit(e)}>
-                <div className="form-group mb-3">
-                    <label htmlFor="licensePlate">Placa</label>
-                    <input type="text" className="form-control" id="licensePlate" value={licensePlate} 
-                    onChange={(event) => setComputerEquipment({ ...computerEquipment, licensePlate: event.target.value })}/>
-                </div>
-                <div className="form-group mb-3">
-                    <label htmlFor="class">Clase</label>
-                    <input type="text" className="form-control" id="class" value={clas} 
-                    onChange={(event) => setComputerEquipment({ ...computerEquipment, clas: event.target.value })}/>
-                </div>
-                <div className="form-group mb-3">
-                    <label htmlFor="name">Nombre</label>
-                    <input type="text" className="form-control" id="name" value={name}
-                    onChange={(event) => setComputerEquipment({ ...computerEquipment, name: event.target.value })}/>
-                </div>
-                <div className="form-group mb-3">
-                    <label htmlFor="brand">Marca</label>
-                    <input type text className="form-control" id="brand" value={brand}
-                    onChange={(event) => setComputerEquipment({ ...computerEquipment, brand: event.target.value })}/>
-                </div>
-                <div className="form-group mb-3">
-                    <label htmlFor="model">Modelo</label>
-                    <input type="text" className="form-control" id="model" value={model}
-                    onChange={(event) => setComputerEquipment({ ...computerEquipment, model: event.target.value })}/>
-                </div>
-                <div className="form-group mb-3">
-                    <label htmlFor="state">Estado</label>
-                    <input type="text" className="form-control" id="state" value={state}
-                    onChange={(event) => setComputerEquipment({ ...computerEquipment, state: event.target.value })}/>
-                </div>
-                <div className="form-group mb-3">
-                    <label htmlFor="observations">Observaciones</label>
-                    <input type="text" className="form-control" id="observations" value={observations} 
-                    onChange={(event) => setComputerEquipment({ ...computerEquipment, observations: event.target.value })}/>
-                </div>
-                <div className="form-group mb-3">
-                    <label htmlFor="include">Incluir</label>
-                    <input type="text" className="form-control" id="include" value={include}
-                    onChange={(event) => setComputerEquipment({ ...computerEquipment, include: event.target.value })}/>
-                </div>
-                <div className="form-group mb-3">
-                    <label htmlFor="serialNumber">Número de Serie</label>
-                    <input type="text" className="form-control" id="serialNumber" value={serialNumber} 
-                    onChange={(event) => setComputerEquipment({ ...computerEquipment, serialNumber: event.target.value })}/>
-                </div>
+            <h1>Agregar Equipo Informatico</h1>
 
+            <form onSubmit={(e) => onSubmit(e)}>
+                <div className="row">
+                    <div className="col-md-4 mb-3">
+                    </div>
+
+                    <div className="col-md-4 mb-3">
+                        <div className="row">
+                            <div className="col-md-12 mb-3">
+                                <div className="form-group mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" className="form-control" id="licensePlate" value={licensePlate}
+                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, licensePlate: event.target.value })} />
+                                        <label htmlFor="licensePlate">Placa</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-12 mb-3">
+                                <div className="form-group mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" className="form-control" id="class" value={clas}
+                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, clas: event.target.value })} />
+                                        <label htmlFor="class">Clase</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-12 mb-3">
+                                <div className="form-group mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" className="form-control" id="name" value={name}
+                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, name: event.target.value })} />
+                                        <label htmlFor="name">Nombre</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-12 mb-3">
+                                <div className="form-group mb-3">
+                                    <div class="form-floating">
+                                        <input type text className="form-control" id="brand" value={brand}
+                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, brand: event.target.value })} />
+                                        <label htmlFor="brand">Marca</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-12 mb-3">
+                                <div className="form-group mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" className="form-control" id="model" value={model}
+                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, model: event.target.value })} />
+                                        <label htmlFor="model">Modelo</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-12 mb-3">
+                                <div className="form-group mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" className="form-control" id="state" value={state}
+                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, state: event.target.value })} />
+                                        <label htmlFor="state">Estado</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-12 mb-3">
+                                <div className="form-group mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" className="form-control" id="observations" value={observations}
+                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, observations: event.target.value })} />
+                                        <label htmlFor="observations">Observaciones</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-12 mb-3">
+                                <div className="form-group mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" className="form-control" id="include" value={include}
+                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, include: event.target.value })} />
+                                        <label htmlFor="include">Incluir</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-md-12 mb-3">
+                                <div className="form-group mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" className="form-control" id="serialNumber" value={serialNumber}
+                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, serialNumber: event.target.value })} />
+                                        <label htmlFor="serialNumber">Número de Serie</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4 mb-3">
+                    </div>
+                </div>
                 <button type="submit" className="btn btn-primary">Guardar</button>
                 <Link type="button" className="btn btn-danger" to="/AddComputerEquipments">Cancelar</Link>
             </form>

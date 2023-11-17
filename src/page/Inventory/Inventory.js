@@ -41,7 +41,7 @@ function Inventory() {
 
     return (<div className='container pt-5'>
         <Button variant="primary" href="/inventory/create">Crear inventario</Button>
-        <Table >
+        <Table className='border shadow'>
             <thead>
                 <tr>
                     <th>#</th>
@@ -54,7 +54,7 @@ function Inventory() {
             </thead>
             <tbody>
                 {
-                    inventory.map((inventory, index) => (
+                    inventory.filter(inventory => !inventory.deleted).map((inventory, index) => (
                         <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{inventory.units}</td>

@@ -30,7 +30,7 @@ function InventoryType() {
 
     return (<div className='container pt-5'>
         <Button variant="primary" href="/inventory/inventoryType/create">Crear tipo de inventario</Button>
-        <Table >
+        <Table className='border shadow'>
             <thead>
                 <tr>
                     <th>#</th>
