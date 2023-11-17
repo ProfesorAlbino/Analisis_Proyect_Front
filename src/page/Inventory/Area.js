@@ -30,7 +30,7 @@ function Area() {
 
     return (<div className='container pt-5'>
         <Button variant="primary" href="/inventory/area/create">Crear area</Button>
-        <Table >
+        <Table className='border shadow'>
             <thead>
                 <tr>
                     <th>#</th>
