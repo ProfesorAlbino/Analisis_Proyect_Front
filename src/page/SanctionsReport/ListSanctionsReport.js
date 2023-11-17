@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getSanctionsReports, deleteSanctionsReport } from "../../service/SanctionsReport/SanctionsReportApi";
+import { FormatterDate } from '../../scripts/FormatterDate';
 
 export default function ListSanctionsReport() {
 
@@ -50,7 +51,7 @@ export default function ListSanctionsReport() {
                                 <td>{sanctionsReport.idLibraryUserNavigation.idUserNavigation.name}</td>
                                 <td>{sanctionsReport.idLibraryUserNavigation.idUserNavigation.lastName}</td>
                                 <td>{sanctionsReport.idSanctionComputerEquipmentNavigation.sanctionType}</td>
-                                <td>{sanctionsReport.idReturnComputerEquipmentNavigation.returnDate}</td>
+                                <td>{FormatterDate(sanctionsReport.idReturnComputerEquipmentNavigation.returnDate)}</td>
                                 <td>
                                     <Link type="button" className="btn btn-outline-warning mv+10">Modificar</Link>
                                     <Link type="button" className="btn btn-outline-danger mv-10" onClick={() => deletesanctionsReportById(sanctionsReport.id)}>Eliminar</Link>

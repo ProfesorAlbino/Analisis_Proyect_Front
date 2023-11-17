@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getComputerEquipments } from '../../service/ComputerEquipment/ComputerEquipmentApi';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { BsBookmarkCheckFill } from "react-icons/bs";
+import { FormatterDate } from '../../scripts/FormatterDate';
 
 export default function AddLoanComputerEquipments() {
 
@@ -60,8 +61,8 @@ export default function AddLoanComputerEquipments() {
                                     <td>{computerEquipment.licensePlate}</td>
                                     <td>{computerEquipment.name}</td>
                                     <td>{computerEquipment.brand}</td>
-                                    <td>{computerEquipment.lastModifications}</td>
-                                    <td>{computerEquipment.entryDate}</td>
+                                    <td>{FormatterDate(computerEquipment.lastModifications)}</td>
+                                    <td>{FormatterDate(computerEquipment.entryDate)}</td>
                                     <td>
                                             <OverlayTrigger
                                                 placement="top"
