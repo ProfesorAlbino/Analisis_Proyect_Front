@@ -3,17 +3,19 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './layout/Navbar';
 
+import Home from './page/PrincipalPage/PrincipalPage';
+import Login from './page/Login/Login';
 import User from './page/User/User';
 import StudyRoom from './page/StudyRoom/StudyRoom';
 import FormViewStudyRoom from './page/StudyRoom/FormViewStudyRoom';
 import FormViewEditStudyRoom from './page/StudyRoom/FormViewEdit';
-import UserAdd from './page/User/UserAdd';
+import UserAdd from './page/User/AddUser';
 import Inventory from './page/Inventory/Inventory';
-import InventoryAdd from './page/Inventory/InventoryAdd';
+import InventoryAdd from './page/Inventory/AddInventory';
 import InventoryType from './page/Inventory/Inventory_type';
-import InventoryTypeAdd from './page/Inventory/Inventory_typeAdd';
+import InventoryTypeAdd from './page/Inventory/AddInventory_type';
 import Area from './page/Inventory/Area';
-import AreaAdd from './page/Inventory/AreaAdd';
+import AreaAdd from './page/Inventory/AddArea';
 import ListTitles from './page/Title/ListTitles';
 import AddTitle from './page/Title/AddTitle';
 import ModifyTitle from './page/Title/ModifyTitle';
@@ -28,8 +30,8 @@ import AddSanctionsReport from './page/SanctionsReport/AddSanctionsReport';
 import LoanBook from './page/LoanBook/AddLoanBook';
 import Example from '../src/layout/Dashboard';
 import Furniture from './page/Furniture/Furniture';
-import FormViewEditFurniture from  "./page/Furniture/FormViewEditFurniture"
-import FormViewFurniture from  "./page/Furniture/FormViewFurniture"
+import FormViewEditFurniture from "./page/Furniture/FormViewEditFurniture"
+import FormViewFurniture from "./page/Furniture/FormViewFurniture"
 import FormViewStudyRoomSchedule from './page/StudyRoomSchedule/FormViewStudyRoomSchedule';
 import StudyRoomSchedule from './page/StudyRoomSchedule/StudyRoomSchedule';
 import FormViewEditStudyRoomSchedule from './page/StudyRoomSchedule/FormViewEditStudyRoomSchedule';
@@ -46,7 +48,10 @@ function App() {
       <Router>
         {/* <Navbar /> */}
         <Example />
-        <Routes>     
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/login" element={<Login />} />
+
           <Route exact path="/users" element={<User />} />
 
           <Route exact path="/studyRooms" element={<StudyRoom />} />
@@ -71,8 +76,8 @@ function App() {
           <Route exact path="/listCopy/:idTitle" element={<ListCopy />} />
           <Route exact path="/editCopy/:idTitle" element={<ModifyCopy />} />
           <Route exact path="/loanBook" element={<LoanBook />} />
-          <Route exact path="/furnitures" element={<Furniture/>} />
-          <Route exact path="/furnitures/create" element={<FormViewFurniture/>} />
+          <Route exact path="/furnitures" element={<Furniture />} />
+          <Route exact path="/furnitures/create" element={<FormViewFurniture />} />
           <Route exact path="/furnitures/edit/:id" element={<FormViewEditFurniture />} />
           <Route exact path="/studyRoomsSchedule" element={<StudyRoomSchedule />} />
           <Route exact path="/studyRoomsSchedule/create" element={<FormViewStudyRoomSchedule />} />
