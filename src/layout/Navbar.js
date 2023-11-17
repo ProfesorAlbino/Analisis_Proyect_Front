@@ -19,6 +19,8 @@ export default function Navbar() {
                 <Link type="button" className="btn btn-outline-light" to="/addForm">info</Link>
                 <Link type="button" className="btn btn-outline-light" to="/ListComputerEquipments">Equipo informatico</Link>
                 <Link type="button" className="btn btn-outline-light" to="/ListSanctionsReport">Sanciones</Link>
+                <Link type="button" className="btn btn-outline-light" to="/loanClassRoom/RegisterLoanClassRoom"> Prestamo Aula y laboratorios</Link>
+                <Link type="button" className="btn btn-outline-light" to="/loanClassRoom/loanClassRoom">Prestamo aulas y laboratorios</Link>
 
             </nav>
         </div>

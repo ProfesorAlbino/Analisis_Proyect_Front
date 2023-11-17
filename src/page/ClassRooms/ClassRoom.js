@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { deleteClassRoom, getClassRooms } from "../../service/ClassRoomService";
+import { deleteClassRoom, getClassRooms } from "../../service/ClassRoomApi/ClassRoomService";
 import { Button, Table } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 function ClassRoom() {
     const [classRoom, setClassRoom] = useState([]);
     const navigate = useNavigate();
+    
     useEffect(() => {
         (async () => {
             const response = await getClassRooms();
             setClassRoom(response);
-            console.log(response);
         })();
     }, []);
 
@@ -44,7 +44,7 @@ function ClassRoom() {
                 Swal.fire
                     (
                         'Error',
-                        'No se pudo eliminar la cita.',
+                        'No se pudo eliminar el reguistro.',
                         'error'
                     );
             }
@@ -65,8 +65,9 @@ function ClassRoom() {
                     <tr>
                         <th>Tipo</th>
                         <th>Descripcion</th>
-                        <th>cantidad</th>
-                        <th>numeracion</th>
+                        <th>Cantidad</th>
+                        <th>Numeracion</th>
+                        <th colSpan={2}>Acciones</th>
 
                     </tr>
                 </thead>
@@ -79,7 +80,9 @@ function ClassRoom() {
                                 <td>{classRooms.quantity}</td>
                                 <td>{classRooms.numeration}</td>
                                 <td>
-                                    <Button variant="primary" onClick={() => editClassRoom(classRooms.id)}>Editar</Button>
+                                    <Button variant="warning" onClick={() => editClassRoom(classRooms.id)}>Editar</Button>
+                                   </td>
+                                   <td>
                                     <Button variant="danger" onClick={() => deleteClass(classRooms.id)}>Eliminar</Button>
                                 </td>
                             </tr>

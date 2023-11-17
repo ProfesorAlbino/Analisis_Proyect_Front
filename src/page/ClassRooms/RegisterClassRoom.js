@@ -2,12 +2,12 @@ import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { createClassRoom } from "../../service/ClassRoomService";
+import { createClassRoom } from "../../service/ClassRoomApi/ClassRoomService";
 function RegisterClassRoom() {
     const navigate = useNavigate();
     const [classRoom, setClassRoom] = useState({
         type: "",
-        requirements: "",
+        description: "",
         quantity: 0,
         numeration: ""
     });
@@ -15,27 +15,31 @@ function RegisterClassRoom() {
     const setObject = (event) => {
         setClassRoom({ ...classRoom, [event.target.name]: event.target.value });
     }
-    const handleSubmit = async (event ) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-       
-          
-            await createClassRoom(classRoom).then((data) => {
-                console.log('res', data.data)
-                navigate('/classRoom');
-            })
-                .catch((error) => {
-                    console.log('error', error)
-                })
-
-
+    
+        try {
+            const resp = await createClassRoom(classRoom);
+            console.log('res', resp);
+            navigate('/classRoom');
+    
             Swal.fire(
                 '¡Guardado!',
                 'Cita guardada con éxito',
                 'success'
-            )
-
-        
-    }
+            );
+        } catch (error) {
+            console.log('error', error);
+    
+            // Puedes manejar el error aquí, por ejemplo, mostrar un mensaje al usuario
+            Swal.fire(
+                'Error',
+                'Hubo un problema al guardar la cita',
+                'error'
+            );
+        }
+    };
+    
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -53,8 +57,8 @@ function RegisterClassRoom() {
                     <div className="col-sm-12"></div>
 
                     <div className="col-sm-6 text-start mt-2">
-                        <label>Detalles:</label>
-                        <input type="text" className="form-control" name="requirements" value={classRoom.requirements} onChange={(event) => { setObject(event) }} />
+                        <label>Descripcion:</label>
+                        <input type="text" className="form-control" name="description" value={classRoom.description} onChange={(event) => { setObject(event) }} />
                     </div>
 
                     <div className="col-sm-12"></div>

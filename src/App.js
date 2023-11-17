@@ -27,7 +27,11 @@ import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
 import AddSanctionsReport from './page/SanctionsReport/AddSanctionsReport';
 import ClassRoom from './page/ClassRooms/ClassRoom';
 import RegisterClassRoom from './page/ClassRooms/RegisterClassRoom';
+import RegisterLoanClassRoom from './page/LoanClassRooms/RegisterLoanClassRoom';
 import EditClassRoom from './page/ClassRooms/EditClassRoom';
+import LoanClassRoom from './page/LoanClassRooms/LoanClassRoom';
+import EditLoanClassRoom from './page/LoanClassRooms/EditLoanClassRoom';
+
 
 function App() {
   return (
@@ -45,7 +49,7 @@ function App() {
           <Route exact path="/inventory/create" element={<InventoryAdd />} />
           <Route exat path="/classRoom" element={<ClassRoom/>}/>
           <Route exat path="/classRoom/RegisterClassRoom" element={<RegisterClassRoom/>}/>
-          <Route exat path="/classRoom/EditClassRoom" element={<EditClassRoom/>}/>
+          <Route exat path="/classRoom/EditClassRoom/:id" element={<EditClassRoom/>}/>
           <Route exact path="/inventory/inventoryType" element={<InventoryType />} />
           <Route exact path="/inventory/inventoryType/create" element={<InventoryTypeAdd />} />
           <Route exact path="/inventory/area" element={<Area />} />
@@ -55,6 +59,9 @@ function App() {
           <Route exact path="/AddComputerEquipments" element={<AddComputerEquipments />} />
           <Route exact path="/ListSanctionsReport" element={<ListSanctionsReport />} />
           <Route exact path="/AddSanctionsReport" element={<AddSanctionsReport />} />
+          <Route exact path="/loanClassRoom/RegisterLoanClassRoom" element={<RegisterLoanClassRoom/>}/>
+          <Route exact path='/LoanClassRoom/LoanClassRoom' element={<LoanClassRoom/>}/>
+          <Route exat path="/LoanClassRoom/EditLoanClassRoom/:id" element={<EditLoanClassRoom/>}/>
 
           {/* <Route exact path="/" element={<Home />} /> */}
           <Route exact path="/listTitles" element={<ListTitles />} />

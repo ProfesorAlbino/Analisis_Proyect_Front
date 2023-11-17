@@ -2,16 +2,17 @@ import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { getClassRoom, updateClassRoom} from "../../service/ClassRoomService";
+import { createClassRoom, getClassRoom, updateClassRoom} from "../../service/ClassRoomApi/ClassRoomService";
 
 function EditClassRoom() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [classRoom, setClassRoom] = useState({
         type: "",
-        requirements: "",
+        description: "",
         quantity: 0,
-        numeration: ""
+        numeration: "",
+     
     });
    
     useEffect(() => {
@@ -19,8 +20,6 @@ function EditClassRoom() {
             getClassRoom(id).then((data) => {
                 console.log('cliente', data.data);
                 setClassRoom(data.data);
-            
-
             })
                 .catch((error) => {
                     console.log(error);
@@ -35,7 +34,7 @@ function EditClassRoom() {
     const handleSubmit = async (event ) => {
         event.preventDefault();
        
-            await updateClassRoom(classRoom).then((data) => {
+            await createClassRoom(classRoom).then((data) => {
                 console.log('res', data.data)
                 navigate('/classRoom');
             })
@@ -46,7 +45,7 @@ function EditClassRoom() {
 
             Swal.fire(
                 '¡Guardado!',
-                'Cita editada con éxito',
+                'Solicitud editada con éxito',
                 'success'
             )
 
@@ -69,14 +68,14 @@ function EditClassRoom() {
     
                         <div className="col-sm-6 text-start mt-2">
                             <label>Detalles:</label>
-                            <input type="text" className="form-control" name="requirements" value={classRoom.requirements} onChange={(event) => { setObject(event) }} />
+                            <input type="text" className="form-control" name="description" value={classRoom.description} onChange={(event) => { setObject(event) }} />
                         </div>
     
                         <div className="col-sm-12"></div>
     
                         <div className="col-sm-6 text-start mt-2">
                             <label>cantidad: </label>
-                            <input type="number" className="form-control" name="quantity" value={classRoom.quantity} onChange={(event) => { setObject(event) }} />
+                            <input required type="number" className="form-control" name="quantity" value={classRoom.quantity} onChange={(event) => { setObject(event) }} />
     
                         </div>
     
