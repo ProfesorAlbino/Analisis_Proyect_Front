@@ -14,6 +14,17 @@ export async function getLoanVehicle() {
         throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en otro lugar.
     }
 }
+export async function getLoanVehicleByLoan(id) {
+    try {
+        console.log(link);
+        const response = await axios.get(link + 'api/LoanVehicles/getLoanVehicleAllById'+id);
+        //console.log(response.data);
+        return response.data; // Devuelve el contenido JSON de la respuesta
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en otro lugar.
+    }
+}
 
 export async function createLoanVehicle(data){
 
@@ -26,11 +37,8 @@ export async function createLoanVehicle(data){
         "state": data.state,
         "destination": data.destination,
         "startingPlace": data.startingPlace,
-        "exitDate": data.exitDate,
-        "returnDate": data.returnDate,
         "exitHour": data.exitHour,
         "returnHour": data.returnHour,
-        "registerDate": data.registerDate,
         "personQuantity": data.personQuantity,
         "unityOrCarrer": data.unityOrCarrer,
         "assignedVehicle": data.assignedVehicle,
@@ -56,11 +64,8 @@ export async function updateLoanVehicle(data){
         "state": data.state,
         "destination": data.destination,
         "startingPlace": data.startingPlace,
-        "exitDate": data.exitDate,
-        "returnDate": data.returnDate,
         "exitHour": data.exitHour,
         "returnHour": data.returnHour,
-        "registerDate": data.registerDate,
         "personQuantity": data.personQuantity,
         "unityOrCarrer": data.unityOrCarrer,
         "assignedVehicle": data.assignedVehicle,

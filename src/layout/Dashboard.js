@@ -55,7 +55,8 @@ function OffCanvasExample({ name, ...props }) {
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Préstamo de Libros</Link>
                 <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Computadoras</button>
                 <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Salas de Estudio</button>
-                <Link type="button" class="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Préstamo de Equipo Informático</Link>
+                <Link type="button" class="btn btn-outline-primary mb-2 col-12" to={`/listLoanComputerEquipment?idUser=${4}`}>Préstamo de Equipo Informático</Link>
+                <Link type="button" class="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Equipo Informático</Link>
 
               </Accordion.Body>
             </Accordion.Item>
@@ -63,20 +64,24 @@ function OffCanvasExample({ name, ...props }) {
               <Accordion.Header>Prestamos</Accordion.Header>
               <Accordion.Body>
                 <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Cancha</button>
-                <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Vehiculos</button>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanVehicle">Préstamo de Vehiculos</Link>
                 <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Aulas y Laboratorios</button>
+                
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
               <Accordion.Header>Administrativos</Accordion.Header>
               <Accordion.Body>
                 <div class="row">
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Administrar Inventario</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Administrar Libros</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Administrar Usuarios</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListSanctionsReport">Sanciones</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Equipo informatico</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Adiministrar Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Administrar Inventario</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Administrar Libros</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Administrar Usuarios</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListSanctionsReport">Sanciones</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Equipo informatico</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Adiministrar Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Adiministrar Horario de Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Adiministrar Muebles de Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/admLoanVehicle">Adiministrar Servicio de Transporte</Link>
                 </div>
               </Accordion.Body>
             </Accordion.Item>
