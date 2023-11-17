@@ -37,6 +37,8 @@ import FormViewFurniture from "./page/Furniture/FormViewFurniture"
 import FormViewStudyRoomSchedule from './page/StudyRoomSchedule/FormViewStudyRoomSchedule';
 import StudyRoomSchedule from './page/StudyRoomSchedule/StudyRoomSchedule';
 import FormViewEditStudyRoomSchedule from './page/StudyRoomSchedule/FormViewEditStudyRoomSchedule';
+import FormViewEditLoanVehicle from './page/LoanVehicle/FormViewEditLoanVehicle';
+import FormViewLoanVehicle from './page/LoanVehicle/FormViewLoanVehicle';
 import ListLoanComputerEquipment from './page/LoanComputerEquipment/ListLoanComputerEquipment';
 import AddLoanComputerEquipments from './page/LoanComputerEquipment/AddLoanComputerEquipments';
 import ReserveLoanComputerEquipment from './page/LoanComputerEquipment/ReserveLoanComputerEquipment';
@@ -46,6 +48,9 @@ import RegisterLoanClassRoom from './page/LoanClassRooms/RegisterLoanClassRoom';
 import EditClassRoom from './page/ClassRooms/EditClassRoom';
 import LoanClassRoom from './page/LoanClassRooms/LoanClassRoom';
 import EditLoanClassRoom from './page/LoanClassRooms/EditLoanClassRoom';
+import LoanVehicle from './page/LoanVehicle/LoanVehicle';
+
+
 
 function App() {
   return (
@@ -100,7 +105,10 @@ function App() {
           <Route exact path="/listLoanComputerEquipment" element={<ListLoanComputerEquipment />} />
           <Route exact path="/addLoanComputerEquipment" element={<AddLoanComputerEquipments />} />
           <Route exact path="/reserveLoanComputerEquipment" element={<ReserveLoanComputerEquipment />} />
-
+          <Route exact path="/loanVehicle/create" element={<FormViewLoanVehicle />} />
+          <Route exact path="/loanVehicle" element={<LoanVehicle/>} />
+          <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle />} />
+          
         </Routes>
         <Footer />
       </Router>

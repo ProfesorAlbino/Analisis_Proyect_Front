@@ -59,6 +59,16 @@ export async function updateLoans(data){
         "startDate": data.startDate,
         "endDate": data.endDate,
         "registerDate": data.registerDate,
+        "loanBookLogs": [],
+        "loanBooks": [],
+        "loanClassrooms": [],
+        "loanComputerEquipments": [],
+        "loanFields": [],
+        "loanSportsEquipments": [],
+        "loanStudyRooms": [],
+        "loanVehicles": [],
+
     }
+    console.log(loan)
     return await axios.put(link+"api/Loans/updateLoan/"+data.id,loan);
 }

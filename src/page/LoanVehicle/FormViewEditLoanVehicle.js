@@ -9,13 +9,23 @@ import { getLoanById, updateLoan, updateLoans } from '../../service/LoanApi/Loan
 function FormViewEditLoanVehicle() {
     const navigate = useNavigate();
     const { id } = useParams();
+    const formatDate = (date) => {
+        const d = new Date(date);
+        const day = d.getDate().toString().padStart(2, '0');
+        const month = (d.getMonth()).toString().padStart(2, '0');
+        const year = d.getFullYear();
+
+        return `${year}-${month}-${day}`;
+    };
 
     const [formLoan, setFormLoan] = useState({
+        id:0,
         startDate: "",
         endDate: "",
         registerDate: ""
     });
     const [formLoanVehicle, setFormLoanVehicle] = useState({
+        id:0,
         idLoan: 1,
         idUser: 2,
         activityType: "",
@@ -39,6 +49,8 @@ function FormViewEditLoanVehicle() {
                     setFormLoanVehicle(data);
                     console.log(data)
                     getLoanById(data.idLoan).then((response) => {
+                        response.startDate= formatDate(response.startDate);
+                        response.endDate=formatDate(response.endDate)
                         console.log(response);
                         setFormLoan(response);
     
@@ -68,12 +80,12 @@ function FormViewEditLoanVehicle() {
             )
         } else {
 
-            await updateLoans(formLoan).then((data) => {
-                console.log('res', data.data);
-                formLoanVehicle.idLoan = parseInt(data.data.id);
+             updateLoan(formLoan).then((data) => {
+                console.log('res', data);
+                formLoanVehicle.idLoan = (data.id);
                 updateLoanVehicle(formLoanVehicle).then((data) => {
 
-                    console.log('res', data.data)
+                    console.log('res',data)
                     navigate('/loanVehicle');
                 })
 
