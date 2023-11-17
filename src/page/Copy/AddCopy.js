@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { createCopy } from '../../service/CopysApi/CopyApi';
 
@@ -17,7 +17,8 @@ export default function AddCopy() {
         classification: '',
         collection: '',
         itemStatus: '',
-        notes: ''
+        notes: '',
+        active: true
     });
 
     const handleSubmit = (e) => {
@@ -25,6 +26,7 @@ export default function AddCopy() {
         createCopy(copy)
             .then((result) => {
                 console.log(result + "Libro creado exitosamente");
+                window.location.href = `/listCopy/${idTitle}`;
             })
             .catch(() => {
                 console.log("Error al crear el libro");
@@ -33,69 +35,89 @@ export default function AddCopy() {
     }
 
     return (
-        <div>
+        <div >
             <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label className="form-label">Secuencia</label>
-                    <input type="number"
-                        className="form-control"
-                        required
-                        onChange={(e) => setCopy({ ...copy, sequence: e.target.value })} />
+                <h2 className="text-center">Registrar Copia</h2>
+                <div className="container py-4">
+                    <div className='row'>
+                        <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <input
+                                type="number"
+                                className="form-control border border-primary"
+                                required
+                                onChange={(e) => setCopy({ ...copy, sequence: e.target.value })}
+                            />
+                            <label className="form-label ms-2">Secuencia</label>
+                        </div>
+                        <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <input
+                                type="text"
+                                className="form-control border border-primary"
+                                required
+                                onChange={(e) => setCopy({ ...copy, barcode: e.target.value })}
+                            />
+                            <label className="form-label ms-2">Código de Barras</label>
+                        </div>
+                        <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <input
+                                type="text"
+                                className="form-control border border-primary"
+                                required
+                                onChange={(e) => setCopy({ ...copy, subLibrary: e.target.value })}
+                            />
+                            <label className="form-label ms-2">Sub Biblioteca</label>
+                        </div>
+                        <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <input
+                                type="text"
+                                className="form-control border border-primary"
+                                required
+                                onChange={(e) => setCopy({ ...copy, description: e.target.value })}
+                            />
+                            <label className="form-label ms-2">Descripción</label>
+                        </div>
+                        <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <input
+                                type="text"
+                                className="form-control border border-primary"
+                                required
+                                onChange={(e) => setCopy({ ...copy, classification: e.target.value })}
+                            />
+                            <label className="form-label ms-2">Clasificación</label>
+                        </div>
+                        <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <input
+                                type="text"
+                                className="form-control border border-primary"
+                                required
+                                onChange={(e) => setCopy({ ...copy, collection: e.target.value })}
+                            />
+                            <label className="form-label ms-2">Colección</label>
+                        </div>
+                        <div className="mb-4 form-floating col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <input
+                                type="text"
+                                className="form-control border border-primary"
+                                required
+                                onChange={(e) => setCopy({ ...copy, itemStatus: e.target.value })}
+                            />
+                            <label className="form-label ms-2">Estado del Item</label>
+                        </div>
+                        <div className="mb-4 form-floating col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <input
+                                type="text"
+                                className="form-control border border-primary"
+                                required
+                                onChange={(e) => setCopy({ ...copy, notes: e.target.value })}
+                            />
+                            <label className="form-label ms-2">Notas</label>
+                        </div>
+                        <div className="mb-4 ml-4">
+                            <button type="submit" className="btn btn-primary me-5">Agregar Copia</button>
+                            <button type="reset" className="btn btn-warning">Limpiar</button>
+                        </div>
+                    </div>
                 </div>
-                <div className="mb-4">
-                    <label className="form-label">Código de Barras</label>
-                    <input type="text"
-                        className="form-control"
-                        required
-                        onChange={(e) => setCopy({ ...copy, barcode: e.target.value })} />
-                </div>
-                <div className="mb-4">
-                    <label className="form-label">Sub Biblioteca</label>
-                    <input type="text"
-                        className="form-control"
-                        required
-                        onChange={(e) => setCopy({ ...copy, subLibrary: e.target.value })} />
-                </div>
-                <div className="mb-4">
-                    <label className="form-label">Descripción</label>
-                    <input type="text"
-                        className="form-control"
-                        required
-                        onChange={(e) => setCopy({ ...copy, description: e.target.value })} />
-                </div>
-                <div className="mb-4">
-                    <label className="form-label">Clasificación</label>
-                    <input type="text"
-                        className="form-control"
-                        required
-                        onChange={(e) => setCopy({ ...copy, classification: e.target.value })} />
-                </div>
-                <div className="mb-4">
-                    <label className="form-label">Colección</label>
-                    <input type="text"
-                        className="form-control"
-                        required
-                        onChange={(e) => setCopy({ ...copy, collection: e.target.value })} />
-                </div>
-                <div className="mb-4">
-                    <label className="form-label">Estado del Item</label>
-                    <input type="text"
-                        className="form-control"
-                        required
-                        onChange={(e) => setCopy({ ...copy, itemStatus: e.target.value })} />
-                </div>
-                <div className="mb-4">
-                    <label className="form-label">Notas</label>
-                    <input type="text"
-                        className="form-control"
-                        required
-                        onChange={(e) => setCopy({ ...copy, notes: e.target.value })} />
-                </div>
-                <div className="mb-4">
-                <button type="submit" className="btn btn-primary">Agregar Copia</button>
-                <button type="reset" className="btn btn-warning">Limpiar</button>
-                </div>
-
             </form>
         </div>
     );
