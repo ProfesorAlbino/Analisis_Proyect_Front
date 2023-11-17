@@ -20,7 +20,7 @@ import ModifyTitle from './page/Title/ModifyTitle';
 import AddCopy from './page/Copy/AddCopy';
 import ListCopy from './page/Copy/ListCopy';
 import ModifyCopy from './page/Copy/ModifyCopy';
-import ComputerEquipments from './page/ComputerEquipments/ListComputerEquipments';
+import ListComputerEquipments from './page/ComputerEquipments/ListComputerEquipments';
 import ModifyComputerEquipments from './page/ComputerEquipments/ModifyComputerEquipments';
 import AddComputerEquipments from './page/ComputerEquipments/AddComputerEquipments';
 import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
@@ -33,9 +33,6 @@ import FormViewFurniture from  "./page/Furniture/FormViewFurniture"
 import FormViewStudyRoomSchedule from './page/StudyRoomSchedule/FormViewStudyRoomSchedule';
 import StudyRoomSchedule from './page/StudyRoomSchedule/StudyRoomSchedule';
 import FormViewEditStudyRoomSchedule from './page/StudyRoomSchedule/FormViewEditStudyRoomSchedule';
-import FormViewLoanVehicle from './page/LoanVehicle/FormViewLoanVehicle';
-import LoanVehicle from './page/LoanVehicle/LoanVehicle';
-import FormViewEditLoanVehicle from './page/LoanVehicle/FormViewEditLoanVehicle';
 
 
 function App() {
@@ -57,7 +54,7 @@ function App() {
           <Route exact path="/inventory/inventoryType/create" element={<InventoryTypeAdd />} />
           <Route exact path="/inventory/area" element={<Area />} />
           <Route exact path="/inventory/area/create" element={<AreaAdd />} />
-          <Route exact path="/ListComputerEquipments" element={<ComputerEquipments />} />
+          <Route exact path="/ListComputerEquipments" element={<ListComputerEquipments />} />
           <Route exact path="/ModifyComputerEquipments" element={<ModifyComputerEquipments />} />
           <Route exact path="/AddComputerEquipments" element={<AddComputerEquipments />} />
           <Route exact path="/ListSanctionsReport" element={<ListSanctionsReport />} />
@@ -75,10 +72,6 @@ function App() {
           <Route exact path="/studyRoomsSchedule" element={<StudyRoomSchedule />} />
           <Route exact path="/studyRoomsSchedule/create" element={<FormViewStudyRoomSchedule />} />
           <Route exact path="/studyRoomsSchedule/edit/:id" element={<FormViewEditStudyRoomSchedule />} />
-          <Route exact path="/loanVehicle" element={<LoanVehicle/>} />
-          <Route exact path="/loanVehicle/create" element={<FormViewLoanVehicle />} />
-          <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle/>} />
-
           {/* <Route exact path="/" element={<Home />} /> */}
 
         </Routes>

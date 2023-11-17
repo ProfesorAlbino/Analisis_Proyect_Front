@@ -51,7 +51,7 @@ function OffCanvasExample({ name, ...props }) {
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Préstamo de Libros</Link>
                 <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Computadoras</button>
                 <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Salas de Estudio</button>
-                <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Equipo Informático</button>
+                <Link type="button" class="btn btn-outline-primary mb-2 col-12" to={`/listLoanComputerEquipment?idUser=${4}`}>Préstamo de Equipo Informático</Link>
 
               </Accordion.Body>
             </Accordion.Item>
@@ -77,6 +77,15 @@ function OffCanvasExample({ name, ...props }) {
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Adiministrar Horario de Salas de estudio</Link>
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Adiministrar Muebles de Salas de estudio</Link>
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/admLoanVehicle">Adiministrar Servicio de Transporte</Link>
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="3">
+              <Accordion.Header>Sanciones</Accordion.Header>
+              <Accordion.Body>
+                <div class="row">
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListSanctionsReport">Reporte de sanciones</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/">Sanciones equipo informatico</Link>
                 </div>
               </Accordion.Body>
             </Accordion.Item>
