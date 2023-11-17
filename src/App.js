@@ -20,7 +20,7 @@ import ModifyTitle from './page/Title/ModifyTitle';
 import AddCopy from './page/Copy/AddCopy';
 import ListCopy from './page/Copy/ListCopy';
 import ModifyCopy from './page/Copy/ModifyCopy';
-import ComputerEquipments from './page/ComputerEquipments/ListComputerEquipments';
+import ListComputerEquipments from './page/ComputerEquipments/ListComputerEquipments';
 import ModifyComputerEquipments from './page/ComputerEquipments/ModifyComputerEquipments';
 import AddComputerEquipments from './page/ComputerEquipments/AddComputerEquipments';
 import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
@@ -54,7 +54,7 @@ function App() {
           <Route exact path="/inventory/inventoryType/create" element={<InventoryTypeAdd />} />
           <Route exact path="/inventory/area" element={<Area />} />
           <Route exact path="/inventory/area/create" element={<AreaAdd />} />
-          <Route exact path="/ListComputerEquipments" element={<ComputerEquipments />} />
+          <Route exact path="/ListComputerEquipments" element={<ListComputerEquipments />} />
           <Route exact path="/ModifyComputerEquipments" element={<ModifyComputerEquipments />} />
           <Route exact path="/AddComputerEquipments" element={<AddComputerEquipments />} />
           <Route exact path="/ListSanctionsReport" element={<ListSanctionsReport />} />
