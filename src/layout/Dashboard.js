@@ -76,6 +76,15 @@ function OffCanvasExample({ name, ...props }) {
                 </div>
               </Accordion.Body>
             </Accordion.Item>
+            <Accordion.Item eventKey="3">
+              <Accordion.Header>Sanciones</Accordion.Header>
+              <Accordion.Body>
+                <div class="row">
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListSanctionsReport">Reporte de sanciones</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/">Sanciones equipo informatico</Link>
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
           </Accordion>
         </Offcanvas.Body>
         <Offcanvas.Header>
