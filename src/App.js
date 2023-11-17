@@ -2,7 +2,6 @@ import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Home from './page/PrincipalPage/PrincipalPage';
 import Login from './page/Login/Login';
 import User from './page/User/User';
 import StudyRoom from './page/StudyRoom/StudyRoom';
@@ -26,6 +25,27 @@ import ModifyComputerEquipments from './page/ComputerEquipments/ModifyComputerEq
 import AddComputerEquipments from './page/ComputerEquipments/AddComputerEquipments';
 import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
 import AddSanctionsReport from './page/SanctionsReport/AddSanctionsReport';
+import LoanBook from './page/LoanBook/AddLoanBook';
+import Example from '../src/layout/Dashboard';
+import ListLoanBook from './page/LoanBook/ListLoanBook';
+import LoanBookModify from './page/LoanBook/ModifyLoanBook';
+import Home from './layout/Home';
+import Footer from './layout/Footer';
+import Furniture from './page/Furniture/Furniture';
+import FormViewEditFurniture from "./page/Furniture/FormViewEditFurniture"
+import FormViewFurniture from "./page/Furniture/FormViewFurniture"
+import FormViewStudyRoomSchedule from './page/StudyRoomSchedule/FormViewStudyRoomSchedule';
+import StudyRoomSchedule from './page/StudyRoomSchedule/StudyRoomSchedule';
+import FormViewEditStudyRoomSchedule from './page/StudyRoomSchedule/FormViewEditStudyRoomSchedule';
+import ListLoanComputerEquipment from './page/LoanComputerEquipment/ListLoanComputerEquipment';
+import AddLoanComputerEquipments from './page/LoanComputerEquipment/AddLoanComputerEquipments';
+import ReserveLoanComputerEquipment from './page/LoanComputerEquipment/ReserveLoanComputerEquipment';
+import ClassRoom from './page/ClassRooms/ClassRoom';
+import RegisterClassRoom from './page/ClassRooms/RegisterClassRoom';
+import RegisterLoanClassRoom from './page/LoanClassRooms/RegisterLoanClassRoom';
+import EditClassRoom from './page/ClassRooms/EditClassRoom';
+import LoanClassRoom from './page/LoanClassRooms/LoanClassRoom';
+import EditLoanClassRoom from './page/LoanClassRooms/EditLoanClassRoom';
 
 function App() {
   return (
@@ -58,7 +78,7 @@ function App() {
           <Route exact path="/ListSanctionsReport" element={<ListSanctionsReport />} />
           <Route exact path="/AddSanctionsReport" element={<AddSanctionsReport />} />
           <Route exact path="/loanClassRoom/RegisterLoanClassRoom" element={<RegisterLoanClassRoom/>}/>
-          <Route exact path='/LoanClassRoom/LoanClassRoom' element={<LoanClassRoom/>}/>
+          <Route exact path='/LoanClassRoom' element={<LoanClassRoom/>}/>
           <Route exat path="/LoanClassRoom/EditLoanClassRoom/:id" element={<EditLoanClassRoom/>}/>
 
           {/* <Route exact path="/" element={<Home />} /> */}

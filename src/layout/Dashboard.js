@@ -76,9 +76,9 @@ function OffCanvasExample({ name, ...props }) {
             <Accordion.Item eventKey="1">
               <Accordion.Header>Prestamos</Accordion.Header>
               <Accordion.Body>
-                <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Cancha</button>
+                <button type="button" class="btn btn-outline-primary mb-2 col-12" >Préstamo de Cancha</button>
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanVehicle">Préstamo de Vehiculos</Link>
-                <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Aulas y Laboratorios</button>
+                <Link type="button" class="btn btn-outline-primary mb-2 col-12" to={"/LoanClassRoom"}>Préstamo de Aulas y Laboratorios</Link>
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
@@ -94,6 +94,8 @@ function OffCanvasExample({ name, ...props }) {
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Adiministrar Horario de Salas de estudio</Link>
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Adiministrar Muebles de Salas de estudio</Link>
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/admLoanVehicle">Adiministrar Servicio de Transporte</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Adiministrar De Aulas</Link>
+
                 </div>
               </Accordion.Body>
             </Accordion.Item>

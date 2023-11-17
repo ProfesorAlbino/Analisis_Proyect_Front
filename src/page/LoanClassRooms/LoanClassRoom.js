@@ -92,7 +92,7 @@ function ClassRoom() {
     return (
 
         <div className='container pt-5'>
-            <Button variant="primary" href="/classRoom/RegisterClassRoom">Crear aulas y laboratorios</Button>
+            <Button variant="primary" href="/loanClassRoom/RegisterLoanClassRoom">Solicitud aulas y laboratorios</Button>
             <Table >
                 <thead>
                     <tr>
