@@ -34,6 +34,7 @@ import FormViewStudyRoomSchedule from './page/StudyRoomSchedule/FormViewStudyRoo
 import StudyRoomSchedule from './page/StudyRoomSchedule/StudyRoomSchedule';
 import FormViewEditStudyRoomSchedule from './page/StudyRoomSchedule/FormViewEditStudyRoomSchedule';
 import ListLoanComputerEquipment from './page/LoanComputerEquipment/ListLoanComputerEquipment';
+import AddLoanComputerEquipments from './page/LoanComputerEquipment/AddLoanComputerEquipments';
 
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
           <Route exact path="/studyRoomsSchedule/create" element={<FormViewStudyRoomSchedule />} />
           <Route exact path="/studyRoomsSchedule/edit/:id" element={<FormViewEditStudyRoomSchedule />} />
           <Route exact path="/listLoanComputerEquipment" element={<ListLoanComputerEquipment />} />
+          <Route exact path="/addLoanComputerEquipment" element={<AddLoanComputerEquipments />} />
           {/* <Route exact path="/" element={<Home />} /> */}
 
         </Routes>

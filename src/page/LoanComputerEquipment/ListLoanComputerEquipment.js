@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getLoanComputerEquipment } from "../../service/LoanComputerEquipment/LoanComputerEquipmentApi";
-import { FaList, FaRegEdit, FaTrashAlt } from 'react-icons/fa';
+import { FaList} from 'react-icons/fa';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 
@@ -19,7 +19,6 @@ export default function ListLoanComputerEquipment() {
     const loadComputerEquipments = async () => {
         getLoanComputerEquipment(idUser).then((result) => {
             setLoanComputerEquipments(result);
-            console.log(result);
         }).catch(() => {
             console.log("Error al cargar los datos");
         });
@@ -32,7 +31,7 @@ export default function ListLoanComputerEquipment() {
                 <div className="col-md-12 my-4">
                     <h3 className="text-center">Préstamo de Equipo Informático</h3>
                     <div>
-                        <Link className="btn btn-primary me-md-4" to="/addLoanComputerEquipment">Agregar Préstamo</Link>
+                        <Link className="btn btn-primary me-md-4" to={`/addLoanComputerEquipment?idUser=${4}`}>Agregar Préstamo</Link>
                     </div>
                 </div>
             </div>
