@@ -1,7 +1,7 @@
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './page/PrincipalPage/PrincipalPage';
+
 import Login from './page/Login/Login';
 import User from './page/User/User';
 import StudyRoom from './page/StudyRoom/StudyRoom';
@@ -42,6 +42,12 @@ import FormViewLoanVehicle from './page/LoanVehicle/FormViewLoanVehicle';
 import ListLoanComputerEquipment from './page/LoanComputerEquipment/ListLoanComputerEquipment';
 import AddLoanComputerEquipments from './page/LoanComputerEquipment/AddLoanComputerEquipments';
 import ReserveLoanComputerEquipment from './page/LoanComputerEquipment/ReserveLoanComputerEquipment';
+import ClassRoom from './page/ClassRooms/ClassRoom';
+import RegisterClassRoom from './page/ClassRooms/RegisterClassRoom';
+import RegisterLoanClassRoom from './page/LoanClassRooms/RegisterLoanClassRoom';
+import EditClassRoom from './page/ClassRooms/EditClassRoom';
+import LoanClassRoom from './page/LoanClassRooms/LoanClassRoom';
+import EditLoanClassRoom from './page/LoanClassRooms/EditLoanClassRoom';
 import LoanVehicle from './page/LoanVehicle/LoanVehicle';
 
 
@@ -64,6 +70,9 @@ function App() {
           <Route exact path="/users/create" element={<UserAdd />} />
           <Route exact path="/inventory" element={<Inventory />} />
           <Route exact path="/inventory/create" element={<InventoryAdd />} />
+          <Route exat path="/classRoom" element={<ClassRoom/>}/>
+          <Route exat path="/classRoom/RegisterClassRoom" element={<RegisterClassRoom/>}/>
+          <Route exat path="/classRoom/EditClassRoom/:id" element={<EditClassRoom/>}/>
           <Route exact path="/inventory/inventoryType" element={<InventoryType />} />
           <Route exact path="/inventory/inventoryType/create" element={<InventoryTypeAdd />} />
           <Route exact path="/inventory/area" element={<Area />} />
@@ -73,6 +82,11 @@ function App() {
           <Route exact path="/AddComputerEquipments" element={<AddComputerEquipments />} />
           <Route exact path="/ListSanctionsReport" element={<ListSanctionsReport />} />
           <Route exact path="/AddSanctionsReport" element={<AddSanctionsReport />} />
+          <Route exact path="/loanClassRoom/RegisterLoanClassRoom" element={<RegisterLoanClassRoom/>}/>
+          <Route exact path='/LoanClassRoom' element={<LoanClassRoom/>}/>
+          <Route exat path="/LoanClassRoom/EditLoanClassRoom/:id" element={<EditLoanClassRoom/>}/>
+
+          {/* <Route exact path="/" element={<Home />} /> */}
           <Route exact path="/listTitles" element={<ListTitles />} />
           <Route exact path="/addTitle" element={<AddTitle />} />
           <Route exact path="/editTitle/:idTitle" element={<ModifyTitle />} />
