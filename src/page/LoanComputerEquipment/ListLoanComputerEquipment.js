@@ -26,7 +26,6 @@ export default function ListLoanComputerEquipment() {
 
     return (
         <div>
-
             <div className="row">
                 <div className="col-md-12 my-4">
                     <h3 className="text-center">Préstamo de Equipo Informático</h3>
