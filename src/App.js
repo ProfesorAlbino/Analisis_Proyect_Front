@@ -3,6 +3,8 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './layout/Navbar';
 
+import Home from './page/PrincipalPage/PrincipalPage';
+import Login from './page/Login/Login';
 import User from './page/User/User';
 import StudyRoom from './page/StudyRoom/StudyRoom';
 import FormViewStudyRoom from './page/StudyRoom/FormViewStudyRoom';
@@ -31,7 +33,9 @@ function App() {
     <div className="App">
       <Router>
         <Navbar />
-        <Routes>     
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/login" element={<Login />} />
           <Route exact path="/users" element={<User />} />
 
           <Route exact path="/studyRooms" element={<StudyRoom />} />

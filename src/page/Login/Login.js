@@ -9,14 +9,14 @@ function Login() {
             <form>
                 <div class="user-box">
                     <input type="text" name="" required="" />
-                    <label>Username</label>
+                    <label>Carne</label>
                 </div>
                 <div class="user-box">
                     <input type="password" name="" required="" />
-                    <label>Password</label>
+                    <label>Contraseña</label>
                 </div><center>
                     <a href="#">
-                        SEND
+                        Iniciar Sesión
                         <span></span>
                     </a></center>
             </form>
