@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { createStudyRoom, inserta} from "../../service/StudyRoomService";
+import { createStudyRoom, inserta} from "../../service/StudyRoom/StudyRoomService";
 function FormViewStudyRoom() {
     const navigate = useNavigate();
     const [formStudyRoom, setFormStudyRoom] = useState({
@@ -40,7 +40,7 @@ function FormViewStudyRoom() {
 
             Swal.fire(
                 '¡Guardado!',
-                'Cita guardada con éxito',
+                'Sala de estudio guardada con éxito',
                 'success'
             )
 
@@ -81,8 +81,9 @@ function FormViewStudyRoom() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <button type="submit" className="btn btn-primary" >Guardar</button>
-
+                        <button type="reset" className="btn btn-warning">Limpiar</button>
                     </div>
+                    
                 </div>
 
             </form>

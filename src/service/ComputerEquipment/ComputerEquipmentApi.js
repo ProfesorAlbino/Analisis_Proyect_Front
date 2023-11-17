@@ -44,3 +44,13 @@ export async function updateComputerEquipment(data) {
         throw error;
     }
 }
+
+export async function getComputerEquipmentById(id) {
+    try {
+        const response = await axios.get(url + 'ComputerEquipments/getById/' + id);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error;
+    }
+}

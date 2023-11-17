@@ -52,3 +52,13 @@ export async function deleteLoan(id) {
     }
 }
 
+export async function updateLoans(data){
+    console.log('service',data)
+    const loan = {
+        "id":data.id,
+        "startDate": data.startDate,
+        "endDate": data.endDate,
+        "registerDate": data.registerDate,
+    }
+    return await axios.put(link+"api/Loans/updateLoan/"+data.id,loan);
+}
