@@ -3,6 +3,7 @@ import { getComputerEquipments, deleteComputerEquipment } from '../../service/Co
 import { Link } from "react-router-dom";
 import { FaList, FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { FormatterDate } from '../../scripts/FormatterDate';
 
 export default function ComputerEquipments() {
 
@@ -37,7 +38,15 @@ export default function ComputerEquipments() {
 
     return (
         <div>
+            <div className="row">
+                <div className="col-md-12 my-4">
+                    <h1>Lista Equipo Informatico</h1>
+                </div>
+            </div>
+
             <table className="table border shadow py-4">
+
+                
                 <thead>
                     <tr>
                         <th scope='col'>#</th>
@@ -67,9 +76,9 @@ export default function ComputerEquipments() {
                             {/* <td>{computerEquipment.state}</td> */}
                             {/* <td>{computerEquipment.observations}</td> */}
                             {/* <td>{computerEquipment.include}</td> */}
-                            <td>{computerEquipment.lastModifications}</td>
+                            <td>{FormatterDate(computerEquipment.lastModifications)}</td>
                             {/* <td>{computerEquipment.serialNumber}</td> */}
-                            <td>{computerEquipment.entryDate}</td>
+                            <td>{FormatterDate(computerEquipment.entryDate)}</td>
                             <td>
                                 <td>
                                     <OverlayTrigger
