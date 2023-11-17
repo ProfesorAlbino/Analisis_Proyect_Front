@@ -121,7 +121,7 @@ function FormViewEditStudyRoomSchedule() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <button type="submit" className="btn btn-primary" >Guardar</button>
-
+                        <button type="reset" className="btn btn-warning">Limpiar</button>
                     </div>
                 </div>
 
