@@ -1,7 +1,6 @@
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import Home from './page/PrincipalPage/PrincipalPage';
 import Login from './page/Login/Login';
 import User from './page/User/User';
@@ -38,10 +37,12 @@ import FormViewFurniture from "./page/Furniture/FormViewFurniture"
 import FormViewStudyRoomSchedule from './page/StudyRoomSchedule/FormViewStudyRoomSchedule';
 import StudyRoomSchedule from './page/StudyRoomSchedule/StudyRoomSchedule';
 import FormViewEditStudyRoomSchedule from './page/StudyRoomSchedule/FormViewEditStudyRoomSchedule';
+import FormViewEditLoanVehicle from './page/LoanVehicle/FormViewEditLoanVehicle';
+import FormViewLoanVehicle from './page/LoanVehicle/FormViewLoanVehicle';
 import ListLoanComputerEquipment from './page/LoanComputerEquipment/ListLoanComputerEquipment';
 import AddLoanComputerEquipments from './page/LoanComputerEquipment/AddLoanComputerEquipments';
 import ReserveLoanComputerEquipment from './page/LoanComputerEquipment/ReserveLoanComputerEquipment';
-
+import LoanVehicle from './page/LoanVehicle/LoanVehicle';
 
 
 
@@ -90,7 +91,10 @@ function App() {
           <Route exact path="/listLoanComputerEquipment" element={<ListLoanComputerEquipment />} />
           <Route exact path="/addLoanComputerEquipment" element={<AddLoanComputerEquipments />} />
           <Route exact path="/reserveLoanComputerEquipment" element={<ReserveLoanComputerEquipment />} />
-
+          <Route exact path="/loanVehicle/create" element={<FormViewLoanVehicle />} />
+          <Route exact path="/loanVehicle" element={<LoanVehicle/>} />
+          <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle />} />
+          
         </Routes>
         <Footer />
       </Router>

@@ -42,7 +42,7 @@ function LoanVehicle() {
                     'El Prestámo de Vehículo ha sido eliminada.',
                     'success'
                 )
-                await deleteLoan(id).then(async (data) => {
+                await deleteLoanVehicle(id).then(async (data) => {
                     const response = await getLoanVehicle();
                     setLoanVehicle(response);
                 })
