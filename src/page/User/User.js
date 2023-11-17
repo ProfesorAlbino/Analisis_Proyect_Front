@@ -4,6 +4,7 @@ import { getUserrs, deleteUserr } from '../../service/UsersApi/UserApi';
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { Toaster, toast } from "sonner";
 import Swal from 'sweetalert2';
+import { FormatterDate } from '../../scripts/FormatterDate';
 
 function User() {
     const [users, setUsers] = useState([]);
@@ -122,7 +123,7 @@ function User() {
                                 <td>{user.role}</td>
                                 <td>{user.phone}</td>
                                 <td>{user.career}</td>
-                                <td>{formatDate(user.creationDate)}</td>
+                                <td>{FormatterDate(user.creationDate)}</td>
                                 <td>
                                     <OverlayTrigger placement="top" overlay={<Tooltip>Eliminar</Tooltip>}>
                                         <Button variant="danger" onClick={() => deleteUser(user.id)}><FaTrashAlt /></Button>

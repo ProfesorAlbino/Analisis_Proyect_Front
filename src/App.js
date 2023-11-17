@@ -41,12 +41,11 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        {/* <Navbar /> */}
+        <Example />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
-          {/* <Navbar /> */}
-          <Example />
 
           <Route exact path="/users" element={<User />} />
 
