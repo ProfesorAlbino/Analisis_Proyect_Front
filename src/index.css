@@ -5,9 +5,25 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('../public/body.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.colorNav{
+  background-color:#16c1f3 !important ;
+}
+.colorButton{
+  background-color:#16c1f3 !important ;
+  border-style: none !important;
+}
+.colorButton:hover{
+  border-style: dotted !important;
+  border-width: 2px !important;
+  border-color: rgb(255, 255, 255) !important;
 }

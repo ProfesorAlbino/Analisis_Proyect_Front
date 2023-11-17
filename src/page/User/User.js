@@ -37,7 +37,7 @@ function User() {
     }
 
     return (
-        <div className='container pt-5'>
+        <div className='container pt-5 mb-5'>
             <Button variant="primary" href="/users/create">Crear usuario</Button>
             <Table >
                 <thead>

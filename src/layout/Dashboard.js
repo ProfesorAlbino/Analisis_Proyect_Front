@@ -16,6 +16,8 @@ const options = [
   },
 ];
 
+localStorage.setItem("userAdmin", false);
+
 function OffCanvasExample({ name, ...props }) {
   const [show, setShow] = useState(false);
 
@@ -23,18 +25,29 @@ function OffCanvasExample({ name, ...props }) {
   const toggleShow = () => setShow((s) => !s);
 
   return (
-    <div>
+    <div >
       {/* //-------------------------------Navbar------------------------ */}
-      <Container className="col-12">
-        <Navbar className="bg-body-tertiary col-12">
+      <div>
+        <Navbar className="colorNav">
           <Container>
-            <Button variant="primary" onClick={toggleShow} className="me-2">
+            <Button  variant="primary" onClick={toggleShow} className="me-2 start colorButton">
               <VscThreeBars />
             </Button>
-            <Navbar.Brand href="/">SIPR</Navbar.Brand>
+
+            <Navbar.Brand href="/">
+              SIPR
+              <img
+                src="RG.png" // reemplace esto con la ruta a su imagen
+                width="130"
+                height="40"
+                className="d-inline-block align-top"
+                alt="Logo"
+              />
+            </Navbar.Brand>
+
           </Container>
         </Navbar>
-      </Container>
+      </div>
       {/* //------------------------------------------------------------ */}
 
       {/* //----------------------------SideBar------------------------- */}
@@ -48,7 +61,7 @@ function OffCanvasExample({ name, ...props }) {
             <Accordion.Item eventKey="0">
               <Accordion.Header>Prestamos de Biblioteca</Accordion.Header>
               <Accordion.Body>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Préstamo de Libros</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to={"/listLoanBook/" + 3}>Préstamo de Libros</Link>
                 <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Computadoras</button>
                 <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Salas de Estudio</button>
                 <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Equipo Informático</button>
@@ -67,12 +80,12 @@ function OffCanvasExample({ name, ...props }) {
               <Accordion.Header>Administrativos</Accordion.Header>
               <Accordion.Body>
                 <div class="row">
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Administrar Inventario</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Administrar Libros</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Administrar Usuarios</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListSanctionsReport">Sanciones</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Equipo informatico</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Adiministrar Salas de estudio</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Administrar Inventario</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Administrar Libros</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Administrar Usuarios</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListSanctionsReport">Sanciones</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Equipo informatico</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Adiministrar Salas de estudio</Link>
                 </div>
               </Accordion.Body>
             </Accordion.Item>

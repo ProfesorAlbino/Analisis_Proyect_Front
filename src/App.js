@@ -1,7 +1,7 @@
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './layout/Navbar';
+// import Navbar from './layout/Navbar';
 
 import User from './page/User/User';
 import StudyRoom from './page/StudyRoom/StudyRoom';
@@ -27,6 +27,10 @@ import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
 import AddSanctionsReport from './page/SanctionsReport/AddSanctionsReport';
 import LoanBook from './page/LoanBook/AddLoanBook';
 import Example from '../src/layout/Dashboard';
+import ListLoanBook from './page/LoanBook/ListLoanBook';
+import LoanBookModify from './page/LoanBook/ModifyLoanBook';
+import Home from './layout/Home';
+import Footer from './layout/Footer';
 
 function App() {
   return (
@@ -34,7 +38,9 @@ function App() {
       <Router>
         {/* <Navbar /> */}
         <Example />
+       
         <Routes>     
+          <Route exact path="/" element={<Home />} />
           <Route exact path="/users" element={<User />} />
 
           <Route exact path="/studyRooms" element={<StudyRoom />} />
@@ -59,7 +65,10 @@ function App() {
           <Route exact path="/listCopy/:idTitle" element={<ListCopy />} />
           <Route exact path="/editCopy/:idTitle" element={<ModifyCopy />} />
           <Route exact path="/loanBook" element={<LoanBook />} />
+          <Route exact path="/listLoanBook/:idUser" element={<ListLoanBook />} />
+          <Route exact path="/ModifyLoanBook/:idLoanBook" element={<LoanBookModify />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

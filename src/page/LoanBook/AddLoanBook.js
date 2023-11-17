@@ -24,13 +24,14 @@ export default function LoanBook() {
         photocopyCharge: 0,
         subLibrary: "",
         observation: "",
-        limitFines: ""
+        limitFines: "",
+        state: 0
     });
 
     useEffect(() => {
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().split('T')[0];
-        
+
         setLoans({ ...loan, registerDate: formattedDate });
         getById(idTitle).then((result) => {
             setLoanBooks({ ...loanBook, title: result.title1 });
@@ -45,6 +46,7 @@ export default function LoanBook() {
                 createLoanBook(loanBook)
                     .then((response) => {
                         console.log(loanBook);
+                        window.location.href = "/listLoanBook/"+3;
                     }).catch((error) => {
                         console.log("error al crear el loanBook");
                     });
