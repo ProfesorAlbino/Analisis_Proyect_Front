@@ -1,7 +1,6 @@
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './layout/Navbar';
 
 import Home from './page/PrincipalPage/PrincipalPage';
 import Login from './page/Login/Login';
@@ -29,16 +28,20 @@ import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
 import AddSanctionsReport from './page/SanctionsReport/AddSanctionsReport';
 import LoanBook from './page/LoanBook/AddLoanBook';
 import Example from '../src/layout/Dashboard';
+import ListLoanBook from './page/LoanBook/ListLoanBook';
+import LoanBookModify from './page/LoanBook/ModifyLoanBook';
+import Home from './layout/Home';
+import Footer from './layout/Footer';
 import Furniture from './page/Furniture/Furniture';
 import FormViewEditFurniture from "./page/Furniture/FormViewEditFurniture"
 import FormViewFurniture from "./page/Furniture/FormViewFurniture"
 import FormViewStudyRoomSchedule from './page/StudyRoomSchedule/FormViewStudyRoomSchedule';
 import StudyRoomSchedule from './page/StudyRoomSchedule/StudyRoomSchedule';
 import FormViewEditStudyRoomSchedule from './page/StudyRoomSchedule/FormViewEditStudyRoomSchedule';
-
 import ListLoanComputerEquipment from './page/LoanComputerEquipment/ListLoanComputerEquipment';
 import AddLoanComputerEquipments from './page/LoanComputerEquipment/AddLoanComputerEquipments';
 import ReserveLoanComputerEquipment from './page/LoanComputerEquipment/ReserveLoanComputerEquipment';
+
 
 
 
@@ -48,12 +51,12 @@ function App() {
       <Router>
         {/* <Navbar /> */}
         <Example />
-        <Routes>
+
+       
+        <Routes>     
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
-
           <Route exact path="/users" element={<User />} />
-
           <Route exact path="/studyRooms" element={<StudyRoom />} />
           <Route exact path="/studyRooms/create" element={<FormViewStudyRoom />} />
           <Route exact path="/studyRooms/edit/:id" element={<FormViewEditStudyRoom />} />
@@ -76,20 +79,20 @@ function App() {
           <Route exact path="/listCopy/:idTitle" element={<ListCopy />} />
           <Route exact path="/editCopy/:idTitle" element={<ModifyCopy />} />
           <Route exact path="/loanBook" element={<LoanBook />} />
+          <Route exact path="/listLoanBook/:idUser" element={<ListLoanBook />} />
+          <Route exact path="/ModifyLoanBook/:idLoanBook" element={<LoanBookModify />} />
           <Route exact path="/furnitures" element={<Furniture />} />
           <Route exact path="/furnitures/create" element={<FormViewFurniture />} />
           <Route exact path="/furnitures/edit/:id" element={<FormViewEditFurniture />} />
           <Route exact path="/studyRoomsSchedule" element={<StudyRoomSchedule />} />
           <Route exact path="/studyRoomsSchedule/create" element={<FormViewStudyRoomSchedule />} />
           <Route exact path="/studyRoomsSchedule/edit/:id" element={<FormViewEditStudyRoomSchedule />} />
-
           <Route exact path="/listLoanComputerEquipment" element={<ListLoanComputerEquipment />} />
           <Route exact path="/addLoanComputerEquipment" element={<AddLoanComputerEquipments />} />
           <Route exact path="/reserveLoanComputerEquipment" element={<ReserveLoanComputerEquipment />} />
 
-          {/* <Route exact path="/" element={<Home />} /> */}
-
         </Routes>
+        <Footer />
       </Router>
     </div>
   );
