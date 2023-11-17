@@ -22,6 +22,16 @@ export async function getLoanBooks() {
     }
 }
 
+export async function getLoanBooksByUser(id) {
+    try {
+        const response = await axios.get(urlApi + "getAllByUserId/" + id);
+        return response.data;
+    } catch (error) {
+        console.error("Error al obtener los datos:", error);
+        throw error;
+    }
+}
+
 export async function getLoanBookById(id) {
     try {
         const response = await axios.get(urlApi + "getById/" + id);
@@ -45,6 +55,26 @@ export async function updateLoanBook(data) {
 export async function deleteLoanBook(id) {
     try {
         const response = await axios.delete(urlApi + "delete/" + id);
+        return response.data;
+    } catch (error) {
+        console.error("Error al modificar los datos:", error);
+        throw error;
+    }
+}
+
+export async function approveLoanBook(id) {
+    try {
+        const response = await axios.put(urlApi + "approve/" + id);
+        return response.data;
+    } catch (error) {
+        console.error("Error al modificar los datos:", error);
+        throw error;
+    }
+}
+
+export async function rejectLoanBook(id) {
+    try {
+        const response = await axios.put(urlApi + "reject/" + id);
         return response.data;
     } catch (error) {
         console.error("Error al modificar los datos:", error);
