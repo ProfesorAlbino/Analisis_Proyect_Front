@@ -32,7 +32,7 @@ export default function ListSanctionsReport() {
 
     return (
         <div>
-            <table className="table">
+            <table className="table mb-5">
                 <thead>
                     <tr>
                         <th scope='col'>#</th>

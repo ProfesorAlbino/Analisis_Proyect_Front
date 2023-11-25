@@ -69,8 +69,9 @@ function LoanVehicle() {
     return (
 
         <div className='container pt-5'>
-            <Button variant="primary" href="/loanVehicle/create">Crear Prestámo de Vehículo</Button>
-            <Table >
+            <h1>Listado de préstamo de vehículo</h1>
+            <Button className="mb-2" variant="primary" href="/loanVehicle/create">Crear Prestámo de Vehículo</Button>
+            <Table className="table border shadow py-4 mb-5">
                 <thead>
                     <tr>
 

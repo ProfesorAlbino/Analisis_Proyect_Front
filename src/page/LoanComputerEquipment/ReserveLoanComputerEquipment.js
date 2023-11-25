@@ -48,6 +48,7 @@ export default function ReserveLoanComputerEquipment() {
             console.log(loanComputerEquipment);
             addLoanComputerEquipment(loanComputerEquipment).then((response) => {
             });
+            console.log(loanComputerEquipment);
             window.location.href = "/ListLoanComputerEquipment?idUser="+idUser;
         });
     };

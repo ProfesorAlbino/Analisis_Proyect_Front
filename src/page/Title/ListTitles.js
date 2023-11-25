@@ -76,7 +76,7 @@ function ListTitles() {
                 </div>
             </nav>
             <div className="py-4">
-                <table className="table border shadow py-4">
+                <table className="table border shadow py-4 mb-5">
                     <thead>
                         <tr>
                             <th>#</th>

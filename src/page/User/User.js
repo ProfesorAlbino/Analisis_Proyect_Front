@@ -94,7 +94,7 @@ function User() {
             </div>
             <h1>Usuarios</h1>
             <Button variant="primary" href="/users/create">Crear usuario</Button>
-            <Table className='border shadow mt-2'>
+            <Table className='border shadow mt-2 mb-5'>
                 <thead>
                     <tr>
                         <th>#</th>

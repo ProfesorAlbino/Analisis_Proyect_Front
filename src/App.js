@@ -110,7 +110,7 @@ function App() {
           <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle />} />
           
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </div>
   );

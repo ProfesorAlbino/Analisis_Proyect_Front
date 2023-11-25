@@ -74,8 +74,9 @@ function StudyRoomSchedule() {
     return (
 
         <div className='container pt-5'>
-            <Button variant="primary" href="/studyRoomsSchedule/create">Crear el horario  de la sala de estudio</Button>
-            <Table >
+            <h1>Listado de horario de sala de estudio</h1>
+            <Button className="mb-2" variant="primary" href="/studyRoomsSchedule/create">Crear el horario  de la sala de estudio</Button>
+            <Table  className="table border shadow py-4 mb-5">
                 <thead>
                     <tr>
                         <th>Día</th>

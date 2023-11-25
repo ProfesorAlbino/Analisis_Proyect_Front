@@ -83,7 +83,7 @@ export default function ListCopy() {
             </nav>
 
             <div className=" py-4 col-6 offset-3 row justify-content-center">
-                <table className="table border shadow">
+                <table className="table border shadow mb-5">
                     <thead>
                         <tr>
                             <th>#</th>

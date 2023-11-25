@@ -40,7 +40,7 @@ export default function ListLoanComputerEquipment() {
                 </div>
 
                 <div className="col-md-10 my-4">
-                    <table className="table border shadow py-4">
+                    <table className="table border shadow py-4 mb-5">
                         <thead>
                             <tr>
                                 <th scope='col'>#</th>

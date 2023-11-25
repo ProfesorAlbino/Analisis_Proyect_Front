@@ -44,7 +44,7 @@ export default function ComputerEquipments() {
                 </div>
             </div>
 
-            <table className="table border shadow py-4">
+            <table className="table border shadow py-4 mb-5">
 
                 
                 <thead>

@@ -81,7 +81,7 @@ function FormViewLoanVehicle() {
 
     return (
         <div className="container">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='mb-5'>
                 <div className="row">
                     <h1>Solicitud de servicio de transporte</h1>
                     <div className="col-sm-6 text-start">

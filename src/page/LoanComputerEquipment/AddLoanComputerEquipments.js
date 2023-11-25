@@ -27,6 +27,8 @@ export default function AddLoanComputerEquipments() {
 
     function reservar(id) {
         localStorage.setItem("idComputerEquipment", id);
+        console.log(idUser);
+        console.log(id);
         window.location.href = "/reserveLoanComputerEquipment?idUser="+idUser;
     }
 

@@ -1,5 +1,6 @@
 import axios from 'axios';
 const urlApi = 'https://localhost:7210/api/Loans/';
+const link = 'https://localhost:7210/';
 
 export async function createLoan(data) {
     console.log(urlApi);
