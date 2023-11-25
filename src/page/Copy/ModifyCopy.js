@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { updateCopy, getById } from '../../service/CopysApi/CopyApi';
+import { encryptAES,decryptAES } from '../../scripts/AES-256';
 
 
 export default function ModifyCopy() {
@@ -8,7 +9,7 @@ export default function ModifyCopy() {
     const { idTitle } = useParams();
 
     const [copy, setCopy] = useState({
-        id: idTitle,
+        id: parseInt(decryptAES(idTitle)),
         idTitles: 0,
         sequence: 0,
         barcode: '',
@@ -23,7 +24,7 @@ export default function ModifyCopy() {
     });
 
     useEffect(() => {
-        getById(idTitle)
+        getById(parseInt(decryptAES(idTitle)))
             .then((result) => {
                 setCopy(result);
                 console.log(result);
@@ -38,8 +39,7 @@ export default function ModifyCopy() {
         updateCopy(copy)
             .then((result) => {
                 console.log(result + "Copia modificada exitosamente");
-                console.log(idTitle);
-                window.location.href = `/listCopy/${copy.idTitles}`;
+                window.location.href = `/listCopy/${encryptAES(copy.idTitles+"")}`;
             })
             .catch(() => {
                 console.log("Error al modificar la copia");

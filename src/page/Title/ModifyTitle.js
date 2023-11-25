@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getById, updateTitle } from '../../service/TitlesApi/TitleApi';
+import { encryptAES,decryptAES } from '../../scripts/AES-256';
 
 
 export default function ModifyTitle() {
@@ -35,7 +36,7 @@ export default function ModifyTitle() {
     });
 
     useEffect(() => {
-        getById(idTitle)
+        getById(parseInt(decryptAES(idTitle)))
             .then((result) => {
                 result.associatedDate = formatDate(result.associatedDate);
                 result.publicationDate = formatDate(result.publicationDate);
@@ -84,6 +85,7 @@ export default function ModifyTitle() {
                                 type="date"
                                 className="form-control border border-primary"
                                 required
+                                readOnly
                                 value={title.associatedDate}
                                 onChange={(e) => setTitle({ ...title, associatedDate: e.target.value })}
                             />

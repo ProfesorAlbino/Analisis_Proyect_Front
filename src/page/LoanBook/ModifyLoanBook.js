@@ -1,14 +1,17 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getLoanBookById, updateLoanBook } from "../../service/LoanBookApi/LoanBookApi";
 import { updateLoan } from "../../service/LoanApi/LoanApi";
 import { getLoanById } from "../../service/LoanApi/LoanApi";
 import { FormatterDateToForms } from '../../scripts/FormatterDate';
+import { decryptAES } from '../../scripts/AES-256';
 
 
 export default function ModifyLoanBook() {
 
     const { idLoanBook } = useParams();
+    const Initdate = useRef();
+    const EndDate = useRef();
 
     const [loan, setLoans] = useState({
         id: 0,
@@ -30,8 +33,14 @@ export default function ModifyLoanBook() {
         state: false
     });
 
+    if(Initdate.current) {
+    Initdate.current.addEventListener("change", (e) => {
+        EndDate.current.value = e.target.value;
+    });
+    }
+    
     useEffect(() => {
-        getLoanBookById(idLoanBook)
+        getLoanBookById(parseInt(decryptAES(idLoanBook)))
             .then((response) => {
                 setLoanBooks(response);
                 getLoanById(response.idLoan)
@@ -104,6 +113,7 @@ export default function ModifyLoanBook() {
 
                         <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <input
+                                ref={Initdate}
                                 type="date"
                                 className="form-control border border-primary"
                                 required
@@ -115,6 +125,7 @@ export default function ModifyLoanBook() {
                         </div>
                         <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <input
+                                ref={EndDate}
                                 type="date"
                                 className="form-control border border-primary"
                                 required

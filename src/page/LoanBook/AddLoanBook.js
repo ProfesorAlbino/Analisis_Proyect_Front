@@ -1,12 +1,15 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import { createLoan } from "../../service/LoanApi/LoanApi";
 import { createLoanBook } from "../../service/LoanBookApi/LoanBookApi";
 import { getById } from '../../service/TitlesApi/TitleApi';
+import { encryptAES,decryptAES } from '../../scripts/AES-256';
 
 export default function LoanBook() {
 
-    const idCopy = parseInt(localStorage.getItem("idCopy"));
+    const idCopy = parseInt(decryptAES(localStorage.getItem("idCopy")));
     const idTitle = localStorage.getItem("idTitle");
+    const subLibrary = localStorage.getItem("subLibrary");
+    const Initdate = useRef();
 
     const [loan, setLoans] = useState({
         id: 0,
@@ -22,7 +25,7 @@ export default function LoanBook() {
         idLibraryUser: 3, /*por localstorage*/
         title: "",
         photocopyCharge: 0,
-        subLibrary: "",
+        subLibrary: subLibrary,
         observation: "",
         limitFines: "",
         state: 0
@@ -31,6 +34,11 @@ export default function LoanBook() {
     useEffect(() => {
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().split('T')[0];
+
+        if (Initdate.current) {
+            Initdate.current.value = new Date().toISOString().split('T')[0];
+        }
+
 
         setLoans({ ...loan, registerDate: formattedDate });
         getById(idTitle).then((result) => {
@@ -43,10 +51,13 @@ export default function LoanBook() {
         createLoan(loan)
             .then((response) => {
                 loanBook.idLoan = response.id;
+
+                console.log("Loan creado con exito");
+                console.log(loanBook);
                 createLoanBook(loanBook)
                     .then((response) => {
                         console.log(loanBook);
-                        window.location.href = "/listLoanBook/"+3;
+                        window.location.href = "/listLoanBook/" + 3;
                     }).catch((error) => {
                         console.log("error al crear el loanBook");
                     });
@@ -87,6 +98,8 @@ export default function LoanBook() {
                                 type="text"
                                 className="form-control border border-primary"
                                 required
+                                readOnly
+                                value={loanBook.subLibrary}
                                 onChange={(e) => setLoanBooks({ ...loanBook, subLibrary: e.target.value })}
                             />
                             <label className="form-label ms-2">Sub Biblioteca</label>
@@ -103,6 +116,7 @@ export default function LoanBook() {
 
                         <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <input
+                                ref={Initdate}
                                 type="date"
                                 className="form-control border border-primary"
                                 required

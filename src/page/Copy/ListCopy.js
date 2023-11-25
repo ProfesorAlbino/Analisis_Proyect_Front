@@ -4,6 +4,7 @@ import { getAll, deleteCopy } from '../../service/CopysApi/CopyApi';
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { PiHandCoinsDuotone } from "react-icons/pi";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { encryptAES,decryptAES } from '../../scripts/AES-256';
 
 export default function ListCopy() {
     const { idTitle } = useParams();
@@ -12,14 +13,13 @@ export default function ListCopy() {
     const seach = useRef();
     const userAdmin = true;
     useEffect(() => {
-
         if (userAdmin) {
             setShow(true);
         } else {
             setShow(false);
         }
 
-        getAll(idTitle)
+        getAll(parseInt(decryptAES(idTitle)))
             .then((result) => {
                 setCopiesList(result);
             })
@@ -31,7 +31,6 @@ export default function ListCopy() {
     function handleDeleteCopy(id) {
         deleteCopy(id)
             .then((result) => {
-                console.log(result + "Copia eliminada exitosamente");
                 window.location.reload();
             })
             .catch(() => {
@@ -39,26 +38,25 @@ export default function ListCopy() {
             });
     }
 
-    function handleLoanBook(id) {
+    function handleLoanBook(id,subLibrary) {
         localStorage.setItem("idCopy", id);
         localStorage.setItem("idTitle", idTitle);
+        localStorage.setItem("subLibrary", subLibrary);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const value = e.target[0].value;
-        console.log(value);
         const filteredTitles = copiesList.filter((element) => {
             return element.subLibrary.toLowerCase().includes(value.toLowerCase());
         });
-        console.log(filteredTitles);
         setCopiesList(filteredTitles);
     }
 
     const handleReset = (e) => {
         e.preventDefault();
         seach.current.value = "";
-        getAll(idTitle)
+        getAll(parseInt(decryptAES(idTitle)))
             .then((result) => {
                 setCopiesList(result); // Actualiza el estado de titles
             })
@@ -71,7 +69,7 @@ export default function ListCopy() {
         <div className='container'>
 
             <h1>Lista de Copias</h1>
-            {show ? <a href={`/addCopy/${idTitle}`} className="btn btn-primary">Agregar Copia</a> : null}
+            {show ? <a href={`/addCopy/${encryptAES(idTitle)}`} className="btn btn-primary">Agregar Copia</a> : null}
             <nav class="navbar ">
                 <div class="container-fluid">
                     <form class="d-flex" role="search" onSubmit={handleSubmit}>
@@ -130,7 +128,7 @@ export default function ListCopy() {
                                                 placement='top'
                                                 overlay={<Tooltip>Editar</Tooltip>}
                                             >
-                                                <a href={`/editCopy/${element.id}`} className="btn btn-warning">
+                                                <a href={`/editCopy/${encryptAES(element.id+"")}`} className="btn btn-warning">
                                                     <FaRegEdit />
                                                 </a>
                                             </OverlayTrigger>
@@ -142,7 +140,7 @@ export default function ListCopy() {
                                                 placement='top'
                                                 overlay={<Tooltip>Solicitar Prestamo</Tooltip>}
                                             >
-                                                <a onClick={() => { handleLoanBook(element.id) }} href='/loanBook' className="btn btn-info">
+                                                <a onClick={() => { handleLoanBook(encryptAES(element.id),encryptAES(element.subLibrary)) }} href='/loanBook' className="btn btn-info">
                                                     <PiHandCoinsDuotone />
                                                 </a>
                                             </OverlayTrigger>

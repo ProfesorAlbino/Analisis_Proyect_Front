@@ -7,6 +7,7 @@ import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { IoCheckmarkDone } from "react-icons/io5";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { encryptAES,decryptAES } from '../../scripts/AES-256';
 
 
 
@@ -117,7 +118,7 @@ export default function ListLoanBook() {
                                             placement="top"
                                             overlay={<Tooltip>Modificar Prestamo</Tooltip>}
                                         >
-                                            <a href={`/ModifyLoanBook/${loanBook.id}`} className="btn btn-warning">
+                                            <a href={`/ModifyLoanBook/${encryptAES(loanBook.id+"")}`} className="btn btn-warning">
                                                 <FaRegEdit />
                                             </a>
                                         </OverlayTrigger>

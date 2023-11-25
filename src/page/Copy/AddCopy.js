@@ -1,6 +1,7 @@
 import { React, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { createCopy } from '../../service/CopysApi/CopyApi';
+import { decryptAES } from '../../scripts/AES-256';
 
 
 export default function AddCopy() {
@@ -9,7 +10,7 @@ export default function AddCopy() {
 
     const [copy, setCopy] = useState({
         id: 0,
-        idTitles: idTitle,
+        idTitles: parseInt(decryptAES(idTitle)),
         sequence: 0,
         barcode: '',
         subLibrary: '',
