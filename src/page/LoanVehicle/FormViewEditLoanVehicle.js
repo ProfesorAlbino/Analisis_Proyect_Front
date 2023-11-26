@@ -68,7 +68,33 @@ function FormViewEditLoanVehicle() {
         setFormLoan({ ...formLoan, [event.target.name]: event.target.value });
     }
 
-
+    const initialFormLoan = {
+        startDate: "",
+        endDate: "",
+        registerDate: ""
+      };
+      
+      const initialFormLoanVehicle = {
+        idLoan: 1,
+        idUser: 2,
+        activityType: "",
+        responsible: "",
+        state: "Pendiente",
+        destination: "",
+        startingPlace: "",
+        exitHour: "",
+        returnHour: "",
+        personQuantity: 0,
+        unityOrCarrer: "",
+        assignedVehicle: "",
+        active: 1
+        
+      };
+    const handleReset = () => {
+        console.log("entra");
+        setFormLoan(initialFormLoan);
+        setFormLoanVehicle(initialFormLoanVehicle);
+      }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -180,7 +206,7 @@ function FormViewEditLoanVehicle() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <button type="submit" className="btn btn-primary" >Guardar</button>
-                        <button type="reset" className="btn btn-warning">Limpiar</button>
+                        <button type="button" className="btn btn-warning" onClick={handleReset}>Limpiar</button>
                     </div>
 
 

@@ -39,7 +39,7 @@ function LoanVehicle() {
             if (result.isConfirmed) {
                 Swal.fire(
                     '¡Eliminado!',
-                    'El Prestámo de Vehículo ha sido eliminada.',
+                    'El Prestámo de Vehículo ha sido eliminado.',
                     'success'
                 )
                 await deleteLoanVehicle(id).then(async (data) => {
