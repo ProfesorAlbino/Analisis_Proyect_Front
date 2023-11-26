@@ -22,6 +22,7 @@ export async function deleteComputerEquipment(id) {
 }
 
 export async function addComputerEquipment(data) {
+    console.log("guardando");
     try {
         data.lastModifications=new Date();
         data.entryDate=new Date();
@@ -48,6 +49,28 @@ export async function updateComputerEquipment(data) {
 export async function getComputerEquipmentById(id) {
     try {
         const response = await axios.get(url + 'ComputerEquipments/getById/' + id);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error;
+    }
+}
+
+export async function getComputerEquipmentBySerialNumber(serialNumber){
+    try {
+        const response = await axios.get(url + 'ComputerEquipments/getBySerialNumber/' + serialNumber);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error;
+    }
+}
+
+export async function getComputerEquipmentByPlate(licensePlate){
+    console.log(licensePlate);
+    try {
+        const response = await axios.get(url + 'ComputerEquipments/getByPlate/' + licensePlate);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Error al obtener los datos:', error);

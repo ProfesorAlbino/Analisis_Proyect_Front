@@ -44,69 +44,85 @@ export default function ComputerEquipments() {
                 </div>
             </div>
 
-            <table className="table border shadow py-4 mb-5">
+            <div className="row">
+                <div className="col-md-2 my-4">
+                </div>
 
-                
-                <thead>
-                    <tr>
-                        <th scope='col'>#</th>
-                        <th scope='col'>Placa</th>
-                        {/* <th scope='col'>Clase</th> */}
-                        <th scope='col'>Nombre</th>
-                        <th scope='col'>Marca</th>
-                        {/* <th scope='col'>Modelo</th> */}
-                        {/* <th scope='col'>Estado</th> */}
-                        {/* <th scope='col'>Observaciones</th> */}
-                        {/* <th scope='col'>Incluir</th> */}
-                        <th scope='col'>Última Modificación</th>
-                        {/* <th scope='col'>Número de Serie</th> */}
-                        <th scope='col'>Fecha de Entrada</th>
-                        <th scope='col'>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {computerEquipments.filter(computerEquipment => computerEquipment.active === true).map((computerEquipment, index) => (
-                        <tr key={index}>
-                            <th scope='row'>{index + 1}</th>
-                            <td>{computerEquipment.licensePlate}</td>
-                            {/* <td>{computerEquipment.class}</td> */}
-                            <td>{computerEquipment.name}</td>
-                            <td>{computerEquipment.brand}</td>
-                            {/* <td>{computerEquipment.model}</td> */}
-                            {/* <td>{computerEquipment.state}</td> */}
-                            {/* <td>{computerEquipment.observations}</td> */}
-                            {/* <td>{computerEquipment.include}</td> */}
-                            <td>{FormatterDate(computerEquipment.lastModifications)}</td>
-                            {/* <td>{computerEquipment.serialNumber}</td> */}
-                            <td>{FormatterDate(computerEquipment.entryDate)}</td>
-                            <td>
-                                <td>
-                                    <OverlayTrigger
-                                        placement="top"
-                                        overlay={<Tooltip>Eliminar</Tooltip>}
-                                    >
-                                        <button className="btn btn-danger" onClick={() => deleteComputerEquipmentById(computerEquipment.id)}>
-                                            <FaTrashAlt />
-                                        </button>
-                                    </OverlayTrigger>
-                                    </td>
+                <div className="col-md-8 my-1">
+                    <Link type="button" className="btn btn-primary" to="/AddComputerEquipments">Agregar Equipo Informatico</Link>
+                </div>
+
+                <div className="col-md-2 my-4">
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-md-2 my-4">
+                </div>
+
+                <div className="col-md-8 my-4">
+                    <table className="table border shadow py-4 mb-5">
+                        <thead>
+                            <tr>
+                                <th scope='col'>#</th>
+                                <th scope='col'>Placa</th>
+                                {/* <th scope='col'>Clase</th> */}
+                                <th scope='col'>Nombre</th>
+                                <th scope='col'>Marca</th>
+                                {/* <th scope='col'>Modelo</th> */}
+                                {/* <th scope='col'>Estado</th> */}
+                                {/* <th scope='col'>Observaciones</th> */}
+                                {/* <th scope='col'>Incluir</th> */}
+                                <th scope='col'>Última Modificación</th>
+                                {/* <th scope='col'>Número de Serie</th> */}
+                                <th scope='col'>Fecha de Entrada</th>
+                                <th scope='col'>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {computerEquipments.filter(computerEquipment => computerEquipment.active === true).map((computerEquipment, index) => (
+                                <tr key={index}>
+                                    <th scope='row'>{index + 1}</th>
+                                    <td>{computerEquipment.licensePlate}</td>
+                                    {/* <td>{computerEquipment.class}</td> */}
+                                    <td>{computerEquipment.name}</td>
+                                    <td>{computerEquipment.brand}</td>
+                                    {/* <td>{computerEquipment.model}</td> */}
+                                    {/* <td>{computerEquipment.state}</td> */}
+                                    {/* <td>{computerEquipment.observations}</td> */}
+                                    {/* <td>{computerEquipment.include}</td> */}
+                                    <td>{FormatterDate(computerEquipment.lastModifications)}</td>
+                                    {/* <td>{computerEquipment.serialNumber}</td> */}
+                                    <td>{FormatterDate(computerEquipment.entryDate)}</td>
                                     <td>
+                                        <td>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Eliminar</Tooltip>}
+                                            >
+                                                <button className="btn btn-danger" onClick={() => deleteComputerEquipmentById(computerEquipment.id)}>
+                                                    <FaTrashAlt />
+                                                </button>
+                                            </OverlayTrigger>
+                                        </td>
+                                        <td>
 
-                                <OverlayTrigger
-                                    placement="top"
-                                    overlay={<Tooltip>Editar</Tooltip>}
-                                >
-                                    <button onClick={() => ModifyComputerEquipments(computerEquipment)} className="btn btn-warning">
-                                    <FaRegEdit />
-                                    </button>
-                                </OverlayTrigger>
-                                </td>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <Link type="button" className="btn btn-primary" to="/AddComputerEquipments">Agregar Equipo Informatico</Link>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip>Editar</Tooltip>}
+                                            >
+                                                <button onClick={() => ModifyComputerEquipments(computerEquipment)} className="btn btn-warning">
+                                                    <FaRegEdit />
+                                                </button>
+                                            </OverlayTrigger>
+                                        </td>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     )
 }
