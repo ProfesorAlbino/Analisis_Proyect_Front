@@ -4,6 +4,8 @@ import { deleteStudyRoom, getStudyRoom } from "../../service/StudyRoom/StudyRoom
 import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 function StudyRoom() {
     const [studyRoom, setStudyRoom] = useState([]);
     const navigate = useNavigate();
@@ -60,37 +62,56 @@ function StudyRoom() {
     }
     return (
 
-        <div className='container pt-5'>
+        <div >
             <h1>Listado de sala de estudio</h1>
             <Button className="mb-2" variant="primary" href="/studyRooms/create">Crear Sala de estudio</Button>
-            <Table className="table border shadow py-4 mb-5 ">
-                <thead>
-                    <tr>
-                        
-                        <th>Nombre</th>
-                        <th>Capacidad</th>
-                        <th>Disponibilidad</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        studyRoom.filter(res => { return res.active == 1 }).map((study, index) => (
-                            <tr key={study.id}>
-                                
-                                <td>{study.name}</td>
-                                <td>{study.capacity}</td>
-                                <td>{study.isAvailable ? 'Sí' : 'No'}</td>
-                                <td>
-                                    <Button variant="primary" onClick={() => editStudyRoom(study.id)} style={{marginRight:'5px'}}>Editar</Button>
-                                    <Button variant="danger" onClick={() => deleteStudy(study.id)}>Eliminar</Button>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </Table >
-            
+            <div className=" py-4 col-6 offset-3 row justify-content-center">
+                <Table className="table border shadow py-4 mb-5 ">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Capacidad</th>
+                            <th>Disponibilidad</th>
+                            <th colSpan={2}>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            studyRoom.filter(res => { return res.active == 1 }).map((study, index) => (
+                                <tr key={study.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{study.name}</td>
+                                    <td>{study.capacity}</td>
+                                    <td>{study.isAvailable ? 'Sí' : 'No'}</td>
+                                    <td>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Modificar</Tooltip>}
+                                        >
+                                            <button className="btn btn-warning" onClick={() => editStudyRoom(study.id)}>
+                                                <FaRegEdit />
+                                            </button>
+                                        </OverlayTrigger>
+                                    </td>
+                                    <td>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Eliminar</Tooltip>}
+                                        >
+                                            <button className="btn btn-danger" onClick={() => deleteStudy(study.id)}>
+                                                <FaTrashAlt />
+                                            </button>
+                                        </OverlayTrigger>
+
+                                    </td>
+                                    
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </Table >
+            </div>
         </div>
     );
 
