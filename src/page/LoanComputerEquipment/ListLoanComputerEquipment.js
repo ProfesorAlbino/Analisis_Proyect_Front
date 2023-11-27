@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getLoanComputerEquipment } from "../../service/LoanComputerEquipment/LoanComputerEquipmentApi";
-import { FaList} from 'react-icons/fa';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-
+import { FormatterDate } from "../../scripts/FormatterDate";
 
 export default function ListLoanComputerEquipment() {
     const [loanComputerEquipments, setLoanComputerEquipments] = useState([]);
@@ -18,6 +16,7 @@ export default function ListLoanComputerEquipment() {
 
     const loadComputerEquipments = async () => {
         getLoanComputerEquipment(idUser).then((result) => {
+            console.log(result);
             setLoanComputerEquipments(result);
         }).catch(() => {
             console.log("Error al cargar los datos");
@@ -49,8 +48,10 @@ export default function ListLoanComputerEquipment() {
                                 <th scope='col'>Evaluacion de activos</th>
                                 <th scope='col'>Lugar destino</th>
                                 <th scope='col'>Estado</th>
-                                <th scope='col'>Actividad</th>
-                                <th scope='col'>Acciones</th>
+                                <th scope='col'>Descripcion</th>                        
+                                <th scope='col'>Fecha Inicio</th>
+                                <th scope='col'>Fecha Fin</th>
+                                <th scope='col'>Condicion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,17 +64,16 @@ export default function ListLoanComputerEquipment() {
                                     <td>{loanComputerEquipment.destinationPlace}</td>
                                     <td>{loanComputerEquipment.state}</td>
                                     <td>{loanComputerEquipment.requestActivity}</td>
+                                    <td>{FormatterDate(loanComputerEquipment.idLoanNavigation.startDate)}</td>
+                                    <td>{FormatterDate(loanComputerEquipment.idLoanNavigation.endDate)}</td>
                                     <td>
-                                        <td>
-                                            <OverlayTrigger
-                                                placement="top"
-                                                overlay={<Tooltip>Ver Detalles</Tooltip>}
-                                            >
-                                                <button className="btn btn-primary">
-                                                    <FaList />
-                                                </button>
-                                            </OverlayTrigger>
-                                        </td>
+                                        {loanComputerEquipment.active === 1
+                                            ? "Pendiente"
+                                            : loanComputerEquipment.active === 0
+                                                ? "Rechazado"
+                                                : loanComputerEquipment.active === 2
+                                                    ? "Aprobado"
+                                                    : "Estado Desconocido"}
                                     </td>
                                 </tr>
                             ))}
