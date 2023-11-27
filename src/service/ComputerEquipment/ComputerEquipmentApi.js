@@ -67,7 +67,6 @@ export async function getComputerEquipmentBySerialNumber(serialNumber){
 }
 
 export async function getComputerEquipmentByPlate(licensePlate){
-    console.log(licensePlate);
     try {
         const response = await axios.get(url + 'ComputerEquipments/getByPlate/' + licensePlate);
         console.log(response.data);

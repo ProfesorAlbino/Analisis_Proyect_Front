@@ -37,22 +37,32 @@ export default function AddComputerEquipments() {
                 computerEquipment.include = 'No posee incluido';
             }
 
-            // if (verifySerialNumber(computerEquipment.serialNumber) === false & verifyPlate(computerEquipment.licensePlate) === false) {
-             
-                
-            // }
-
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Registro Guardado",
-                showConfirmButton: false,
-                timer: 1500
-              }).then(() => {
-                addComputerEquipment(computerEquipment);
-                window.location.href = '/ListComputerEquipments';
-              });
+            verify();
         }
+    }
+
+    function verify(){
+        Promise.all([
+            verifySerialNumber(computerEquipment.serialNumber),
+            verifyPlate(computerEquipment.licensePlate)
+        ])
+        .then(([isSerialNumberValid, isPlateValid]) => {
+            if (!isSerialNumberValid && !isPlateValid) {
+
+                console.log("Número de serie no registrado y placa no registrada");
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Registro Guardado",
+                    showConfirmButton: false,
+                    timer: 1500
+                  }).then(() => {
+                    addComputerEquipment(computerEquipment);
+                    window.location.href = '/ListComputerEquipments';
+                  });
+
+            }
+        })       
     }
 
     return (
@@ -66,6 +76,7 @@ export default function AddComputerEquipments() {
 
                     <div className="col-md-4 mb-3">
                         <div className="row">
+
                             <div className="col-md-6 mb-1">
                                 <div className="form-group mb-2">
                                     <label className="warning" id="label_licensePlate"></label>
@@ -82,7 +93,7 @@ export default function AddComputerEquipments() {
                                     <label className="warning" id="label_class"></label>
                                     <div className="form-floating">
                                         <input type="text" className="form-control" id="class" value={clas}
-                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, clas: event.target.value })} />
+                                            onChange={(event) => setComputerEquipment({ ...computerEquipment, class: event.target.value })} />
                                         <label htmlFor="class">Clase</label>
                                     </div>
                                 </div>
