@@ -3,6 +3,8 @@ import { getComputerEquipments } from '../../service/ComputerEquipment/ComputerE
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { BsBookmarkCheckFill } from "react-icons/bs";
 import { FormatterDate } from '../../scripts/FormatterDate';
+import { verifyLoanComputerEquipment } from "./VerifyLoanComputerEquipment";
+import Swal from 'sweetalert2'
 
 export default function AddLoanComputerEquipments() {
 
@@ -19,6 +21,7 @@ export default function AddLoanComputerEquipments() {
 
     const loadComputerEquipments = async () => {
         getComputerEquipments().then((result) => {
+            console.log(result);
             setComputerEquipments(result);
         }).catch(() => {
             console.log("Error al cargar los datos");
@@ -27,9 +30,24 @@ export default function AddLoanComputerEquipments() {
 
     function reservar(id) {
         localStorage.setItem("idComputerEquipment", id);
-        console.log(idUser);
-        console.log(id);
         window.location.href = "/reserveLoanComputerEquipment?idUser="+idUser;
+    }
+
+    function verify(id) {
+        verifyLoanComputerEquipment(id, idUser).then((result) => {
+            if (result) {
+                console.log("El equipo ya está reservado");
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Ya reservaste este equipo",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else {
+                reservar(id);
+            }
+        })
     }
 
     return (
@@ -70,7 +88,7 @@ export default function AddLoanComputerEquipments() {
                                                 placement="top"
                                                 overlay={<Tooltip>Reservar</Tooltip>}
                                             >
-                                                <button className="btn btn-primary" onClick={() => reservar(computerEquipment.id)}>
+                                                <button className="btn btn-primary" onClick={() => verify(computerEquipment.id)}>
                                                     <BsBookmarkCheckFill />
                                                 </button>
                                             </OverlayTrigger>

@@ -3,6 +3,8 @@ import { getComputerEquipmentById } from "../../service/ComputerEquipment/Comput
 import { createLoan } from "../../service/LoanApi/LoanApi";
 import { addLoanComputerEquipment } from "../../service/LoanComputerEquipment/LoanComputerEquipmentApi";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2'
+
 
 export default function ReserveLoanComputerEquipment() {
     let idUser = localStorage.getItem("idUser");
@@ -24,7 +26,8 @@ export default function ReserveLoanComputerEquipment() {
         destinationPlace: "",
         state: "",
         dependence: "",
-        requestActivity: ""
+        requestActivity: "",
+        active: 1
     });
 
     useEffect(() => {
@@ -42,6 +45,28 @@ export default function ReserveLoanComputerEquipment() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Se reservará el equipo informático",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                saveLoan();
+                Swal.fire(
+                    '¡Reservado!',
+                    'El equipo informático ha sido reservado.',
+                    'success'
+                )
+            }
+        })
+        
+    };
+
+    function saveLoan() {
         console.log(loan);
         createLoan(loan).then((response) => {
             loanComputerEquipment.idLoan = response.id;
@@ -51,7 +76,7 @@ export default function ReserveLoanComputerEquipment() {
             console.log(loanComputerEquipment);
             window.location.href = "/ListLoanComputerEquipment?idUser="+idUser;
         });
-    };
+    }
 
     return (
         <div>
@@ -139,7 +164,7 @@ export default function ReserveLoanComputerEquipment() {
                                             value={loanComputerEquipment.requestActivity}
                                             disabled
                                         />
-                                        <label for="floatingInput">Actividad Solicitada</label>
+                                        <label for="floatingInput">Descripcion</label>
                                     </div>
                                 </div>
                             </div>
@@ -155,6 +180,7 @@ export default function ReserveLoanComputerEquipment() {
                                             className="form-control"
                                             id="floatingInput"
                                             onChange={(e) => setLoanComputerEquipment({ ...loanComputerEquipment, destinationPlace: e.target.value })}
+                                            required
                                         />
                                         <label for="floatingInput">Lugar de destino</label>
                                     </div>
@@ -170,6 +196,7 @@ export default function ReserveLoanComputerEquipment() {
                                             id="floatingInput"
                                             min={loan.registerDate}
                                             onChange={(e) => setLoans({ ...loan, startDate: e.target.value })}
+                                            required
                                         />
                                         <label for="floatingInput">Fecha Inicio</label>
                                     </div>
@@ -188,6 +215,7 @@ export default function ReserveLoanComputerEquipment() {
                                             id="floatingInput"
                                             min={loan.startDate}
                                             onChange={(e) => setLoans({ ...loan, endDate: e.target.value })}
+                                            required
                                         />
                                         <label for="floatingInput">Fecha Fin</label>
                                     </div>
