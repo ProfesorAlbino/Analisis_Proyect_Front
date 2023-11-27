@@ -18,7 +18,7 @@ const options = [
 
 localStorage.setItem("userAdmin", false);
 
-function OffCanvasExample({ name, ...props }) {
+function OffCanvas({ name, ...props }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -29,7 +29,7 @@ function OffCanvasExample({ name, ...props }) {
   }
 
   return (
-    <div >
+    <>
       {/* //-------------------------------Navbar------------------------ */}
       <div>
         <Navbar className="colorNav">
@@ -41,7 +41,8 @@ function OffCanvasExample({ name, ...props }) {
             <Navbar.Brand href="/">
               SIPR
               <img
-                src="RG.png" // reemplace esto con la ruta a su imagen
+                srcSet='/RG.png'              
+                src="RG.png" 
                 width="130"
                 height="40"
                 className="d-inline-block align-top"
@@ -134,14 +135,14 @@ function OffCanvasExample({ name, ...props }) {
         </Offcanvas.Header>
       </Offcanvas>
       {/* //------------------------------------------------------------ */}
-    </div>
+    </>
   );
 }
 
-export default function Example() {
+export default function NavAndSide() {
   return (
     <div className='col-12'>
-      <OffCanvasExample key={options[0]} {...options[0]} />
+      <OffCanvas key={options[0]} {...options[0]} />
     </div>
   );
 }

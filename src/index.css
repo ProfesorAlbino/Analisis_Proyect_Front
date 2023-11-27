@@ -8,6 +8,9 @@ body {
   background-image: url('../public/body.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+  padding-bottom: 5%;
+  min-height: 100vh;
+  position: relative;
 }
 
 code {
@@ -15,15 +18,24 @@ code {
     monospace;
 }
 
-.colorNav{
-  background-color:#16c1f3 !important ;
+.colorNav {
+  background-color: #16c1f3 !important;
 }
-.colorButton{
-  background-color:#16c1f3 !important ;
+
+.colorButton {
+  background-color: #16c1f3 !important;
   border-style: none !important;
 }
-.colorButton:hover{
+
+.colorButton:hover {
   border-style: dotted !important;
   border-width: 2px !important;
   border-color: rgb(255, 255, 255) !important;
+}
+
+
+Footer {
+  margin-top: auto !important;
+  position: absolute;
+  bottom: 0;
 }

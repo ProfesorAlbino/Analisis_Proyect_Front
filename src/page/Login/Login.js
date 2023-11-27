@@ -20,7 +20,7 @@ function Login() {
         login(user).then((response) => {
             console.log(response);
             if (response) {
-                sessionStorage.setItem('user', JSON.stringify(user.userId));
+                sessionStorage.setItem('user', JSON.stringify(response));
                 window.location.href = '/';
             } else {
                 toast.error("Usuario o contraseña incorrectos");
