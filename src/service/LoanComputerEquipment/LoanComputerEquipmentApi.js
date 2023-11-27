@@ -20,3 +20,33 @@ export async function addLoanComputerEquipment(data) {
         throw error;
     }
 }
+
+export async function getLoanComputerEquipmentsByIdComputerEquipment(idComputerEquipment, idUser) {
+    try {
+        const response = await axios.get(url + 'LoanComputerEquipments/getLoanComputerEquipmentByIdComputerEquipment/'+idComputerEquipment+'/'+idUser);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error;
+    }
+}
+
+export async function getAllLoanComputerEquipment() {
+    try {
+        const response = await axios.get(url + 'LoanComputerEquipments');
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error;
+    }
+}
+
+export async function updateActiveLoanComputerEquipment(idLoanComputerEquipment, data) {
+    try {
+        const response = await axios.put(url + 'LoanComputerEquipments/updateActive/'+idLoanComputerEquipment+"/"+data);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error;
+    }
+}

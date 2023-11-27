@@ -49,8 +49,8 @@ import EditClassRoom from './page/ClassRooms/EditClassRoom';
 import LoanClassRoom from './page/LoanClassRooms/LoanClassRoom';
 import EditLoanClassRoom from './page/LoanClassRooms/EditLoanClassRoom';
 import LoanVehicle from './page/LoanVehicle/LoanVehicle';
-
-
+import MoreInformationComputerEquipment from './page/ComputerEquipments/MoreInformationComputerEquipments';
+import AdminListLoan from './page/LoanComputerEquipment/Admin/AdminListLoan';
 
 function App() {
   return (
@@ -86,7 +86,6 @@ function App() {
           <Route exact path='/LoanClassRoom' element={<LoanClassRoom/>}/>
           <Route exat path="/LoanClassRoom/EditLoanClassRoom/:id" element={<EditLoanClassRoom/>}/>
 
-          {/* <Route exact path="/" element={<Home />} /> */}
           <Route exact path="/listTitles" element={<ListTitles />} />
           <Route exact path="/addTitle" element={<AddTitle />} />
           <Route exact path="/editTitle/:idTitle" element={<ModifyTitle />} />
@@ -108,6 +107,8 @@ function App() {
           <Route exact path="/loanVehicle/create" element={<FormViewLoanVehicle />} />
           <Route exact path="/loanVehicle" element={<LoanVehicle/>} />
           <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle />} />
+          <Route exact path="/moreInformationComputerEquipment" element={<MoreInformationComputerEquipment />} />
+          <Route exact path="/adminListLoan" element={<AdminListLoan />} />
           
         </Routes>
         {/* <Footer /> */}
