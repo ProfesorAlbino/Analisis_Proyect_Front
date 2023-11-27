@@ -20,7 +20,7 @@ function FormViewEditFurniture() {
     const [formFurniture, setFormFurniture] = useState({
         id_study_room: 0,
         furniture: "",
-        capacity: 0,
+        capacity: 1,
         active: 1
     });
    
@@ -50,9 +50,15 @@ function FormViewEditFurniture() {
                 'Existen campos vacíos',
                 'error'
             )
-        } else {
+        } else  if (formFurniture.capacity === 0) {
+            Swal.fire(
+                'ERROR!',
+                'Cantidad debe ser mayor a 0',
+                'error'
+            )
+        }  else {
             if (formFurniture.id_study_room === "" || formFurniture.active === "") {
-                formFurniture.id_study_room = 0;
+                formFurniture.id_study_room = 1;
                 formFurniture.active = true;
 
             }
@@ -67,11 +73,22 @@ function FormViewEditFurniture() {
 
             Swal.fire(
                 '¡Guardado!',
-                'Mueble editada con éxito',
+                'Mueble editado con éxito',
                 'success'
             )
 
         }
+    }
+    const resetForm = () => {
+        setFormFurniture({
+        furniture: "",
+        capacity: 1,
+        active: 1
+        
+        });
+    };
+    const handleBack = () => {
+        navigate('/furnitures');
     }
     return (
         <div className="container">
@@ -80,13 +97,13 @@ function FormViewEditFurniture() {
                 <h1>Formulario para editar muebles</h1>
                 <div className="col-sm-6 text-start">
                     <label>Nombre del mueble:</label>
-                    <input type="text" className="form-control" name="furniture" value={formFurniture.furniture} onChange={(event) => { setObject(event) }} />
+                    <input required type="text" className="form-control" name="furniture" value={formFurniture.furniture} onChange={(event) => { setObject(event) }} />
                 </div>
                 <div className="col-sm-12"></div>
 
                 <div className="col-sm-6 text-start mt-2">
                     <label>Cantidad:</label>
-                    <input type="number" className="form-control" name="capacity" value={formFurniture.capacity} onChange={(event) => { setObject(event) }} />
+                    <input required min={1} type="number" className="form-control" name="capacity" value={formFurniture.capacity} onChange={(event) => { setObject(event) }} />
                 </div>
 
                 <div className="col-sm-12"></div>
@@ -114,7 +131,8 @@ function FormViewEditFurniture() {
                 <div className="col-sm-12"></div>
                 <div className="col-sm-6 text-start mt-2">
                     <button type="submit" className="btn btn-primary" >Guardar</button>
-                    <button type="reset" className="btn btn-warning">Limpiar</button>
+                    <button type="reset" className="btn btn-warning" onClick={resetForm}>Limpiar</button>
+                    <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button>
                 </div>
 
 

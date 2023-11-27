@@ -5,7 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { deleteLoanVehicle, getLoanVehicle } from "../../service/LoanVehicle/LoanVehicleService";
 import { deleteLoan, getLoans } from '../../service/LoanApi/LoanApi';
+import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { FormatterDate } from '../../scripts/FormatterDate';
 
+import ActivityType from './components/ActivityType';
 function LoanVehicle() {
     const [loanVehicle, setLoanVehicle] = useState([]);
     const [loans, setLoans] = useState([]);
@@ -19,7 +23,7 @@ function LoanVehicle() {
             const responseLoan = await getLoans();
 
             setLoans(responseLoan);
-          
+
             console.log(responseLoan);
             console.log(response);
         })();
@@ -68,51 +72,71 @@ function LoanVehicle() {
     }
     return (
 
-        <div className='container pt-5'>
+        <div>
             <h1>Listado de préstamo de vehículo</h1>
             <Button className="mb-2" variant="primary" href="/loanVehicle/create">Crear Prestámo de Vehículo</Button>
-            <Table className="table border shadow py-4 mb-5">
-                <thead>
-                    <tr>
+            <div className=" py-4 col-6 offset-3 row justify-content-center">
+                <Table className="table border shadow py-4 mb-5">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Unidad o Carrera</th>
+                            <th>Responsable</th>
+                            <th>Cantidad de personas</th>
+                            <th>Destino</th>
+                            <th>Lugar de salida</th>
+                            <th>Fecha salida - regreso</th>
+                            <th>Hora salida - regreso</th>
+                            <th>Tipo de actividad</th>
+                            <th>Estado</th>
+                            <th colSpan={2}>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            loanVehicle.filter(res => { return res.active == 1 }).map((loan, index) => (
 
-                        <th>Unidad o Carrera</th>
-                        <th>Responsable</th>
-                        <th>Cantidad de personas</th>
-                        <th>Destino</th>
-                        <th>Lugar de salida</th>
-                        <th>Hora de salida</th>
-                        <th>Hora de regreso</th>
-                        <th>Tipo de actividad</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        loanVehicle.filter(res => { return res.active == 1 }).map((loan, index) => (
+                                <tr key={loan.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{loan.unityOrCarrer}</td>
+                                    <td>{loan.responsible}</td>
+                                    <td>{loan.personQuantity}</td>
+                                    <td>{loan.destination}</td>
+                                    <td>{loan.startingPlace}</td>
 
-                            <tr key={loan.id}>
-                                <td>{loan.unityOrCarrer}</td>
-                                <td>{loan.responsible}</td>
-                                <td>{loan.personQuantity}</td>
-                                <td>{loan.destination}</td>
-                                <td>{loan.startingPlace}</td>
+                                    <td>{FormatterDate(loan.startDate)} - {FormatterDate(loan.endDate)} </td>
 
 
-                                <td>{loan.exitHour}</td>
-                                <td>{loan.returnHour}</td>
-                                <td>{loan.activityType}</td>
-                                <td>{loan.state}</td>
-                                <td>
-                                    <Button variant="primary" onClick={() => editLoanVehicle(loan.id)} style={{ marginRight: '5px' }}>Editar</Button>
-                                    <Button variant="danger" onClick={() => deleteLoanV(loan.id)}>Eliminar</Button>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </Table >
+                                    <td>{loan.exitHour} - {loan.returnHour}</td>
+                                    <td><ActivityType activity={loan.activityType}/></td>
+                                    <td>{loan.state}</td>
+                                    <td>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Modificar</Tooltip>}
+                                        >
+                                            <button className="btn btn-warning" onClick={() => editLoanVehicle(loan.id)}>
+                                                <FaRegEdit />
+                                            </button>
+                                        </OverlayTrigger>
+                                    </td>
+                                    <td>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Eliminar</Tooltip>}
+                                        >
+                                            <button className="btn btn-danger" onClick={() => deleteLoanV(loan.id)}>
+                                                <FaTrashAlt />
+                                            </button>
+                                        </OverlayTrigger>
 
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </Table >
+            </div>
         </div>
     );
 
