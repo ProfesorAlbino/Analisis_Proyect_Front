@@ -7,6 +7,7 @@ import { getLoanById, updateLoan, updateLoans } from '../../service/LoanApi/Loan
 
 
 function FormViewEditLoanVehicle() {
+   
     const navigate = useNavigate();
     const { id } = useParams();
     const formatDate = (date) => {
@@ -68,7 +69,36 @@ function FormViewEditLoanVehicle() {
         setFormLoan({ ...formLoan, [event.target.name]: event.target.value });
     }
 
-
+    const initialFormLoan = {
+        startDate: "",
+        endDate: "",
+        registerDate: ""
+      };
+      
+      const initialFormLoanVehicle = {
+        idLoan: 1,
+        idUser: 2,
+        activityType: "",
+        responsible: "",
+        state: "Pendiente",
+        destination: "",
+        startingPlace: "",
+        exitHour: "",
+        returnHour: "",
+        personQuantity: 0,
+        unityOrCarrer: "",
+        assignedVehicle: "",
+        active: 1
+        
+      };
+    const handleReset = () => {
+        console.log("entra");
+        setFormLoan(initialFormLoan);
+        setFormLoanVehicle(initialFormLoanVehicle);
+      }
+      const handleBack = () => {
+        navigate('/loanVehicle');
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -133,13 +163,13 @@ function FormViewEditLoanVehicle() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <label>N° de pasajeros:</label>
-                        <input type="number" required className="form-control" name="personQuantity" value={formLoanVehicle.personQuantity} onChange={(event) => { setObject(event) }} />
+                        <input type="number" min={1} required className="form-control" name="personQuantity" value={formLoanVehicle.personQuantity} onChange={(event) => { setObject(event) }} />
                     </div>
 
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start">
                         <label>Fecha de partida:</label>
-                        <input type="date" required className="form-control" name="startDate" value={formLoan.startDate} onChange={(event) => { setObject(event) }} />
+                        <input type="date" required className="form-control" name="startDate" value={formLoan.startDate} min={formLoan.startDate} onChange={(event) => { setObject(event) }} />
                     </div>
                     <div className="col-sm-12"></div>
 
@@ -151,7 +181,7 @@ function FormViewEditLoanVehicle() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start">
                         <label>Fecha de regreso:</label>
-                        <input type="date" required className="form-control" name="endDate" value={formLoan.endDate} onChange={(event) => { setObject(event) }} />
+                        <input type="date" required className="form-control" name="endDate"  min={formLoan.startDate} value={formLoan.endDate} onChange={(event) => { setObject(event) }} />
                     </div>
                     <div className="col-sm-12"></div>
 
@@ -180,7 +210,8 @@ function FormViewEditLoanVehicle() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <button type="submit" className="btn btn-primary" >Guardar</button>
-                        <button type="reset" className="btn btn-warning">Limpiar</button>
+                        <button type="button" className="btn btn-warning" onClick={handleReset}>Limpiar</button>
+                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button> 
                     </div>
 
 

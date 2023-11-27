@@ -6,25 +6,28 @@ import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getStudyRoomById } from "../../service/StudyRoom/StudyRoomService";
+import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
+import { FormatterDate } from '../../scripts/FormatterDate';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 function StudyRoomSchedule() {
     const [studyRoomSchedule, setStudyRoomSchedule] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
         (async () => {
             const response = await getStudyRoomSchedule();
-        
-            let temporal=[];
-            for(let i=0;i<response.length;i++){
+
+            let temporal = [];
+            for (let i = 0; i < response.length; i++) {
                 response[i].name = "";
-             }
-             for(let i=0;i<response.length;i++){
+            }
+            for (let i = 0; i < response.length; i++) {
                 let res = await getStudyRoomById(response[i].idStudyRoom);
-              
+
                 response[i].name = res.name;
-             }
-           
+            }
+
             setStudyRoomSchedule(response);
-           
+
         })();
     }, []);
 
@@ -44,7 +47,7 @@ function StudyRoomSchedule() {
             if (result.isConfirmed) {
                 Swal.fire(
                     '¡Eliminado!',
-                    'El horario de la sala de estudio ha sido eliminada.',
+                    'El horario de la sala de estudio ha sido eliminado.',
                     'success'
                 )
                 await deleteStudyRoomSchedule(id).then(async (data) => {
@@ -67,43 +70,64 @@ function StudyRoomSchedule() {
     }
 
     function editStudyRoom(id) {
-    
+
         navigate("/studyRoomsSchedule/edit/" + id);
-       
+
     }
     return (
 
-        <div className='container pt-5'>
+        <div >
             <h1>Listado de horario de sala de estudio</h1>
             <Button className="mb-2" variant="primary" href="/studyRoomsSchedule/create">Crear el horario  de la sala de estudio</Button>
-            <Table  className="table border shadow py-4 mb-5">
-                <thead>
-                    <tr>
-                        <th>Día</th>
-                        <th>Sala de estudio</th>
-                        <th>Hora inicio</th>
-                        <th>Hora fin</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        studyRoomSchedule.filter(res => { return res.active == 1 }).map((study, index) => (
-                            <tr key={study.id}>
-                                <td>{study.day}</td>
-                                <td>{study.name}</td>
-                                <td>{study.startHour}</td>
-                                <td>{study.endHour}</td>
-                                <td>
-                                    <Button variant="primary" onClick={() => editStudyRoom(study.id)} style={{marginRight:'5px'}}>Editar</Button>
-                                    <Button variant="danger" onClick={() => deleteStudy(study.id)}>Eliminar</Button>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </Table >
-            
+            <div className=" py-4 col-6 offset-3 row justify-content-center">
+                <Table className="table border shadow py-4 mb-5">
+                    <thead>
+                        <tr>
+                        <th>#</th>
+                            <th>Día</th>
+                            <th>Sala de estudio</th>
+                            <th>Hora inicio</th>
+                            <th>Hora fin</th>
+                            <th colSpan={2}>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            studyRoomSchedule.filter(res => { return res.active == 1 }).map((study, index) => (
+                                <tr key={study.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{FormatterDate(study.day)}</td>
+                                    <td>{study.name}</td>
+                                    <td>{study.startHour}</td>
+                                    <td>{study.endHour}</td>
+                                    <td>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Modificar</Tooltip>}
+                                        >
+                                            <button className="btn btn-warning" onClick={() => editStudyRoom(study.id)}>
+                                                <FaRegEdit />
+                                            </button>
+                                        </OverlayTrigger>
+                                    </td>
+                                    <td>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Eliminar</Tooltip>}
+                                        >
+                                            <button className="btn btn-danger" onClick={() => deleteStudy(study.id)}>
+                                                <FaTrashAlt />
+                                            </button>
+                                        </OverlayTrigger>
+
+                                    </td>
+
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </Table >
+            </div>
         </div>
     );
 

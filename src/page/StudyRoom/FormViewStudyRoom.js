@@ -7,7 +7,7 @@ function FormViewStudyRoom() {
     const navigate = useNavigate();
     const [formStudyRoom, setFormStudyRoom] = useState({
         name: "",
-        capacity: 0,
+        capacity: 1,
         isAvailable: 1,
         active: 1
     });
@@ -46,6 +46,18 @@ function FormViewStudyRoom() {
 
         }
     }
+    const handleBack = () => {
+        navigate('/studyRooms');
+    }
+
+    const resetForm = () => {
+        setFormStudyRoom({
+            name: "",
+            capacity: 1,
+            isAvailable: 1,
+            active: 1
+        });
+    };
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -53,35 +65,25 @@ function FormViewStudyRoom() {
                     <h1>Formulario para crear salas de estudio</h1>
                     <div className="col-sm-6 text-start">
                         <label>Nombre:</label>
-                        <input type="text" className="form-control" name="name" value={formStudyRoom.name} onChange={(event) => { setObject(event) }} />
+                        <input required type="text" className="form-control" name="name" value={formStudyRoom.name} onChange={(event) => { setObject(event) }} />
                     </div>
                     <div className="col-sm-12"></div>
 
                     <div className="col-sm-6 text-start mt-2">
                         <label>Capacidad:</label>
-                        <input type="number" className="form-control" name="capacity" value={formStudyRoom.capacity} onChange={(event) => { setObject(event) }} />
+                        <input required type="number" min={1} className="form-control" name="capacity" value={formStudyRoom.capacity} onChange={(event) => { setObject(event) }} />
                     </div>
 
                     <div className="col-sm-12"></div>
 
-                    <div className="col-sm-6 text-start mt-2">
-                        <label>Disponibilidad: </label>
-                        <input type="radio" onChange={(event) => { setFormStudyRoom({ ...formStudyRoom, "isAvailable": 1 }) }} checked={formStudyRoom.isAvailable == 1} /> Sí
-                        <input type="radio" className="ml-2" onChange={(event) => { setFormStudyRoom({ ...formStudyRoom, "isAvailable": 0 }) }} checked={formStudyRoom.isAvailable == 0} /> No
+                    
 
-                    </div>
-
-                    <div className="col-sm-12"></div>
-
-                    <div className="col-sm-6 text-start mt-2">
-                        <label>Activo: </label>
-                        <input type="radio" onChange={(event) => { setFormStudyRoom({ ...formStudyRoom, "active": 1 }) }} checked={formStudyRoom.active == 1} /> Sí
-                        <input type="radio" className="ml-2" onChange={(event) => { setFormStudyRoom({ ...formStudyRoom, "active": 0 }) }} checked={formStudyRoom.active == 0} /> No
-                    </div>
+                    
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <button type="submit" className="btn btn-primary" >Guardar</button>
-                        <button type="reset" className="btn btn-warning">Limpiar</button>
+                        <button type="reset" className="btn btn-warning" onClick={resetForm}>Limpiar</button>
+                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button>
                     </div>
                     
                 </div>

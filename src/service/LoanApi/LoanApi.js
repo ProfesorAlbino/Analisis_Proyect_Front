@@ -6,7 +6,9 @@ export async function createLoan(data) {
     console.log(urlApi);
     try {
         const response = await axios.post(urlApi + "create", data);
+        console.log("Después; ",response.data);
         return response.data;
+        
     } catch (error) {
         console.error('Error al obtener los datos:', error);
         throw error;
