@@ -1,6 +1,7 @@
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+//import './css/Footer.css';
 
 import Login from './page/Login/Login';
 import User from './page/User/User';
@@ -26,7 +27,7 @@ import AddComputerEquipments from './page/ComputerEquipments/AddComputerEquipmen
 import ListSanctionsReport from './page/SanctionsReport/ListSanctionsReport';
 import AddSanctionsReport from './page/SanctionsReport/AddSanctionsReport';
 import LoanBook from './page/LoanBook/AddLoanBook';
-import Example from '../src/layout/Dashboard';
+import NavAndSide from '../src/layout/Dashboard';
 import ListLoanBook from './page/LoanBook/ListLoanBook';
 import LoanBookModify from './page/LoanBook/ModifyLoanBook';
 import Home from './layout/Home';
@@ -57,10 +58,10 @@ function App() {
     <div className="App">
       <Router>
         {/* <Navbar /> */}
-        <Example />
+        <NavAndSide />
 
-       
-        <Routes>     
+
+        <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/users" element={<User />} />
@@ -70,9 +71,9 @@ function App() {
           <Route exact path="/users/create" element={<UserAdd />} />
           <Route exact path="/inventory" element={<Inventory />} />
           <Route exact path="/inventory/create" element={<InventoryAdd />} />
-          <Route exat path="/classRoom" element={<ClassRoom/>}/>
-          <Route exat path="/classRoom/RegisterClassRoom" element={<RegisterClassRoom/>}/>
-          <Route exat path="/classRoom/EditClassRoom/:id" element={<EditClassRoom/>}/>
+          <Route exat path="/classRoom" element={<ClassRoom />} />
+          <Route exat path="/classRoom/RegisterClassRoom" element={<RegisterClassRoom />} />
+          <Route exat path="/classRoom/EditClassRoom/:id" element={<EditClassRoom />} />
           <Route exact path="/inventory/inventoryType" element={<InventoryType />} />
           <Route exact path="/inventory/inventoryType/create" element={<InventoryTypeAdd />} />
           <Route exact path="/inventory/area" element={<Area />} />
@@ -82,9 +83,9 @@ function App() {
           <Route exact path="/AddComputerEquipments" element={<AddComputerEquipments />} />
           <Route exact path="/ListSanctionsReport" element={<ListSanctionsReport />} />
           <Route exact path="/AddSanctionsReport" element={<AddSanctionsReport />} />
-          <Route exact path="/loanClassRoom/RegisterLoanClassRoom" element={<RegisterLoanClassRoom/>}/>
-          <Route exact path='/LoanClassRoom' element={<LoanClassRoom/>}/>
-          <Route exat path="/LoanClassRoom/EditLoanClassRoom/:id" element={<EditLoanClassRoom/>}/>
+          <Route exact path="/loanClassRoom/RegisterLoanClassRoom" element={<RegisterLoanClassRoom />} />
+          <Route exact path='/LoanClassRoom' element={<LoanClassRoom />} />
+          <Route exat path="/LoanClassRoom/EditLoanClassRoom/:id" element={<EditLoanClassRoom />} />
 
           <Route exact path="/listTitles" element={<ListTitles />} />
           <Route exact path="/addTitle" element={<AddTitle />} />
@@ -105,13 +106,13 @@ function App() {
           <Route exact path="/addLoanComputerEquipment" element={<AddLoanComputerEquipments />} />
           <Route exact path="/reserveLoanComputerEquipment" element={<ReserveLoanComputerEquipment />} />
           <Route exact path="/loanVehicle/create" element={<FormViewLoanVehicle />} />
-          <Route exact path="/loanVehicle" element={<LoanVehicle/>} />
+          <Route exact path="/loanVehicle" element={<LoanVehicle />} />
           <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle />} />
           <Route exact path="/moreInformationComputerEquipment" element={<MoreInformationComputerEquipment />} />
           <Route exact path="/adminListLoan" element={<AdminListLoan />} />
-          
+
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
       </Router>
     </div>
   );
