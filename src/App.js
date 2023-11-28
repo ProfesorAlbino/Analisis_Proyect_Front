@@ -59,6 +59,8 @@ import LoanFieldSport from './page/LoanSports/LoanFieldSport';
 import RegisterLoanFieldSport from './page/LoanSports/RegisterLoanFieldSport';
 import EditFieldSport from './page/LoanSports/EditFieldSport';
 import LoanStudyRoom from './page/LoanStudyRoom/LoanStudyRoom';
+import FormViewLoanStudyRoom from './page/LoanStudyRoom/FormViewLoanStudyRoom';
+import FormViewEditLoanStudyRoom from './page/LoanStudyRoom/FormViewEditLoanStudyRoom';
 
 function App() {
 
@@ -128,7 +130,9 @@ function App() {
           <Route exact path="/moreInformationComputerEquipment" element={<MoreInformationComputerEquipment />} />
           <Route exact path="/adminListLoan" element={<AdminListLoan />} />
           <Route exact path="/loanStudyRoom" element={<LoanStudyRoom />} />
-
+          <Route exact path="/loanStudyRoom" element={<LoanStudyRoom/>} />
+          <Route exact path="/loanStudyRoom/create" element={<FormViewLoanStudyRoom />} />
+          <Route exact path="/loanStudyRoom/edit/:id" element={<FormViewEditLoanStudyRoom />} />
         </Routes>
         <Footer />
       </Router>
