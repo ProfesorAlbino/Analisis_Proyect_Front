@@ -22,7 +22,9 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing....'
-                sh 'npm test'
+                dir('D:\Jeykel\UCR\CuartoYear\Segundo semestre\Analisis de Sistemas\Tarea\Proyecto Analisis Codigo\Analisis_Proyect_Front') {
+                    sh 'npm test'
+                }
             }
          }
 
