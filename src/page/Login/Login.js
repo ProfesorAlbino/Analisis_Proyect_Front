@@ -36,14 +36,14 @@ function Login() {
             <div className="login-box">
                 <form onSubmit={onSubmit}>
                     <div className="user-box">
-                        <input type="text" name="" required="" />
+                        <input type="text" name="" required id='userId' />
                         <label>Cedula</label>
                     </div>
                     <div className="user-box">
-                        <input type="password" name="" required="" />
+                        <input type="password" name="" required id='userPass' />
                         <label>Contraseña</label>
                     </div><center>
-                        <button type='submit' className='btn'>
+                        <button type='submit' className='btn' id='submit'>
                             Iniciar Sesión
                             <span></span>
                         </button></center>
