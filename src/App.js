@@ -56,6 +56,10 @@ import AdminListLoan from './page/LoanComputerEquipment/Admin/AdminListLoan';
 import LoanStudyRoom from './page/LoanStudyRoom/LoanStudyRoom';
 
 function App() {
+
+  const user = sessionStorage.getItem('user');
+  const isUserAdmin = user ? JSON.parse(user).role === 'Administrador' : false;
+
   return (
     <div className="App">
       <Router>
@@ -67,20 +71,20 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
-          <Route exact path="/users" element={<User />} />
+          <Route exact path="/users" element={isUserAdmin ? <User /> : <Home />} />
+          <Route exact path="/users/create" element={isUserAdmin ? <UserAdd /> : <Home />} /> {/* IMPLEMENTAR IGUAL PARA LA SEGURIDAD, PUEDEN SACAR MÁS COSAS EN CONSTANTES  */}
+          <Route exact path="/inventory" element={isUserAdmin ? <Inventory /> : <Home />} />
+          <Route exact path="/inventory/create" element={isUserAdmin ? <InventoryAdd /> : <Home />} />
+          <Route exact path="/inventory/inventoryType" element={isUserAdmin ? <InventoryType /> : <Home />} />
+          <Route exact path="/inventory/inventoryType/create" element={isUserAdmin ? <InventoryTypeAdd /> : <Home />} />
+          <Route exact path="/inventory/area" element={isUserAdmin ? <Area /> : <Home />} />
+          <Route exact path="/inventory/area/create" element={isUserAdmin ? <AreaAdd /> : <Home />} />
           <Route exact path="/studyRooms" element={<StudyRoom />} />
           <Route exact path="/studyRooms/create" element={<FormViewStudyRoom />} />
           <Route exact path="/studyRooms/edit/:id" element={<FormViewEditStudyRoom />} />
-          <Route exact path="/users/create" element={<UserAdd />} />
-          <Route exact path="/inventory" element={<Inventory />} />
-          <Route exact path="/inventory/create" element={<InventoryAdd />} />
           <Route exat path="/classRoom" element={<ClassRoom />} />
           <Route exat path="/classRoom/RegisterClassRoom" element={<RegisterClassRoom />} />
           <Route exat path="/classRoom/EditClassRoom/:id" element={<EditClassRoom />} />
-          <Route exact path="/inventory/inventoryType" element={<InventoryType />} />
-          <Route exact path="/inventory/inventoryType/create" element={<InventoryTypeAdd />} />
-          <Route exact path="/inventory/area" element={<Area />} />
-          <Route exact path="/inventory/area/create" element={<AreaAdd />} />
           <Route exact path="/ListComputerEquipments" element={<ListComputerEquipments />} />
           <Route exact path="/ModifyComputerEquipments" element={<ModifyComputerEquipments />} />
           <Route exact path="/AddComputerEquipments" element={<AddComputerEquipments />} />
@@ -113,7 +117,7 @@ function App() {
           <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle />} />
           <Route exact path="/moreInformationComputerEquipment" element={<MoreInformationComputerEquipment />} />
           <Route exact path="/adminListLoan" element={<AdminListLoan />} />
-          <Route exact path="/loanStudyRoom" element={<LoanStudyRoom/>} />
+          <Route exact path="/loanStudyRoom" element={<LoanStudyRoom />} />
 
         </Routes>
         <Footer />
