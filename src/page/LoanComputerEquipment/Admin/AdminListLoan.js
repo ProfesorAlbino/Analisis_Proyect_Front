@@ -13,6 +13,7 @@ export default function AdminListLoan() {
     var urlActual = window.location.href;
     var url = new URL(urlActual);
     var idUser = url.searchParams.get("idUser");
+    console.log(idUser);
 
     useEffect(() => {
         loadComputerEquipments();

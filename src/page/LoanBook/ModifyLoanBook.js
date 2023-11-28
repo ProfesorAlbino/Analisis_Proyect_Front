@@ -5,6 +5,7 @@ import { updateLoan } from "../../service/LoanApi/LoanApi";
 import { getLoanById } from "../../service/LoanApi/LoanApi";
 import { FormatterDateToForms } from '../../scripts/FormatterDate';
 import { decryptAES } from '../../scripts/AES-256';
+import { set } from "date-fns";
 
 
 export default function ModifyLoanBook() {
@@ -33,12 +34,14 @@ export default function ModifyLoanBook() {
         state: false
     });
 
-    if(Initdate.current) {
-    Initdate.current.addEventListener("change", (e) => {
-        EndDate.current.value = e.target.value;
-    });
+    if (Initdate.current) {
+        Initdate.current.addEventListener("change", (e) => {
+            if (EndDate.current.value < e.target.value) {
+                EndDate.current.value = e.target.value;
+            }
+        });
     }
-    
+
     useEffect(() => {
         getLoanBookById(parseInt(decryptAES(idLoanBook)))
             .then((response) => {
@@ -52,11 +55,12 @@ export default function ModifyLoanBook() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        loan.endDate = EndDate.current.value;
         updateLoan(loan);
         updateLoanBook(loanBook)
             .then(() => {
                 console.log(loanBook);
-                window.location.href = "/listLoanBook/" + 3;
+                window.location.href = "/listLoanBook";
             });
     };
 
@@ -105,6 +109,7 @@ export default function ModifyLoanBook() {
                                 type="number"
                                 className="form-control border border-primary"
                                 required
+                                max={9999}
                                 value={loanBook.limitFines}
                                 onChange={(e) => setLoanBooks({ ...loanBook, limitFines: e.target.value })}
                             />
@@ -117,6 +122,7 @@ export default function ModifyLoanBook() {
                                 type="date"
                                 className="form-control border border-primary"
                                 required
+                                id="startDate"
                                 min={FormatterDateToForms(loan.registerDate)}
                                 value={FormatterDateToForms(loan.startDate)}
                                 onChange={(e) => setLoans({ ...loan, startDate: e.target.value })}
@@ -127,6 +133,7 @@ export default function ModifyLoanBook() {
                             <input
                                 ref={EndDate}
                                 type="date"
+                                id="endDate"
                                 className="form-control border border-primary"
                                 required
                                 min={FormatterDateToForms(loan.startDate)}

@@ -4,7 +4,7 @@ import "../css/Navbar.css";
 
 export default function Navbar() {
     return (
-        <div>
+        <>
             <nav className="navbar navbar-expand-lg navbar-light bg-primary navbar-custom">
                 <a className="navbar-brand" href="/">Sistema de Prestamos</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,6 +12,6 @@ export default function Navbar() {
                 </button>
               
             </nav>
-        </div>
+        </>
     )
 }
