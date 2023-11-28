@@ -7,18 +7,17 @@ export async function login(user) {
         const response = await axios.post(url + 'login/', user);
         return response.data;
     } catch (error) {
-        console.error('Error al crear el usuario:', error);
         throw error;
     }
 }
 
 
-export async function register(user) {
+export async function register(userr) {
     try {
-        const response = await axios.post(url + 'register/', user);
+        const response = await axios.post(url + 'register/', userr);
         return response.data;
     } catch (error) {
-        console.error('Error al crear el usuario:', error);
+        //console.error('Error al crear el usuario:', error);
         throw error;
     }
 }
