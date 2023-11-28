@@ -3,6 +3,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 //import './css/Footer.css';
 
+import Register from './page/Login/Register';
 import Login from './page/Login/Login';
 import User from './page/User/User';
 import StudyRoom from './page/StudyRoom/StudyRoom';
@@ -52,6 +53,7 @@ import EditLoanClassRoom from './page/LoanClassRooms/EditLoanClassRoom';
 import LoanVehicle from './page/LoanVehicle/LoanVehicle';
 import MoreInformationComputerEquipment from './page/ComputerEquipments/MoreInformationComputerEquipments';
 import AdminListLoan from './page/LoanComputerEquipment/Admin/AdminListLoan';
+import LoanStudyRoom from './page/LoanStudyRoom/LoanStudyRoom';
 
 function App() {
   return (
@@ -64,6 +66,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
           <Route exact path="/users" element={<User />} />
           <Route exact path="/studyRooms" element={<StudyRoom />} />
           <Route exact path="/studyRooms/create" element={<FormViewStudyRoom />} />
@@ -110,6 +113,7 @@ function App() {
           <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle />} />
           <Route exact path="/moreInformationComputerEquipment" element={<MoreInformationComputerEquipment />} />
           <Route exact path="/adminListLoan" element={<AdminListLoan />} />
+          <Route exact path="/loanStudyRoom" element={<LoanStudyRoom/>} />
 
         </Routes>
         <Footer />

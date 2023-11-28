@@ -15,7 +15,7 @@ const Register = () => {
             password: event.target[1].value
         }
 
-       
+
     }
 
     return (
@@ -23,20 +23,20 @@ const Register = () => {
             <div className="login-box">
                 <form onSubmit={onSubmit}>
                     <div className="user-box">
-                        <input type="text" name="" required="" />
+                        <input type="text" required id='userId'/>
                         <label>Cedula</label>
                     </div>
                     <div className="user-box">
-                        <input type="password" name="" required="" />
+                        <input type="password" required id='userPass' />
                         <label>Contraseña</label>
                     </div><center>
                         <button type='submit' className='btn'>
-                            Iniciar Sesión
+                            Registrarse
                             <span></span>
                         </button></center>
                 </form>
                 <br></br>
-                <Link type="button" className="btn btn-outline-primary ms-4" to="/register">Registrarse</Link>
+                <Link type="button" className="btn btn-outline-primary ms-4" to="/register">Iniciar Sesión</Link>
             </div>
             <Toaster richColors />
         </>
