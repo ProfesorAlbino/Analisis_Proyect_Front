@@ -2,6 +2,8 @@ import { React, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { createCopy } from '../../service/CopysApi/CopyApi';
 import { decryptAES } from '../../scripts/AES-256';
+import { Toaster, toast } from 'sonner';
+
 
 
 export default function AddCopy() {
@@ -26,19 +28,23 @@ export default function AddCopy() {
         e.preventDefault();
         createCopy(copy)
             .then((result) => {
-                console.log(result + "Libro creado exitosamente");
-                window.location.href = `/listCopy/${idTitle}`;
+                toast.success('Copia creada exitosamente');
+                setTimeout(() => {
+                    window.location.href = `/listCopy/${idTitle}`;
+                }, 1000);
             })
             .catch(() => {
-                console.log("Error al crear el libro");
+                toast.error('Ooops,Algo salió mal');
             });
-        console.log(copy);
-    }
+            }
 
     return (
         <div >
             <form onSubmit={handleSubmit}>
                 <h2 className="text-center">Registrar Copia</h2>
+                <div className="col-4">
+                    <a href={`/listCopy/${idTitle}`} className="btn btn-primary float-left">Regresar</a>
+                </div>
                 <div className="container py-4">
                     <div className='row'>
                         <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -120,6 +126,10 @@ export default function AddCopy() {
                     </div>
                 </div>
             </form>
+            <Toaster
+                richColors
+                position="bottom-center"
+            />
         </div>
     );
 }

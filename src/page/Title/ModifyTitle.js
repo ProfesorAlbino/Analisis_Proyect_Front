@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getById, updateTitle } from '../../service/TitlesApi/TitleApi';
-import { encryptAES,decryptAES } from '../../scripts/AES-256';
+import { encryptAES, decryptAES } from '../../scripts/AES-256';
+import { Toaster, toast } from 'sonner';
+import Swal from "sweetalert2";
+
 
 
 export default function ModifyTitle() {
@@ -43,30 +46,55 @@ export default function ModifyTitle() {
                 setTitle(result);
             })
             .catch(() => {
-                console.log("Error al obtener el libro");
+                toast.error('Ooops,Algo salió mal');
             });
     }, [idTitle]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(title);
 
-        updateTitle(title)
-            .then((result) => {
+        Swal.fire({
+            title: '¿Estás seguro de Modificar el Libro?',
+            text: "No podrás revertir esto.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, Modifícalo!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                updateTitle(title)
+                    .then((result) => {
+                        toast.success('Libro actualizado exitosamente');
+                        setTimeout(() => {
+                            window.location.href = `/listTitles`;
+                        }, 1000);
+                    })
+                    .catch(() => {
+                        toast.error('Ooops,Algo salió mal');
+                    });
+
+            } else {
+
+                Swal.fire
+                    (
+                        'Error',
+                        'No se pudo eliminar el Libro.',
+                        'error'
+                    );
+
                 window.location.href = `/listTitles`;
-                console.log(result + "Libro actualizado exitosamente");
-            })
-            .catch(() => {
-                console.log("Error al actualizar el libro");
-                console.log(title);
-            });
-
+            }
+        })
     };
 
     return (
-        <div>
+        <>
             <form onSubmit={handleSubmit}>
                 <h2 className="text-center">Modificar Libro</h2>
+                <div className="col-4 mb-3">
+                    <a href="/listTitles" className="btn btn-primary float-left">Regresar</a>
+                </div>
                 <div className="container py-4">
                     <div className="row">
                         {/* AUTOR */}
@@ -209,12 +237,15 @@ export default function ModifyTitle() {
                             <label className="form-label ms-2">Información</label>
                         </div>
                         <div className="mb-4 ml-4">
-                            <button type="submit" className="btn btn-primary me-5">Agregar</button>
+                            <button type="submit" className="btn btn-primary me-5">Modificar</button>
                             <button type="reset" className="btn btn-warning">Limpiar</button>
                         </div>
                     </div>
                 </div>
             </form>
-        </div>
+            <Toaster
+                richColors
+                position="bottom-center" />
+        </>
     );
 };

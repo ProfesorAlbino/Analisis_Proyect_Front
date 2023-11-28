@@ -4,7 +4,9 @@ import { getAll, deleteCopy } from '../../service/CopysApi/CopyApi';
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { PiHandCoinsDuotone } from "react-icons/pi";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { encryptAES,decryptAES } from '../../scripts/AES-256';
+import { encryptAES, decryptAES } from '../../scripts/AES-256';
+import { Toaster, toast } from 'sonner';
+import Swal from "sweetalert2";
 
 export default function ListCopy() {
     const { idTitle } = useParams();
@@ -24,7 +26,14 @@ export default function ListCopy() {
 
         getAll(idTitles)
             .then((result) => {
-                setCopiesList(result);
+                if (result.length === 0) {
+                    toast.warning('Ooops,No hay copias registradas');
+                    setTimeout(() => {
+                        window.location.href = `/addCopy/${idTitle}`;
+                    }, 1000);
+                } else {
+                    setCopiesList(result); // Actualiza el estado de titles
+                }
             })
             .catch(() => {
                 console.log("Error al obtener los libros");
@@ -32,16 +41,34 @@ export default function ListCopy() {
     }, [idTitles]);
 
     function handleDeleteCopy(id) {
-        deleteCopy(id)
-            .then((result) => {
-                window.location.reload();
-            })
-            .catch(() => {
-                console.log("Error al eliminar la copia");
-            });
+
+        Swal.fire({
+            title: '¿Estás seguro de Eliminar la copia?',
+            text: "No podrás revertir esto.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminala!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    '¡Eliminada!',
+                    'La copia ha sido eliminada.',
+                    'success'
+                )
+                deleteCopy(id)
+                    .then((result) => {
+                        window.location.reload();
+                    })
+                    .catch(() => {
+                        console.log("Error al eliminar la copia");
+                    });
+            }
+        })
     }
 
-    function handleLoanBook(id,subLibrary) {
+    function handleLoanBook(id, subLibrary) {
         localStorage.setItem("idCopy", id);
         localStorage.setItem("idTitle", idTitle);
         localStorage.setItem("subLibrary", subLibrary);
@@ -72,7 +99,6 @@ export default function ListCopy() {
         <div className='container'>
 
             <h1>Lista de Copias</h1>
-            {show ? <a href={`/addCopy/${idTitle}`} className="btn btn-primary">Agregar Copia</a> : null}
             <nav className="navbar ">
                 <div className="container-fluid">
                     <form className="d-flex" role="search" onSubmit={handleSubmit}>
@@ -83,7 +109,11 @@ export default function ListCopy() {
                 </div>
             </nav>
 
-            <div className=" py-4 col-6 offset-3 row justify-content-center">
+            <div className="row">
+            <div className="col-4 mb-3">
+                    <a href="/listTitles" className="btn btn-primary">Regresar</a>
+            {show ? <a href={`/addCopy/${idTitle}`} className="btn btn-primary ms-2">Agregar Copia</a> : null}
+                </div>
                 <table className="table border shadow mb-5">
                     <thead>
                         <tr>
@@ -131,7 +161,7 @@ export default function ListCopy() {
                                                 placement='top'
                                                 overlay={<Tooltip>Editar</Tooltip>}
                                             >
-                                                <a href={`/editCopy/${encryptAES(element.id+"")}`} className="btn btn-warning">
+                                                <a href={`/editCopy/${encryptAES(element.id + "")}`} className="btn btn-warning">
                                                     <FaRegEdit />
                                                 </a>
                                             </OverlayTrigger>
@@ -143,7 +173,7 @@ export default function ListCopy() {
                                                 placement='top'
                                                 overlay={<Tooltip>Solicitar Prestamo</Tooltip>}
                                             >
-                                                <a onClick={() => { handleLoanBook(encryptAES(element.id+""),encryptAES(element.subLibrary)) }} href='/loanBook' className="btn btn-info">
+                                                <a onClick={() => { handleLoanBook(encryptAES(element.id + ""), encryptAES(element.subLibrary)) }} href='/loanBook' className="btn btn-info">
                                                     <PiHandCoinsDuotone />
                                                 </a>
                                             </OverlayTrigger>
@@ -153,6 +183,9 @@ export default function ListCopy() {
                     </tbody>
                 </table>
             </div>
+            <Toaster
+                richColors
+                position='bottom-center' />
         </div>
     );
 }

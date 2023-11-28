@@ -6,7 +6,7 @@ const link = url();
 export async function getLoans() {
     try {
         console.log(link);
-        const response = await axios.get(link + 'api/Loans');
+        const response = await axios.get(link + 'api/Loans/getAll');
         return response.data; // Devuelve el contenido JSON de la respuesta
     } catch (error) {
         console.error('Error al obtener los datos:', error);
@@ -21,29 +21,21 @@ export async function createLoan(data){
        "RegisterDate":data.register_date
     }
     console.log(newLoan);
-    const response=await axios.post(link+"api/Loans",newLoan);
+    const response=await axios.post(link+"api/Loans/create",newLoan);
 
     return response.data;
 }
 
 export async function getLoan(id){
-    return await axios.get(link+"api/Loan/"+id);
+    return await axios.get(link+"api/Loans/getById/"+id);
 }
 
 export async function updateLoan(data){
-    console.log('service',data)
-    const loan = {
-        "id":data.id,
-        "type": data.type,
-        "description": data.description,
-        "quantity": data.quantity,
-        "numeration": data.numeration,
-        "classroomSchedules": [],  // Colección vacía
-        "loanClassrooms": []      // Colección vacía
-    }
-    return await axios.put(link+"api/Loan"+data.id,loan)
+    const response=await axios.put(link+"api/Loans/update",data);
+
+    return "loan actualizado";
 }
 
 export async function deleteLoan(id){
-    return await axios.delete(link+"api/Loan/"+id);
+    return await axios.delete(link+"api/Loan/delete/"+id);
 }
