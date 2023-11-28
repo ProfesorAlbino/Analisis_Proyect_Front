@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { createTitle } from '../../service/TitlesApi/TitleApi';
 import { Toaster, toast } from "sonner";
 
@@ -25,20 +25,25 @@ export default function AddTitle() {
         createTitle(title)
             .then((result) => {
                 toast.success('Libro creado exitosamente');
+                console.log(result);
                 setTimeout(() => {
                     window.location.href = `/listTitles`;
                 }, 1000);
             })
 
             .catch(() => {
-                console.log("Error al crear el libro");
+                toast.error('Ooops,Algo salió mal');
             });
     };
 
     return (
-        <div>
+        <>
+
             <form onSubmit={handleSubmit}>
                 <h2 className="text-center">Registrar Libro</h2>
+                <div className="col-4 mb-3">
+                    <a href="/listTitles" className="btn btn-primary float-left">Regresar</a>
+                </div>
                 <div className="container py-4">
                     <div className='row' >
                         {/* AUTOR */}
@@ -157,8 +162,9 @@ export default function AddTitle() {
                 </div>
             </form>
             <Toaster
-                position='button-center'
-                richColors />
-        </div>
+                richColors
+                position='botton-center'
+            />
+        </>
     );
 };

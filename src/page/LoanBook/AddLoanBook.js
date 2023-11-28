@@ -4,7 +4,7 @@ import { createLoanBook } from "../../service/LoanBookApi/LoanBookApi";
 import { getById } from '../../service/TitlesApi/TitleApi';
 import { encryptAES, decryptAES } from '../../scripts/AES-256';
 import { FormatterDateToForms } from '../../scripts/FormatterDate';
-
+import { Toaster, toast } from 'sonner';
 
 export default function LoanBook() {
 
@@ -18,7 +18,7 @@ export default function LoanBook() {
         id: 0,
         startDate: "",
         endDate: "",
-        registerDate: ""
+        registerDate: new Date().toISOString().split('T')[0],
     });
 
     const [loanBook, setLoanBooks] = useState({
@@ -41,11 +41,12 @@ export default function LoanBook() {
             }
         });
     }
-    
+
     useEffect(() => {
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().split('T')[0];
-        setLoans({ ...loan, registerDate: formattedDate });
+        // setLoans({ ...loan, registerDate: formattedDate });
+        setLoans({ ...loan, startDate: formattedDate });
         getById(idTitle).then((result) => {
             setLoanBooks({ ...loanBook, title: result.title1 });
         });
@@ -54,21 +55,23 @@ export default function LoanBook() {
     const handleSubmit = (e) => {
         e.preventDefault();
         loan.endDate = EndDate.current.value;
+
+console.log(loan);
+
         createLoan(loan)
             .then((response) => {
                 loanBook.idLoan = response.id;
-
-                console.log("Loan creado con exito");
-                console.log(loanBook);
                 createLoanBook(loanBook)
                     .then((response) => {
-                        console.log(loanBook);
-                        window.location.href = "/listLoanBook";
+                        toast.success('Prestamo solicitado con éxito');
+                        setTimeout(() => {
+                            window.location.href = "/listLoanBook";
+                        }, 1000);
                     }).catch((error) => {
-                        console.log("error al crear el loanBook");
+                        toast.error('Ooops,Algo salió mal');
                     });
             }).catch((error) => {
-                console.log("error al crear el loan");
+                toast.error('Ooops,Algo salió mal');
             });
     };
 
@@ -78,6 +81,9 @@ export default function LoanBook() {
         <div>
             <form onSubmit={handleSubmit}>
                 <h2 className="text-center">Solicitar Prestamo</h2>
+                <div className="col-4">
+                    <a href="/listLoanBook" className="btn btn-primary float-left">Regresar</a>
+                </div>
                 <div className="container py-4">
                     <div className='row'>
                         <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -137,7 +143,7 @@ export default function LoanBook() {
                         </div>
                         <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <input
-                            ref={EndDate}
+                                ref={EndDate}
                                 type="date"
                                 className="form-control border border-primary"
                                 required
@@ -163,6 +169,10 @@ export default function LoanBook() {
                     </div>
                 </div>
             </form>
+            <Toaster
+                richColors
+                position="bottom-center"
+            />
         </div>
     );
 }
