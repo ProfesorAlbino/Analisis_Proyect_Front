@@ -100,6 +100,9 @@ function OffCanvas({ name, ...props }) {
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/admLoanVehicle">Servicio de Transporte</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminLoanClassRoom">Prestamos Aulas y Laboratrios</Link>
+
+
 
                 </div>
               </Accordion.Body>
