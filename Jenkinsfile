@@ -13,7 +13,7 @@ pipeline {
             echo 'Running Selenium Tests..'
             try {
                 dir('Test'){
-                sh 'npm test'  // Reemplaza con el nombre real de tu archivo de prueba
+                sh 'npm run test'  // Reemplaza con el nombre real de tu archivo de prueba
                 }
             } catch (Exception e) {
                 currentBuild.result = 'FAILURE'
