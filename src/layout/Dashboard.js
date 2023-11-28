@@ -7,6 +7,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import Accordion from 'react-bootstrap/Accordion';
 import { VscThreeBars } from "react-icons/vsc";
 import { Link } from "react-router-dom";
+import { encryptAES,decryptAES } from '../scripts/AES-256';
+
 
 const options = [
   {
@@ -15,9 +17,6 @@ const options = [
     backdrop: true,
   },
 ];
-
-localStorage.setItem("userAdmin", false);
-
 function OffCanvas({ name, ...props }) {
   const [show, setShow] = useState(false);
 
@@ -66,34 +65,34 @@ function OffCanvas({ name, ...props }) {
             <Accordion.Item eventKey="0">
               <Accordion.Header>Prestamos de Biblioteca</Accordion.Header>
               <Accordion.Body>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to={"/listLoanBook/" + 4}>Préstamo de Libros</Link>
-                <button type="button" class="btn btn-outline-primary mb-2 col-12">Préstamo de Salas de Estudio</button>
-                <Link type="button" class="btn btn-outline-primary mb-2 col-12" to={`/listLoanComputerEquipment?idUser=${4}`}>Préstamo de Equipo Informático</Link>
-                <Link type="button" class="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Equipo Informático</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to={"/listLoanBook"}>Libros</Link>
+                <button type="button" className="btn btn-outline-primary mb-2 col-12">Salas de Estudio</button>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to={`/listLoanComputerEquipment?idUser=${4}`}>Equipo Informático</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Informático</Link>
 
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
               <Accordion.Header>Prestamos</Accordion.Header>
               <Accordion.Body>
-                <button type="button" class="btn btn-outline-primary mb-2 col-12" >Préstamo de Cancha</button>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanVehicle">Préstamo de Vehiculos</Link>
-                <Link type="button" class="btn btn-outline-primary mb-2 col-12" to={"/LoanClassRoom"}>Préstamo de Aulas y Laboratorios</Link>
+                <button type="button" className="btn btn-outline-primary mb-2 col-12" >Cancha</button>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanVehicle">Vehiculos</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to={"/LoanClassRoom"}>Aulas y Laboratorios</Link>
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
               <Accordion.Header>Administrativos</Accordion.Header>
               <Accordion.Body>
-                <div class="row">
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Administrar Inventario</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Administrar Libros</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Administrar Usuarios</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Adiministrar Salas de estudio</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Adiministrar Horario de Salas de estudio</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Adiministrar Muebles de Salas de estudio</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/admLoanVehicle">Adiministrar Servicio de Transporte</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Adiministrar De Aulas</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Prestamos Equipos Informaticos</Link>
+                <div className="row">
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Inventario</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Libros</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Usuarios</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Horario de Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Muebles de Salas de estudio</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/admLoanVehicle">Servicio de Transporte</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
 
                 </div>
               </Accordion.Body>
@@ -101,7 +100,7 @@ function OffCanvas({ name, ...props }) {
             <Accordion.Item eventKey="3">
               <Accordion.Header>Sanciones</Accordion.Header>
               <Accordion.Body>
-                <div class="row">
+                <div className="row">
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListSanctionsReport">Reporte de sanciones</Link>
                 </div>
               </Accordion.Body>
@@ -109,15 +108,15 @@ function OffCanvas({ name, ...props }) {
             <Accordion.Item eventKey="4">
               <Accordion.Header>Usuario</Accordion.Header>
               <Accordion.Body>
-                <div class="row">
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Listado de usuarios</Link>
+                <div className="row">
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Listado</Link>
                 </div>
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="5">
               <Accordion.Header>Inventario</Accordion.Header>
               <Accordion.Body>
-                <div class="row">
+                <div className="row">
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Inventario</Link>
                 </div>
               </Accordion.Body>
@@ -125,11 +124,11 @@ function OffCanvas({ name, ...props }) {
           </Accordion>
         </Offcanvas.Body>
         <Offcanvas.Header>
-          <footer class="footer mt-auto col-12 py-3 bg-light">
-            <div class="container">
-              <label class="text">SIPR</label>
+          <footer className="footer mt-auto col-12 py-3 bg-light">
+            <div className="container">
+              <label className="text">SIPR</label>
               <Link type="button" className="btn btn-outline-primary ms-4" to="/login" onClick={onClick}>Iniciar Sesión</Link>
-              {/* <button type="button" class="btn btn-primary ms-2 button-footer">Iniciar Sesión</button> */}
+              {/* <button type="button" className="btn btn-primary ms-2 button-footer">Iniciar Sesión</button> */}
             </div>
           </footer>
         </Offcanvas.Header>

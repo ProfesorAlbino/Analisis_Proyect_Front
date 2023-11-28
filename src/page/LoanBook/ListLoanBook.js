@@ -7,7 +7,7 @@ import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { IoCheckmarkDone } from "react-icons/io5";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { encryptAES,decryptAES } from '../../scripts/AES-256';
+import { encryptAES, decryptAES } from '../../scripts/AES-256';
 
 
 
@@ -15,7 +15,7 @@ export default function ListLoanBook() {
     const { idUser } = useParams();
     const [loanBook, setLoanBook] = useState([]);
     const [show, setShow] = useState(true);
-    let userAdmin = null;
+    const user = JSON.parse(sessionStorage.getItem("user"));
 
     function changeState(state) {
         let newState = "";
@@ -36,14 +36,10 @@ export default function ListLoanBook() {
         return newState;
     }
 
-    
+
 
     useEffect(() => {
-        // userAdmin = localStorage.getItem("userAdmin");
-        userAdmin = false;
-        console.log(userAdmin);
-
-        if (userAdmin) {
+        if (user.role === "Admin_Library") {
             setShow(true);
             getLoanBooks()
                 .then((response) => {
@@ -52,15 +48,17 @@ export default function ListLoanBook() {
                 .catch((error) => {
                     console.error("Error fetching data: ", error);
                 });
-        } else {
+        } else if (user.role === "Estudiante") {
             setShow(false);
-            getLoanBooksByUser(idUser)
+            getLoanBooksByUser(user.idLibraryUser)
                 .then((response) => {
                     setLoanBook(response);
                 })
                 .catch((error) => {
                     console.error("Error fetching data: ", error);
                 });
+        }else{
+            window.location.href = "/";
         }
 
 
@@ -69,19 +67,19 @@ export default function ListLoanBook() {
 
     const handleDeleteTitle = (id) => {
         deleteLoan(id).then(() => {
-            window.location.href = "/listLoanBook/" + 3;
+            window.location.href = "/listLoanBook";
         });
     }
 
     const handleApproveLoanBook = (id) => {
         approveLoanBook(id).then(() => {
-            window.location.href = "/listLoanBook/" + 3;
+            window.location.href = "/listLoanBook";
         });
 
     }
     const handleRejectLoanBook = (id) => {
         rejectLoanBook(id).then(() => {
-            window.location.href = "/listLoanBook/" + 3;
+            window.location.href = "/listLoanBook";
         });
     }
 
@@ -118,7 +116,7 @@ export default function ListLoanBook() {
                                             placement="top"
                                             overlay={<Tooltip>Modificar Prestamo</Tooltip>}
                                         >
-                                            <a href={`/ModifyLoanBook/${encryptAES(loanBook.id+"")}`} className="btn btn-warning">
+                                            <a href={`/ModifyLoanBook/${encryptAES(loanBook.id + "")}`} className="btn btn-warning">
                                                 <FaRegEdit />
                                             </a>
                                         </OverlayTrigger>

@@ -94,7 +94,7 @@ function App() {
           <Route exact path="/listCopy/:idTitle" element={<ListCopy />} />
           <Route exact path="/editCopy/:idTitle" element={<ModifyCopy />} />
           <Route exact path="/loanBook" element={<LoanBook />} />
-          <Route exact path="/listLoanBook/:idUser" element={<ListLoanBook />} />
+          <Route exact path="/listLoanBook" element={<ListLoanBook />} />
           <Route exact path="/ModifyLoanBook/:idLoanBook" element={<LoanBookModify />} />
           <Route exact path="/furnitures" element={<Furniture />} />
           <Route exact path="/furnitures/create" element={<FormViewFurniture />} />

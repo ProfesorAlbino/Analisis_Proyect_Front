@@ -11,22 +11,25 @@ export default function ListCopy() {
     const [copiesList, setCopiesList] = useState([]);
     const [show, setShow] = useState(true);
     const seach = useRef();
-    const userAdmin = true;
+    const user = JSON.parse(sessionStorage.getItem("user")).role;
+    const idTitles = parseInt(decryptAES(idTitle));
+
+
     useEffect(() => {
-        if (userAdmin) {
-            setShow(true);
-        } else {
+        if (user === "Estudiante") {
             setShow(false);
+        } else if (user === "Admin_Library") {
+            setShow(true);
         }
 
-        getAll(parseInt(decryptAES(idTitle)))
+        getAll(idTitles)
             .then((result) => {
                 setCopiesList(result);
             })
             .catch(() => {
                 console.log("Error al obtener los libros");
             });
-    }, [idTitle]);
+    }, [idTitles]);
 
     function handleDeleteCopy(id) {
         deleteCopy(id)
@@ -56,7 +59,7 @@ export default function ListCopy() {
     const handleReset = (e) => {
         e.preventDefault();
         seach.current.value = "";
-        getAll(parseInt(decryptAES(idTitle)))
+        getAll(idTitles)
             .then((result) => {
                 setCopiesList(result); // Actualiza el estado de titles
             })
@@ -69,13 +72,13 @@ export default function ListCopy() {
         <div className='container'>
 
             <h1>Lista de Copias</h1>
-            {show ? <a href={`/addCopy/${encryptAES(idTitle)}`} className="btn btn-primary">Agregar Copia</a> : null}
-            <nav class="navbar ">
-                <div class="container-fluid">
-                    <form class="d-flex" role="search" onSubmit={handleSubmit}>
-                        <input class="form-control me-2 col-6" type="search" ref={seach} placeholder="Search" aria-label="Search" />
-                        <button class="btn btn-outline-success me-2" type="submit">Buscar</button>
-                        <button class="btn btn-outline-warning" onClick={handleReset}>Limpiar</button>
+            {show ? <a href={`/addCopy/${idTitle}`} className="btn btn-primary">Agregar Copia</a> : null}
+            <nav className="navbar ">
+                <div className="container-fluid">
+                    <form className="d-flex" role="search" onSubmit={handleSubmit}>
+                        <input className="form-control me-2 col-6" type="search" ref={seach} placeholder="Search" aria-label="Search" />
+                        <button className="btn btn-outline-success me-2" type="submit">Buscar</button>
+                        <button className="btn btn-outline-warning" onClick={handleReset}>Limpiar</button>
                     </form>
                 </div>
             </nav>
@@ -140,7 +143,7 @@ export default function ListCopy() {
                                                 placement='top'
                                                 overlay={<Tooltip>Solicitar Prestamo</Tooltip>}
                                             >
-                                                <a onClick={() => { handleLoanBook(encryptAES(element.id),encryptAES(element.subLibrary)) }} href='/loanBook' className="btn btn-info">
+                                                <a onClick={() => { handleLoanBook(encryptAES(element.id+""),encryptAES(element.subLibrary)) }} href='/loanBook' className="btn btn-info">
                                                     <PiHandCoinsDuotone />
                                                 </a>
                                             </OverlayTrigger>
