@@ -52,6 +52,7 @@ import EditLoanClassRoom from './page/LoanClassRooms/EditLoanClassRoom';
 import LoanVehicle from './page/LoanVehicle/LoanVehicle';
 import MoreInformationComputerEquipment from './page/ComputerEquipments/MoreInformationComputerEquipments';
 import AdminListLoan from './page/LoanComputerEquipment/Admin/AdminListLoan';
+import LoanStudyRoom from './page/LoanStudyRoom/LoanStudyRoom';
 
 function App() {
   return (
@@ -110,6 +111,7 @@ function App() {
           <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle />} />
           <Route exact path="/moreInformationComputerEquipment" element={<MoreInformationComputerEquipment />} />
           <Route exact path="/adminListLoan" element={<AdminListLoan />} />
+          <Route exact path="/loanStudyRoom" element={<LoanStudyRoom/>} />
 
         </Routes>
         <Footer />
