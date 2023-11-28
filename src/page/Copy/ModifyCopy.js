@@ -1,8 +1,9 @@
 import { React, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { updateCopy, getById } from '../../service/CopysApi/CopyApi';
-import { encryptAES,decryptAES } from '../../scripts/AES-256';
-
+import { encryptAES, decryptAES } from '../../scripts/AES-256';
+import { Toaster, toast } from 'sonner';
+import Swal from "sweetalert2";
 
 export default function ModifyCopy() {
 
@@ -27,30 +28,49 @@ export default function ModifyCopy() {
         getById(parseInt(decryptAES(idTitle)))
             .then((result) => {
                 setCopy(result);
-                console.log(result);
             })
             .catch(() => {
-                console.log("Error al obtener los libros");
+                toast.error('Ooops,Algo salió mal');
             });
     }, [idTitle]);
 
     const handleSubmit = (e) => {
+
+        Swal.fire({
+            title: '¿Estás seguro de Modificar el Libro?',
+            text: "No podrás revertir esto.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, Modifícalo!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+
+                updateCopy(copy)
+                    .then((result) => {
+                        toast.success('Copia actualizada exitosamente');
+                        setTimeout(() => {
+                            window.location.href = `/listCopy/${encryptAES(copy.idTitles + "")}`;
+                        }, 1000);
+                    })
+                    .catch(() => {
+                        toast.error('Ooops,Algo salió mal');
+                    });
+            } 
+        })
+
+
         e.preventDefault();
-        updateCopy(copy)
-            .then((result) => {
-                console.log(result + "Copia modificada exitosamente");
-                window.location.href = `/listCopy/${encryptAES(copy.idTitles+"")}`;
-            })
-            .catch(() => {
-                console.log("Error al modificar la copia");
-            });
-        console.log(copy);
     }
 
     return (
         <div>
             <form onSubmit={handleSubmit}>
                 <h2 className="text-center">Modificar Copia</h2>
+                <div className="col-4">
+                    <a href={`/listCopy/${encryptAES(copy.idTitles + "")}`} className="btn btn-primary float-left">Regresar</a>
+                </div>
                 <div className="container py-4">
                     <div className="row">
                         <div className=" visually-hidden mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -62,7 +82,7 @@ export default function ModifyCopy() {
                                 value={copy.id}
                                 onChange={(e) => setCopy({ ...copy, id: e.target.value })}
                             />
-                            
+
                         </div>
                         <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <input
@@ -150,6 +170,9 @@ export default function ModifyCopy() {
                     </div>
                 </div>
             </form>
+            <Toaster 
+            richColors
+            position='bottom-center'/>
         </div>
     );
 }

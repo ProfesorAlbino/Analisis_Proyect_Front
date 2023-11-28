@@ -7,15 +7,16 @@ import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { IoCheckmarkDone } from "react-icons/io5";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { encryptAES,decryptAES } from '../../scripts/AES-256';
-
+import { encryptAES, decryptAES } from '../../scripts/AES-256';
+import { Toaster, toast } from 'sonner';
+import Swal from "sweetalert2";
 
 
 export default function ListLoanBook() {
     const { idUser } = useParams();
     const [loanBook, setLoanBook] = useState([]);
     const [show, setShow] = useState(true);
-    let userAdmin = null;
+    const user = JSON.parse(sessionStorage.getItem("user"));
 
     function changeState(state) {
         let newState = "";
@@ -36,31 +37,44 @@ export default function ListLoanBook() {
         return newState;
     }
 
-    
+
 
     useEffect(() => {
-        // userAdmin = localStorage.getItem("userAdmin");
-        userAdmin = false;
-        console.log(userAdmin);
 
-        if (userAdmin) {
+        if (user.role === "Admin_Library") {
             setShow(true);
             getLoanBooks()
                 .then((response) => {
-                    setLoanBook(response);
+                    if (response.length === 0) {
+                        toast.warning('Ooops,No hay prestamos registrados');
+                        setTimeout(() => {
+                            window.location.href = `/listTitles`;
+                        }, 1000);
+                    } else {
+                        setLoanBook(response);
+                    }
                 })
                 .catch((error) => {
-                    console.error("Error fetching data: ", error);
+                    toast.error('Ooops,Algo salió mal');
+                });
+        } else if (user.role === "Estudiante") {
+            setShow(false);
+            getLoanBooksByUser(user.idLibraryUser)
+                .then((response) => {
+                    if (response.length === 0) {
+                        toast.warning('Ooops,No tienes prestamos registrados');
+                        setTimeout(() => {
+                            window.location.href = `/listTitles`;
+                        }, 1000);
+                    } else {
+                        setLoanBook(response);
+                    }
+                })
+                .catch((error) => {
+                    toast.error('Ooops,Algo salió mal');
                 });
         } else {
-            setShow(false);
-            getLoanBooksByUser(idUser)
-                .then((response) => {
-                    setLoanBook(response);
-                })
-                .catch((error) => {
-                    console.error("Error fetching data: ", error);
-                });
+            window.location.href = "/";
         }
 
 
@@ -68,29 +82,93 @@ export default function ListLoanBook() {
     }, [idUser]);
 
     const handleDeleteTitle = (id) => {
-        deleteLoan(id).then(() => {
-            window.location.href = "/listLoanBook/" + 3;
-        });
+        Swal.fire({
+            title: '¿Estás seguro de Eliminar el préstamo?',
+            text: "No podrás revertir esto.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminalo!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    '¡Eliminado!',
+                    'El préstamo ha sido eliminado.',
+                    'success'
+                )
+                deleteLoan(id).then(() => {
+                    window.location.href = "/listLoanBook";
+                });
+            } else {
+
+                Swal.fire
+                    (
+                        'Error',
+                        'No se pudo eliminar el préstamo.',
+                        'error'
+                    );
+            }
+        })
     }
 
     const handleApproveLoanBook = (id) => {
-        approveLoanBook(id).then(() => {
-            window.location.href = "/listLoanBook/" + 3;
-        });
 
+        Swal.fire({
+            title: '¿Aprobar el préstamo?',
+            text: "No podrás revertir esto.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Aprobar!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Aprobado!',
+                    'El préstamo ha sido aprobado.',
+                    'success'
+                )
+                approveLoanBook(id).then(() => {
+                    window.location.href = "/listLoanBook";
+                });
+            }
+        })
     }
     const handleRejectLoanBook = (id) => {
-        rejectLoanBook(id).then(() => {
-            window.location.href = "/listLoanBook/" + 3;
-        });
+
+        Swal.fire({
+            title: '¿Rechazar el préstamo?',
+            text: "No podrás revertir esto.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Rechazar!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    '¡Rechazado!',
+                    'El préstamo ha sido rechazado.',
+                    'success'
+                )
+                rejectLoanBook(id).then(() => {
+                    window.location.href = "/listLoanBook";
+                });
+            }
+        })
     }
 
     return (
         <div>
             <h1>Listado de Prestamos</h1>
-            {show ? null :
-                <a href={`/listTitles`} className="btn btn-primary">Generar Prestamo</a>}
-            <div className=" py-4 col-6 offset-3 row justify-content-center">
+
+            <div className="col-4 ml-2">
+                <a href="/" className="btn btn-primary float-left ">Regresar</a>
+                {show ? null :
+                    <a href={`/listTitles`} className="btn btn-primary ms-2">Generar Prestamo</a>}
+            </div>
+            <div className=" py-4 col-10 offset-1 row">
                 <table className="table border shadow mb-5">
                     <thead>
                         <tr>
@@ -114,13 +192,26 @@ export default function ListLoanBook() {
                                     <td>{loanBook.subLibrary}</td>
                                     <td>{changeState(loanBook.state)}</td>
                                     <td>
+
                                         <OverlayTrigger
                                             placement="top"
                                             overlay={<Tooltip>Modificar Prestamo</Tooltip>}
                                         >
-                                            <a href={`/ModifyLoanBook/${encryptAES(loanBook.id+"")}`} className="btn btn-warning">
-                                                <FaRegEdit />
-                                            </a>
+                                            {(loanBook.state === 1 || loanBook.state === 2) ? (
+
+                                                <button disabled className="btn btn-warning" >
+                                                    <a>
+                                                        <FaRegEdit />
+                                                    </a>
+                                                </button>
+                                            ) : (
+                                                <button className="btn btn-warning" >
+                                                    <a href={`/ModifyLoanBook/${encryptAES(loanBook.id + "")}`} className='link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'>
+                                                        <FaRegEdit />
+                                                    </a>
+                                                </button>
+                                            )}
+
                                         </OverlayTrigger>
                                     </td>
                                     <td>
@@ -128,9 +219,15 @@ export default function ListLoanBook() {
                                             placement="top"
                                             overlay={<Tooltip>Eliminar</Tooltip>}
                                         >
-                                            <button className="btn btn-danger" onClick={() => handleDeleteTitle(loanBook.idLoanNavigation.id)}>
-                                                <FaTrashAlt />
-                                            </button>
+                                            {(loanBook.state === 1 || loanBook.state === 2) ? (
+                                                <button disabled className="btn btn-danger" onClick={() => handleDeleteTitle(loanBook.idLoanNavigation.id)}>
+                                                    <FaTrashAlt />
+                                                </button>
+                                            ) : (
+                                                <button className="btn btn-danger" onClick={() => handleDeleteTitle(loanBook.idLoanNavigation.id)}>
+                                                    <FaTrashAlt />
+                                                </button>
+                                            )}
                                         </OverlayTrigger>
                                     </td>
                                     {show ?
@@ -139,9 +236,17 @@ export default function ListLoanBook() {
                                                 placement="top"
                                                 overlay={<Tooltip>Aprobar</Tooltip>}
                                             >
-                                                <button className="btn btn-success" onClick={() => handleApproveLoanBook(loanBook.id)}>
-                                                    <IoCheckmarkDone />
-                                                </button>
+
+                                                {(loanBook.state === 1 || loanBook.state === 2) ? (
+                                                    <button disabled className="btn btn-success" onClick={() => handleApproveLoanBook(loanBook.id)}>
+                                                        <IoCheckmarkDone />
+                                                    </button>
+                                                ) : (
+                                                    <button className="btn btn-success" onClick={() => handleApproveLoanBook(loanBook.id)}>
+                                                        <IoCheckmarkDone />
+                                                    </button>
+                                                )}
+
                                             </OverlayTrigger>
                                         </td> : null}
                                     {show ?
@@ -150,9 +255,18 @@ export default function ListLoanBook() {
                                                 placement="top"
                                                 overlay={<Tooltip>Rechazar</Tooltip>}
                                             >
-                                                <button className="btn btn-danger" onClick={() => handleRejectLoanBook(loanBook.id)}>
-                                                    <IoCloseCircleSharp />
-                                                </button>
+
+                                                {(loanBook.state === 1 || loanBook.state === 2) ? (
+                                                    <button disabled className="btn btn-danger" onClick={() => handleRejectLoanBook(loanBook.id)}>
+                                                        <IoCloseCircleSharp />
+                                                    </button>
+                                                ) : (
+                                                    <button className="btn btn-danger" onClick={() => handleRejectLoanBook(loanBook.id)}>
+                                                        <IoCloseCircleSharp />
+                                                    </button>
+                                                )}
+
+
                                             </OverlayTrigger>
                                         </td> : null}
                                 </tr>
@@ -160,6 +274,9 @@ export default function ListLoanBook() {
                     </tbody>
                 </table>
             </div>
+            <Toaster
+                richColors
+                position='bottom-center' />
         </div>
     )
 }

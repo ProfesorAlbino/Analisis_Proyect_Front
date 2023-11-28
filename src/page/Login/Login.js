@@ -15,18 +15,14 @@ function Login() {
             password: event.target[1].value
         }
 
-        console.log(user);
-
         login(user).then((response) => {
-            console.log(response);
             if (response) {
-                sessionStorage.setItem('user', JSON.stringify(user.userId));
+                sessionStorage.setItem('user', JSON.stringify(response));
                 window.location.href = '/';
             } else {
                 toast.error("Usuario o contraseña incorrectos");
             }
         }).catch((error) => {
-            console.log(error);
             toast.error(error.request.status === 401 ? "Contraseña incorrecta" : "Usuario o contraseña incorrectos");
         });
     }
@@ -36,20 +32,20 @@ function Login() {
             <div className="login-box">
                 <form onSubmit={onSubmit}>
                     <div className="user-box">
-                        <input type="text" name="" required="" />
+                        <input type="text" name="" required id='userId' />
                         <label>Cedula</label>
                     </div>
                     <div className="user-box">
-                        <input type="password" name="" required="" />
+                        <input type="password" name="" required id='userPass' />
                         <label>Contraseña</label>
                     </div><center>
-                        <button type='submit' className='btn'>
+                        <button type='submit' className='btn' id='submit'>
                             Iniciar Sesión
                             <span></span>
                         </button></center>
                 </form>
                 <br></br>
-                <Link type="button" className="btn btn-outline-primary ms-4" to="/register">Registrarse</Link>
+                <Link type="button" className="btn btn-outline-primary " to="/register">Registrarse</Link>
             </div>
             <Toaster richColors />
         </>

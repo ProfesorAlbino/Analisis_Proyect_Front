@@ -5,7 +5,8 @@ import { updateLoan } from "../../service/LoanApi/LoanApi";
 import { getLoanById } from "../../service/LoanApi/LoanApi";
 import { FormatterDateToForms } from '../../scripts/FormatterDate';
 import { decryptAES } from '../../scripts/AES-256';
-
+import { Toaster, toast } from 'sonner';
+import Swal from "sweetalert2";
 
 export default function ModifyLoanBook() {
 
@@ -33,12 +34,14 @@ export default function ModifyLoanBook() {
         state: false
     });
 
-    if(Initdate.current) {
-    Initdate.current.addEventListener("change", (e) => {
-        EndDate.current.value = e.target.value;
-    });
+    if (Initdate.current) {
+        Initdate.current.addEventListener("change", (e) => {
+            if (EndDate.current.value < e.target.value) {
+                EndDate.current.value = e.target.value;
+            }
+        });
     }
-    
+
     useEffect(() => {
         getLoanBookById(parseInt(decryptAES(idLoanBook)))
             .then((response) => {
@@ -52,12 +55,29 @@ export default function ModifyLoanBook() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        updateLoan(loan);
-        updateLoanBook(loanBook)
-            .then(() => {
-                console.log(loanBook);
-                window.location.href = "/listLoanBook/" + 3;
-            });
+
+        loan.endDate = EndDate.current.value;
+
+        Swal.fire({
+            title: '¿Estás seguro de Modificar el prestamo?',
+            text: "No podrás revertir esto.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, Modifícalo!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                updateLoan(loan);
+                updateLoanBook(loanBook)
+                    .then(() => {
+                        toast.success('Prestamo actualizado exitosamente');
+                        setTimeout(() => {
+                            window.location.href = "/listLoanBook";
+                        }, 1000);
+                    });
+            }
+        })
     };
 
 
@@ -66,6 +86,9 @@ export default function ModifyLoanBook() {
         <div>
             <form onSubmit={handleSubmit}>
                 <h2 className="text-center">Modificar Prestamo</h2>
+                <div className="col-4">
+                    <a href="/listLoanBook" className="btn btn-primary float-left">Regresar</a>
+                </div>
                 <div className="container py-4">
                     <div className='row'>
                         <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -105,6 +128,7 @@ export default function ModifyLoanBook() {
                                 type="number"
                                 className="form-control border border-primary"
                                 required
+                                max={9999}
                                 value={loanBook.limitFines}
                                 onChange={(e) => setLoanBooks({ ...loanBook, limitFines: e.target.value })}
                             />
@@ -117,6 +141,7 @@ export default function ModifyLoanBook() {
                                 type="date"
                                 className="form-control border border-primary"
                                 required
+                                id="startDate"
                                 min={FormatterDateToForms(loan.registerDate)}
                                 value={FormatterDateToForms(loan.startDate)}
                                 onChange={(e) => setLoans({ ...loan, startDate: e.target.value })}
@@ -127,6 +152,7 @@ export default function ModifyLoanBook() {
                             <input
                                 ref={EndDate}
                                 type="date"
+                                id="endDate"
                                 className="form-control border border-primary"
                                 required
                                 min={FormatterDateToForms(loan.startDate)}
@@ -152,6 +178,10 @@ export default function ModifyLoanBook() {
                     </div>
                 </div>
             </form>
+            <Toaster
+                richColors
+                position="bottom-center"
+            />
         </div>
     );
 }

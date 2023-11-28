@@ -15,6 +15,10 @@ function UserAdd() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (event.target.password.value !== event.target.passwordCheck.value) {
+            return toast.error('Las contraseñas no coinciden');
+        }
+
         const confirm = await Swal.fire({
             title: '¿Deseas continuar?',
             text: isEditing ? 'Se actualizará el usuario' : 'Se creará un nuevo usuario',
@@ -49,8 +53,6 @@ function UserAdd() {
                 name,
                 lastName,
             };
-
-            console.log(newUser);
 
             try {
                 if (!isEditing) {
@@ -115,6 +117,10 @@ function UserAdd() {
         }
     }
 
+    const onClick = () => {
+        window.location.href = '/users';
+    }
+
     return (<>
         <form onSubmit={handleSubmit}>
             <h2 className="text-center">Registrar Usuario</h2>
@@ -175,11 +181,27 @@ function UserAdd() {
                         <label className='ms-2 '>Carrera</label>
                     </div>
                     {/* CONTRASEÑA */}
-                    <div className="mb-4 form-floating col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         {
                             showPassword ?
                                 <>
-                                    <input type="text" className="form-control border border-primary" id='password' required />
+                                    <input type="password" className="form-control border border-primary" id='password' required />
+                                </>
+                                :
+                                <></>/* 
+                                <div>
+                                    <Button variant="primary" onClick={changePassword}>Cambiar Contraseña</Button>
+                                </div>
+                         */
+                        }
+                        <label className='ms-2 '>Contraseña</label>
+                    </div>
+                    {/* CONTRASEÑACHECK */}
+                    <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        {
+                            showPassword ?
+                                <>
+                                    <input type="password" className="form-control border border-primary" id='passwordCheck' required />
                                     {isEditing ? <Button variant="primary" onClick={changePassword}>Cancelar</Button> : null}
                                 </>
                                 :
@@ -187,10 +209,10 @@ function UserAdd() {
                                     <Button variant="primary" onClick={changePassword}>Cambiar Contraseña</Button>
                                 </div>
                         }
-                        <label className='ms-2 '>Contraseña</label>
+                        <label className='ms-2 '>Confirmar</label>
                     </div>
                     {/* CATEGORIA */}
-                    <div className="mb-4 form-floating col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         <select className="form-select border border-primary" id='category' required >
                             <option>Seleccione</option>
                             <option value="Estudiante">Estudiante</option>
@@ -200,7 +222,7 @@ function UserAdd() {
                         <label className='ms-2 '>Categoría</label>
                     </div>
                     {/* BOTON */}
-                    <div className="mb-4 form-floating col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div className="mb-4 form-floating col-lg-12 col-md-12 col-sm-6 col-xs-12">
                         <Button variant="primary" type="submit">
                             {isEditing ? 'Actualizar' : 'Crear'}
                         </Button>
@@ -208,79 +230,13 @@ function UserAdd() {
                 </div>
             </div>
         </form>
+        <div className="mb-4 col-lg-12 col-md-12 col-sm-6 col-xs-12">
+            <Button variant="primary" onClick={onClick}>
+                Regresar
+            </Button>
+        </div>
         <Toaster richColors />
     </>)
 }
 
 export default UserAdd;
-
-{/* <div className='container pt-5 col-6'>
-        <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-4" controlId="userId">
-                <Form.Label>Cédula</Form.Label>
-                <Form.Control type="text" placeholder="123456789" maxLength={9} minLength={9} onChange={veridyId} required />
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="name">
-                <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" placeholder="Nombre" required />
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="lastName">
-                <Form.Label>Apellido</Form.Label>
-                <Form.Control type="text" placeholder="Apellido" required />
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="rol">
-                <Form.Label>Rol</Form.Label>
-                <Form.Select aria-label="rol" required >
-                    <option>Seleccione</option>
-                    {
-                        role.map((rol, index) => (
-                            <option key={index} value={rol.id}>{rol.name}</option>
-                        ))
-                    }
-                </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="phone">
-                <Form.Label>Teléfono</Form.Label>
-                <Form.Control type="text" placeholder="Teléfono" required />
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="career">
-                <Form.Label>Carrera</Form.Label>
-                <Form.Control type="text" placeholder="Carrera" required />
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="password">
-                <Form.Label>Contraseña: </Form.Label>
-                {
-                    showPassword ?
-                        <>
-                            <Form.Control type="text" placeholder="Contraseña" required />
-                            {isEditing ? <Button variant="primary" onClick={changePassword}>Cancelar</Button> : null}
-                        </>
-                        :
-                        <div>
-                            <Button variant="primary" onClick={changePassword}>Cambiar Contraseña</Button>
-                        </div>
-                }
-            </Form.Group>
-
-            <Form.Group className="mb-4" controlId="category">
-                <Form.Label>Categoría</Form.Label>
-                <Form.Select aria-label="category" required >
-                    <option>Seleccione</option>
-                    <option value="Estudiante">Estudiante</option>
-                    <option value="Administrativo">Administrativo</option>
-                    <option value="Profesor">Profesor</option>
-                </Form.Select>
-            </Form.Group>
-
-            <Button variant="primary" type="submit">
-                {isEditing ? 'Actualizar' : 'Crear'}
-            </Button>
-        </Form>
-
-    </div> */}

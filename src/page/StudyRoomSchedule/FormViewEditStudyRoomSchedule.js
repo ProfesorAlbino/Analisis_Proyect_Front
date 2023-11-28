@@ -69,12 +69,25 @@ function FormViewEditStudyRoomSchedule() {
 
             Swal.fire(
                 '¡Guardado!',
-                'Horario de sala de estudio editada con éxito',
+                'Horario de sala de estudio editado con éxito',
                 'success'
             )
 
         }
     }
+    const handleBack = () => {
+        navigate('/studyRoomsSchedule');
+    }
+
+    const resetForm = () => {
+        setFormStudyRoomSchedule({
+            day: "",
+            idStudyRoom: 0,
+            startHour: "",
+            endHour: "",
+            active: 1
+        });
+    };
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -121,7 +134,8 @@ function FormViewEditStudyRoomSchedule() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <button type="submit" className="btn btn-primary" >Guardar</button>
-                        <button type="reset" className="btn btn-warning">Limpiar</button>
+                        <button type="reset" className="btn btn-warning" onClick={resetForm}>Limpiar</button>
+                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button>
                     </div>
                 </div>
 

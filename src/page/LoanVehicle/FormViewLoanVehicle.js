@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { createLoanVehicle } from '../../service/LoanVehicle/LoanVehicleService';
 import { createLoan } from '../../service/LoanApi/LoanApi';
+import { FormatterDateToForms, getTimeActually } from '../../scripts/FormatterDate';
 
 
 function FormViewLoanVehicle() {
@@ -15,9 +16,10 @@ function FormViewLoanVehicle() {
             setFormLoan({ ...formLoan, registerDate: formattedDate });
         })();
     }, []);
+    let hoy = FormatterDateToForms(new Date());
     const [formLoan, setFormLoan] = useState({
-        startDate: "",
-        endDate: "",
+        startDate: hoy,
+        endDate: hoy,
         registerDate: ""
     });
     const [formLoanVehicle, setFormLoanVehicle] = useState({
@@ -28,9 +30,9 @@ function FormViewLoanVehicle() {
         state: "Pendiente",
         destination: "",
         startingPlace: "",
-        exitHour: "",
-        returnHour: "",
-        personQuantity: 0,
+        exitHour: getTimeActually(),
+        returnHour: getTimeActually(),
+        personQuantity: 1,
         unityOrCarrer: "",
         assignedVehicle: "",
         active: 1
@@ -42,8 +44,38 @@ function FormViewLoanVehicle() {
         setFormLoan({ ...formLoan, [event.target.name]: event.target.value });
     }
 
-   
-    
+    console.log(hoy);
+    const initialFormLoan = {
+        startDate: hoy,
+        endDate: hoy,
+        registerDate: ""
+    };
+
+    const initialFormLoanVehicle = {
+        idLoan: 1,
+        idUser: 2,
+        activityType: "",
+        responsible: "",
+        state: "Pendiente",
+        destination: "",
+        startingPlace: "",
+        exitHour: getTimeActually(),
+        returnHour: getTimeActually(),
+        personQuantity: 1,
+        unityOrCarrer: "",
+        assignedVehicle: "",
+        active: 1
+
+    };
+    const handleReset = () => {
+        console.log("entra");
+        setFormLoan(initialFormLoan);
+        setFormLoanVehicle(initialFormLoanVehicle);
+    }
+    const handleBack = () => {
+        navigate('/loanVehicle');
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (formLoanVehicle.responsible === "" || formLoanVehicle.destination === "" || formLoanVehicle.startingPlace === "" || formLoanVehicle.unityOrCarrer === "") {
@@ -53,16 +85,16 @@ function FormViewLoanVehicle() {
                 'error'
             )
         } else {
-            
+
             await createLoan(formLoan).then((data) => {
-                console.log('res', data.data);
-                formLoanVehicle.idLoan=parseInt(data.data.id);
-                 createLoanVehicle(formLoanVehicle).then((data) => {
-                
-                    console.log('res', data.data)
+                console.log('res', data);
+                formLoanVehicle.idLoan = data.idLoan;
+                createLoanVehicle(formLoanVehicle).then((data2) => {
+
+                    console.log('res', data2)
                     navigate('/loanVehicle');
                 })
-               
+
             })
                 .catch((error) => {
                     console.log('error', error)
@@ -71,7 +103,7 @@ function FormViewLoanVehicle() {
 
             Swal.fire(
                 '¡Guardado!',
-                'Prestámo de Vehículo guardada con éxito',
+                'Prestámo de Vehículo guardado con éxito',
                 'success'
             )
 
@@ -107,13 +139,13 @@ function FormViewLoanVehicle() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <label>N° de pasajeros:</label>
-                        <input type="number" required className="form-control" name="personQuantity" value={formLoanVehicle.personQuantity} onChange={(event) => { setObject(event) }} />
+                        <input required min={1} type="number" className="form-control" name="personQuantity" value={formLoanVehicle.personQuantity} onChange={(event) => { setObject(event) }} />
                     </div>
 
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start">
                         <label>Fecha de partida:</label>
-                        <input type="date" required className="form-control" name="startDate" value={formLoan.startDate} onChange={(event) => { setObject(event) }} />
+                        <input type="date" required className="form-control" name="startDate" min={hoy} value={formLoan.startDate} onChange={(event) => { setObject(event) }} />
                     </div>
                     <div className="col-sm-12"></div>
 
@@ -125,7 +157,7 @@ function FormViewLoanVehicle() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start">
                         <label>Fecha de regreso:</label>
-                        <input type="date" required className="form-control" name="endDate" value={formLoan.endDate} onChange={(event) => { setObject(event) }} />
+                        <input type="date" required className="form-control" name="endDate" min={formLoan.startDate} value={formLoan.endDate} onChange={(event) => { setObject(event) }} />
                     </div>
                     <div className="col-sm-12"></div>
 
@@ -154,7 +186,8 @@ function FormViewLoanVehicle() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <button type="submit" className="btn btn-primary" >Guardar</button>
-                        <button type="reset" className="btn btn-warning">Limpiar</button>
+                        <button type="button" className="btn btn-warning" onClick={handleReset}>Limpiar</button>
+                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button>
                     </div>
 
 

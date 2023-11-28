@@ -5,6 +5,8 @@ import { getStudyRoom, getStudyRoomById } from "../../service/StudyRoom/StudyRoo
 import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 function Furniture() {
     const [furniture, setFurniture] = useState([]);
     const [studyRooms, setStudyRooms] = useState([]);
@@ -14,7 +16,7 @@ function Furniture() {
             const response = await getFurniture();
             setFurniture(response);
             console.log(response);
-            const responseStudyRooms = await getStudyRoom(); 
+            const responseStudyRooms = await getStudyRoom();
             setStudyRooms(responseStudyRooms);
         })();
     }, []);
@@ -39,7 +41,7 @@ function Furniture() {
             if (result.isConfirmed) {
                 Swal.fire(
                     '¡Eliminado!',
-                    'El mueble ha sido eliminada.',
+                    'El mueble ha sido eliminado.',
                     'success'
                 )
                 await deleteFurniture(id).then(async (data) => {
@@ -68,40 +70,56 @@ function Furniture() {
     }
     return (
 
-        <div className='container pt-5'>
-              <h1>Listado de mobiliario</h1>
+        <div>
+            <h1>Listado de mobiliario</h1>
             <Button className="mb-2" variant="primary" href="/furnitures/create">Crear mueble</Button>
-            <Table className="table border shadow py-4 mb-5">
-                <thead>
-                    <tr>
-                       
-                        <th>Pertenece a</th>
-                        <th>Mueble</th>
-                        <th>Capacidad</th>
+            <div className=" py-4 col-6 offset-3 row justify-content-center">
+                <Table className="table border shadow py-4 mb-5">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Pertenece a</th>
+                            <th>Mueble</th>
+                            <th>Capacidad</th>
+                            <th colSpan={2}>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            furniture.filter(res => { return res.active == 1 }).map((f, index) => (
+                                <tr key={f.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{getStudyRoomById(f.id_study_room)}</td>
+                                    <td>{f.furniture}</td>
+                                    <td>{f.capacity}</td>
+                                    <td>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Modificar</Tooltip>}
+                                        >
+                                            <button className="btn btn-warning" onClick={() => editFurniture(f.id)}>
+                                                <FaRegEdit />
+                                            </button>
+                                        </OverlayTrigger>
+                                    </td>
+                                    <td>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip>Eliminar</Tooltip>}
+                                        >
+                                            <button className="btn btn-danger" onClick={() => deleteFurnitures(f.id)}>
+                                                <FaTrashAlt />
+                                            </button>
+                                        </OverlayTrigger>
 
-
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        furniture.filter(res => { return res.active == 1 }).map((f, index) => (
-                            <tr key={f.id}>
-                               
-                                <td>{getStudyRoomById(f.id_study_room)}</td>
-                                <td>{f.furniture}</td>
-                                <td>{f.capacity}</td>
-
-                                <td>
-                                    <Button variant="primary" onClick={() => editFurniture(f.id)} style={{marginRight:'5px'}}>Editar</Button>
-                                    <Button variant="danger" onClick={() => deleteFurnitures(f.id)}>Eliminar</Button>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </Table >
-           
+                                    </td>
+                                    
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </Table >
+            </div>
         </div>
     );
 

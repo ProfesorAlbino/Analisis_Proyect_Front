@@ -3,23 +3,24 @@ import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { deleteLoanVehicle, getLoanVehicle } from "../../service/LoanVehicle/LoanVehicleService";
+
 import { deleteLoan, getLoans } from '../../service/LoanApi/LoanApi';
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FormatterDate } from '../../scripts/FormatterDate';
+import { deleteLoanStudyRoom, getLoanStudyRoom } from '../../service/LoanStudyRoom/LoanStudyRoom';
 
-import ActivityType from './components/ActivityType';
-function LoanVehicle() {
-    const [loanVehicle, setLoanVehicle] = useState([]);
+
+function LoanStudyRoom() {
+    const [loanStudyRoom, setLoanStudyRoom] = useState([]);
     const [loans, setLoans] = useState([]);
-    const activity = "";
+   
     const navigate = useNavigate();
     useEffect(() => {
         (async () => {
-            const response = await getLoanVehicle();
+            const response = await getLoanStudyRoom();
 
-            setLoanVehicle(response);
+            setLoanStudyRoom(response);
             const responseLoan = await getLoans();
 
             setLoans(responseLoan);
@@ -29,7 +30,7 @@ function LoanVehicle() {
         })();
     }, []);
 
-    async function deleteLoanV(id) {
+    async function deleteLoanSR(id) {
 
         Swal.fire({
             title: '¿Estás seguro?',
@@ -43,12 +44,12 @@ function LoanVehicle() {
             if (result.isConfirmed) {
                 Swal.fire(
                     '¡Eliminado!',
-                    'El Prestámo de Vehículo ha sido eliminado.',
+                    'El Prestámo de Sala de estudio ha sido eliminado.',
                     'success'
                 )
-                await deleteLoanVehicle(id).then(async (data) => {
-                    const response = await getLoanVehicle();
-                    setLoanVehicle(response);
+                await deleteLoanStudyRoom(id).then(async (data) => {
+                    const response = await getLoanStudyRoom();
+                    setLoanStudyRoom(response);
                 })
                     .catch((error) => {
                         console.log('error', error)
@@ -58,64 +59,57 @@ function LoanVehicle() {
                 Swal.fire
                     (
                         'Error',
-                        'No se pudo eliminar el Prestámo de Vehículo.',
+                        'No se pudo eliminar el Prestámo de Sala de estudio.',
                         'error'
                     );
             }
         })
     }
 
-    function editLoanVehicle(id) {
+    function editLoanStudyRoom(id) {
 
-        navigate("/loanVehicle/edit/" + id);
+        navigate("/loanStudyRoom/edit/" + id);
 
     }
     return (
 
         <div>
-            <h1>Listado de préstamo de vehículo</h1>
-            <Button className="mb-2" variant="primary" href="/loanVehicle/create">Crear Prestámo de Vehículo</Button>
+            <h1>Listado de préstamo de sala de estudio</h1>
+            <Button className="mb-2" variant="primary" href="/loanStudyRoom/create">Crear Prestámo de Sala de estudio</Button>
             <div className=" py-4 col-6 offset-3 row justify-content-center">
                 <Table className="table border shadow py-4 mb-5">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Unidad o Carrera</th>
-                            <th>Responsable</th>
+                            <th>Fecha de inicio</th>
+                            <th>Hora de inicio</th>
+                            <th>Fecha de finalización</th>
+                            <th>Hora de finalización</th>
                             <th>Cantidad de personas</th>
-                            <th>Destino</th>
-                            <th>Lugar de salida</th>
-                            <th>Fecha salida - regreso</th>
-                            <th>Hora salida - regreso</th>
-                            <th>Tipo de actividad</th>
+                            <th>Sala de estudio</th>
                             <th>Estado</th>
                             <th colSpan={2}>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            loanVehicle.filter(res => { return res.active == 1 }).map((loan, index) => (
+                            loanStudyRoom.filter(res => { return res.active == 1 }).map((loan, index) => (
 
                                 <tr key={loan.id}>
                                     <td>{index + 1}</td>
-                                    <td>{loan.unityOrCarrer}</td>
-                                    <td>{loan.responsible}</td>
-                                    <td>{loan.personQuantity}</td>
-                                    <td>{loan.destination}</td>
-                                    <td>{loan.startingPlace}</td>
-
-                                    <td>{FormatterDate(loan.startDate)} - {FormatterDate(loan.endDate)} </td>
-
-
-                                    <td>{loan.exitHour} - {loan.returnHour}</td>
-                                    <td><ActivityType activity={loan.activityType}/></td>
+                                    <td>{FormatterDate(loan.startDate)}</td>
+                                    <td>{loan.returnTime}</td>
+                                    <td>{FormatterDate(loan.endDate)}</td>
+                                    <td>{loan.exitTime}</td>
+                                    <td>{loan.numberOfPeople}</td>
+                    
                                     <td>{loan.state}</td>
                                     <td>
                                         <OverlayTrigger
                                             placement="top"
                                             overlay={<Tooltip>Modificar</Tooltip>}
                                         >
-                                            <button className="btn btn-warning" onClick={() => editLoanVehicle(loan.id)}>
+                                            <button className="btn btn-warning" onClick={() => editLoanStudyRoom(loan.id)}>
                                                 <FaRegEdit />
                                             </button>
                                         </OverlayTrigger>
@@ -125,7 +119,7 @@ function LoanVehicle() {
                                             placement="top"
                                             overlay={<Tooltip>Eliminar</Tooltip>}
                                         >
-                                            <button className="btn btn-danger" onClick={() => deleteLoanV(loan.id)}>
+                                            <button className="btn btn-danger" onClick={() => deleteLoanSR(loan.id)}>
                                                 <FaTrashAlt />
                                             </button>
                                         </OverlayTrigger>
@@ -141,4 +135,4 @@ function LoanVehicle() {
     );
 
 }
-export default LoanVehicle;
+export default LoanStudyRoom;
