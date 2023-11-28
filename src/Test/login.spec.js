@@ -12,4 +12,6 @@ describe("login", () => {
         //await driver.sleep(5000);
         await driver.quit();
     });
+    //Prueba de login con credenciales incorrectas
+    //2
 });
