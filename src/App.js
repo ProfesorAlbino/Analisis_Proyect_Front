@@ -3,6 +3,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 //import './css/Footer.css';
 
+import Register from './page/Login/Register';
 import Login from './page/Login/Login';
 import User from './page/User/User';
 import StudyRoom from './page/StudyRoom/StudyRoom';
@@ -65,6 +66,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
           <Route exact path="/users" element={<User />} />
           <Route exact path="/studyRooms" element={<StudyRoom />} />
           <Route exact path="/studyRooms/create" element={<FormViewStudyRoom />} />
