@@ -8,19 +8,19 @@ pipeline {
         }
 
          stage('Test') {
-            steps {
-                script {
-                    echo 'Testing..'
-                    try {
-                        
-                        sh 'D:/Jeykel/UCR/CuartoYear/Segundo semestre/Analisis de Sistemas/Tarea/Proyecto Analisis Codigo/Analisis_Proyect_Front/login.spec.js'
-                    } catch (Exception e) {
-                        currentBuild.result = 'FAILURE'
-                        error("Error en la etapa de prueba: ${e.message}")
-                    }
-                }
+    steps {
+        script {
+            echo 'Running Selenium Tests..'
+            try {
+                sh 'npm install'  // Instala las dependencias del proyecto, si es necesario
+                sh 'node login.spec.js'  // Reemplaza con el nombre real de tu archivo de prueba
+            } catch (Exception e) {
+                currentBuild.result = 'FAILURE'
+                error("Error en la etapa de prueba: ${e.message}")
             }
         }
+    }
+         }
 
         stage('Deploy') {
             steps {
