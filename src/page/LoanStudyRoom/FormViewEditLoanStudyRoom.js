@@ -143,7 +143,7 @@ function FormViewEditLoanStudyRoom() {
         <div className="container">
             <form onSubmit={handleSubmit}>
                 <div className="row">
-                    <h1>Solicitud de prestamo de sala de estudio</h1>
+                    <h1>Solicitud de préstamo de sala de estudio</h1>
                     <div className="col-sm-6 text-start">
                         <label>N° de personas:</label>
                         <input type="number" min={1} required className="form-control" name="numberOfPeople" value={formLoanStudyRoom.numberOfPeople} onChange={(event) => { setObject(event) }} />
