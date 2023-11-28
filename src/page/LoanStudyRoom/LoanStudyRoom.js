@@ -4,11 +4,12 @@ import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
-import { deleteLoan, getLoans } from '../../service/LoanApi/LoanApi';
+import {  getLoans } from '../../service/LoanApi/LoanApi';
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FormatterDate } from '../../scripts/FormatterDate';
 import { deleteLoanStudyRoom, getLoanStudyRoom } from '../../service/LoanStudyRoom/LoanStudyRoom';
+import { getStudyRoomById } from '../../service/StudyRoom/StudyRoomService';
 
 
 function LoanStudyRoom() {
@@ -20,6 +21,17 @@ function LoanStudyRoom() {
         (async () => {
             const response = await getLoanStudyRoom();
 
+           
+            let temporal = [];
+            for (let i = 0; i < response.length; i++) {
+                response[i].name = "";
+            }
+            for (let i = 0; i < response.length; i++) {
+                let res = await getStudyRoomById(response[i].studyRoomId);
+
+                response[i].name = res.name;
+            }
+
             setLoanStudyRoom(response);
             const responseLoan = await getLoans();
 
@@ -29,6 +41,7 @@ function LoanStudyRoom() {
             console.log(response);
         })();
     }, []);
+    
 
     async function deleteLoanSR(id) {
 
@@ -69,6 +82,7 @@ function LoanStudyRoom() {
     function editLoanStudyRoom(id) {
 
         navigate("/loanStudyRoom/edit/" + id);
+        
 
     }
     return (
@@ -87,7 +101,7 @@ function LoanStudyRoom() {
                             <th>Hora de finalización</th>
                             <th>Cantidad de personas</th>
                             <th>Sala de estudio</th>
-                            <th>Estado</th>
+                            
                             <th colSpan={2}>Acciones</th>
                         </tr>
                     </thead>
@@ -98,12 +112,12 @@ function LoanStudyRoom() {
                                 <tr key={loan.id}>
                                     <td>{index + 1}</td>
                                     <td>{FormatterDate(loan.startDate)}</td>
-                                    <td>{loan.returnTime}</td>
+                                    <td>{loan.returnHour}</td>
                                     <td>{FormatterDate(loan.endDate)}</td>
-                                    <td>{loan.exitTime}</td>
+                                    <td>{loan.exitHour}</td>
                                     <td>{loan.numberOfPeople}</td>
-                    
-                                    <td>{loan.state}</td>
+                                    <td>{loan.name}</td>
+                                   
                                     <td>
                                         <OverlayTrigger
                                             placement="top"

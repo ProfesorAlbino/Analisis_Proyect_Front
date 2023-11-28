@@ -7,7 +7,7 @@ export async function getStudyRoom() {
     try {
         console.log(link);
         const response = await axios.get(link + 'api/StudyRooms/getAll');
-        //console.log(response.data);
+        console.log(response.data);
         return response.data; // Devuelve el contenido JSON de la respuesta
     } catch (error) {
         console.error('Error al obtener los datos:', error);
