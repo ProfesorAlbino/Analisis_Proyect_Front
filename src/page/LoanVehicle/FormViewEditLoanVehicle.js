@@ -7,26 +7,26 @@ import { getLoanById, updateLoan, updateLoans } from '../../service/LoanApi/Loan
 
 
 function FormViewEditLoanVehicle() {
-   
+
     const navigate = useNavigate();
     const { id } = useParams();
     const formatDate = (date) => {
         const d = new Date(date);
-        const day = d.getDate().toString().padStart(2, '0');
-        const month = (d.getMonth()).toString().padStart(2, '0');
-        const year = d.getFullYear();
+        const day = d.getUTCDate().toString().padStart(2, '0');
+        const month = (d.getUTCMonth() + 1).toString().padStart(2, '0');
+        const year = d.getUTCFullYear();
 
         return `${year}-${month}-${day}`;
     };
 
     const [formLoan, setFormLoan] = useState({
-        id:0,
+        id: 0,
         startDate: "",
         endDate: "",
         registerDate: ""
     });
     const [formLoanVehicle, setFormLoanVehicle] = useState({
-        id:0,
+        id: 0,
         idLoan: 1,
         idUser: 2,
         activityType: "",
@@ -50,17 +50,17 @@ function FormViewEditLoanVehicle() {
                     setFormLoanVehicle(data);
                     console.log(data)
                     getLoanById(data.idLoan).then((response) => {
-                        response.startDate= formatDate(response.startDate);
-                        response.endDate=formatDate(response.endDate)
+                        response.startDate = formatDate(response.startDate);
+                        response.endDate = formatDate(response.endDate)
                         console.log(response);
                         setFormLoan(response);
-    
-    
+
+
                     })
 
                 })
             }
-                    
+
         })();
     }, []);
 
@@ -73,9 +73,9 @@ function FormViewEditLoanVehicle() {
         startDate: "",
         endDate: "",
         registerDate: ""
-      };
-      
-      const initialFormLoanVehicle = {
+    };
+
+    const initialFormLoanVehicle = {
         idLoan: 1,
         idUser: 2,
         activityType: "",
@@ -89,14 +89,14 @@ function FormViewEditLoanVehicle() {
         unityOrCarrer: "",
         assignedVehicle: "",
         active: 1
-        
-      };
+
+    };
     const handleReset = () => {
         console.log("entra");
         setFormLoan(initialFormLoan);
         setFormLoanVehicle(initialFormLoanVehicle);
-      }
-      const handleBack = () => {
+    }
+    const handleBack = () => {
         navigate('/loanVehicle');
     }
 
@@ -110,12 +110,12 @@ function FormViewEditLoanVehicle() {
             )
         } else {
 
-             updateLoan(formLoan).then((data) => {
+            updateLoan(formLoan).then((data) => {
                 console.log('res', data);
                 formLoanVehicle.idLoan = (data.id);
                 updateLoanVehicle(formLoanVehicle).then((data) => {
 
-                    console.log('res',data)
+                    console.log('res', data)
                     navigate('/loanVehicle');
                 })
 
@@ -181,7 +181,7 @@ function FormViewEditLoanVehicle() {
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start">
                         <label>Fecha de regreso:</label>
-                        <input type="date" required className="form-control" name="endDate"  min={formLoan.startDate} value={formLoan.endDate} onChange={(event) => { setObject(event) }} />
+                        <input type="date" required className="form-control" name="endDate" min={formLoan.startDate} value={formLoan.endDate} onChange={(event) => { setObject(event) }} />
                     </div>
                     <div className="col-sm-12"></div>
 
@@ -211,7 +211,7 @@ function FormViewEditLoanVehicle() {
                     <div className="col-sm-6 text-start mt-2">
                         <button type="submit" className="btn btn-primary" >Guardar</button>
                         <button type="button" className="btn btn-warning" onClick={handleReset}>Limpiar</button>
-                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button> 
+                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button>
                     </div>
 
 
