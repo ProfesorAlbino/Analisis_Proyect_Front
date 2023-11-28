@@ -12,9 +12,7 @@ pipeline {
         script {
             echo 'Running Selenium Tests..'
             try {
-                dir('../'){
-                sh 'npm run test'  // Reemplaza con el nombre real de tu archivo de prueba
-                }
+                sh 'nodeTest2'  // Reemplaza con el nombre real de tu archivo de prueba
             } catch (Exception e) {
                 currentBuild.result = 'FAILURE'
                 error("Error en la etapa de prueba: ${e.message}")
