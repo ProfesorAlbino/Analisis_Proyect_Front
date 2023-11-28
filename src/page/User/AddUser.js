@@ -6,6 +6,9 @@ import Swal from 'sweetalert2';
 import UserIdVerify from '../../scripts/UserIdVerify';
 import { Toaster, toast } from "sonner";
 
+import SuccessMessages from '../../enums/SuccessMessages';
+import ErrorMessages from '../../enums/ErrorMessages';
+
 function UserAdd() {
     const [role, setRole] = useState([]);
     const [isEditing, setIsEditing] = useState(localStorage.getItem("id") ? true : false);
@@ -67,8 +70,7 @@ function UserAdd() {
                 }
                 window.location.href = !isEditing ? "/users?success" : "/users?editSuccess";
             } catch (error) {
-                console.error(error);
-                toast.error(error.response.data === 'Usuario exitente' ? 'Usuario existente' : 'Error al crear usuario');
+                toast.error(error.response.data === ErrorMessages.USER_EXISTING ? ErrorMessages.USER_EXISTING : ErrorMessages.SOMETHING_WENT_WRONG);
             }
 
         }

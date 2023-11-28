@@ -7,7 +7,8 @@ const ErrorMessages = {
     PASSWORDS_NOT_MATCH: "Las contraseñas no coinciden",
     INVALID_DATA: "Error en los datos ingresados",
     REGISTRATION_ERROR: "Error al registrar el usuario",
-    USER_CREATION_ERROR: "Error al crear el usuario"
+    USER_CREATION_ERROR: "Error al crear el usuario",
+    SOMETHING_WENT_WRONG: "Algo salió mal",
 };
 
 

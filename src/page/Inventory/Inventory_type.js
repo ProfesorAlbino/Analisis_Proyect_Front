@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 
+import Swal from 'sweetalert2';
+import { Toaster, toast } from 'sonner';
+
 import { deleteInventoryType, getInventoryTypesByIdInventory } from '../../service/InventoryApi/InventoryTypeApi';
 
 function InventoryType() {
@@ -18,6 +21,20 @@ function InventoryType() {
     }, []);
 
     function deleteInventoryTypeS(id) {
+       
+        const result = Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Desea eliminar el tipo de inventario?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#dc3545',
+            cancelButtonText: 'No, ¡cancelar!',
+            confirmButtonText: 'Si, ¡eliminar!'
+        });
+
+        if (!result.isConfirmed) return;
+
         deleteInventoryType(id);
         getInventoryType();
         window.location.reload();

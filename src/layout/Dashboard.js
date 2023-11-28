@@ -7,7 +7,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import Accordion from 'react-bootstrap/Accordion';
 import { VscThreeBars } from "react-icons/vsc";
 import { Link } from "react-router-dom";
-import { encryptAES, decryptAES } from '../scripts/AES-256';
 
 
 const options = [

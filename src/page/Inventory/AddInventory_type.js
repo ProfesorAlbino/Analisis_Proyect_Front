@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { getInventoryType, createInventoryType, updateInventoryType } from '../../service/InventoryApi/InventoryTypeApi';
+import Swal from 'sweetalert2';
+import { Toaster, toast } from 'sonner';
 
 function InventoryTypeAdd() {
     const [isEditing, setIsEditing] = useState(false);
@@ -8,6 +10,22 @@ function InventoryTypeAdd() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        const confirm = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Desea crear un tipo de inventario?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#dc3545',
+            cancelButtonText: 'No, ¡cancelar!',
+            confirmButtonText: 'Si, ¡crear!'
+        });
+
+        if (!confirm.isConfirmed) {
+            return;
+        }
+
         const form = event.target;
         const type = form.type.value;
 
