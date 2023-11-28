@@ -12,7 +12,7 @@ pipeline {
         script {
             echo 'Running Selenium Tests..'
             try {
-                dir('src/Test'){
+                dir('Test'){
                 sh 'npm test'  // Reemplaza con el nombre real de tu archivo de prueba
                 }
             } catch (Exception e) {
