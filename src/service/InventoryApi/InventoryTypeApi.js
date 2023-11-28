@@ -32,6 +32,16 @@ export async function getInventoryTypesByIdInventory(id) {
     }
 }
 
+export async function getInventoryTypeByIdInventory(id) {
+    try {
+        const response = await axios.get(url + 'getInventoryTypeByIdInventory/' + id);
+        return response.data; 
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error;
+    }
+}
+
 export async function createInventoryType(data) {
     try {
         const response = await axios.post(url + 'createInventoryType/', data);

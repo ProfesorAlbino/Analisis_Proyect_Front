@@ -17,8 +17,6 @@ function AreaAdd() {
             area1
         };
 
-        console.log(newArea);
-
         try {
             if (!isEditing) {
                 const response = await createArea(newArea);

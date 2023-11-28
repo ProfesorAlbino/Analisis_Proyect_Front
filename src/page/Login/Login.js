@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { login } from '../../service/UsersApi/LoginApi';
 import { Toaster, toast } from "sonner";
 
+import ErrorMessages from '../../enums/ErrorMessages';
+
 import '../../css/LoginCss/Login.css';
 
 function Login() {
@@ -20,10 +22,10 @@ function Login() {
                 sessionStorage.setItem('user', JSON.stringify(response));
                 window.location.href = '/';
             } else {
-                toast.error("Usuario o contraseña incorrectos");
+                toast.error(ErrorMessages.INVALID_CREDENTIALS);
             }
         }).catch((error) => {
-            toast.error(error.request.status === 401 ? "Contraseña incorrecta" : "Usuario o contraseña incorrectos");
+            toast.error(error.request.status === 401 ? ErrorMessages.INVALID_PASSWORD : ErrorMessages.INVALID_CREDENTIALS);
         });
     }
 

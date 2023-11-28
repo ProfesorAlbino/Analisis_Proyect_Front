@@ -3,6 +3,9 @@ import { Button, Table } from 'react-bootstrap';
 
 import { deleteArea, getAreasByIdInventory } from '../../service/InventoryApi/AreaApi';
 
+import Swal from 'sweetalert2';
+import { Toaster, toast } from 'sonner';
+
 function Area() {
     const [area, setArea] = useState([]);
 
@@ -18,6 +21,19 @@ function Area() {
     }, []);
 
     function deleteAreaS(id) {
+        const result = Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Desea eliminar el area?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#dc3545',
+            cancelButtonText: 'No, ¡cancelar!',
+            confirmButtonText: 'Si, ¡eliminar!'
+        });
+
+        if (!result.isConfirmed) return;
+
         deleteArea(id);
         getArea();
         window.location.reload();
