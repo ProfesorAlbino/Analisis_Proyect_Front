@@ -85,6 +85,10 @@ function User() {
         }
     }
 
+    const returnHome = () => {
+        window.location.href = "/";
+    }
+
     return (
         <div className='container pt-3'>
             <div className="row">
@@ -105,8 +109,10 @@ function User() {
                     </Row>
                 </Form>
             </div>
+            <Button variant="primary" onClick={returnHome}>Regresar</Button>
             <h1>Usuarios</h1>
             <Button variant="primary" href="/users/create">Crear usuario</Button>
+
             <Table className='border shadow mt-2 mb-5'>
                 {loading ?
                     <>
@@ -143,13 +149,15 @@ function User() {
                                 <td>{user.phone}</td>
                                 <td>{user.career}</td>
                                 <td>{FormatterDate(user.creationDate)}</td>
-                                <td>
-                                    <OverlayTrigger placement="top" overlay={<Tooltip>Eliminar</Tooltip>}>
-                                        <Button variant="danger" onClick={() => deleteUser(user.id)}><FaTrashAlt /></Button>
-                                    </OverlayTrigger>
-                                    <OverlayTrigger placement="top" overlay={<Tooltip>Editar</Tooltip>}>
-                                        <Button variant="primary" onClick={() => editUser(user.id)}><FaRegEdit /></Button>
-                                    </OverlayTrigger>
+                                <td >
+                                    <div className='grid gap-0 column-gap-3'>
+                                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Editar</Tooltip>}>
+                                            <Button variant="warning" onClick={() => editUser(user.id)}><FaRegEdit /></Button>
+                                        </OverlayTrigger>
+                                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Eliminar</Tooltip>}>
+                                            <Button variant="danger" onClick={() => deleteUser(user.id)}><FaTrashAlt /></Button>
+                                        </OverlayTrigger>
+                                    </div>
                                 </td>
                             </tr>
                         ))

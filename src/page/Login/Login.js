@@ -15,10 +15,7 @@ function Login() {
             password: event.target[1].value
         }
 
-        console.log(user);
-
         login(user).then((response) => {
-            console.log(response);
             if (response) {
                 sessionStorage.setItem('user', JSON.stringify(response));
                 window.location.href = '/';
@@ -26,7 +23,6 @@ function Login() {
                 toast.error("Usuario o contraseña incorrectos");
             }
         }).catch((error) => {
-            console.log(error);
             toast.error(error.request.status === 401 ? "Contraseña incorrecta" : "Usuario o contraseña incorrectos");
         });
     }
@@ -49,7 +45,7 @@ function Login() {
                         </button></center>
                 </form>
                 <br></br>
-                <Link type="button" className="btn btn-outline-primary ms-4" to="/register">Registrarse</Link>
+                <Link type="button" className="btn btn-outline-primary " to="/register">Registrarse</Link>
             </div>
             <Toaster richColors />
         </>

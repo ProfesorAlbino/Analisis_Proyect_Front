@@ -7,25 +7,17 @@ pipeline {
             }
         }
 
-         stage('Test') {
-    steps {
-        script {
-            echo 'Running Selenium Tests..'
-            try {
-                dir('Test'){
-                sh 'npm run test'  // Reemplaza con el nombre real de tu archivo de prueba
-                }
-            } catch (Exception e) {
-                currentBuild.result = 'FAILURE'
-                error("Error en la etapa de prueba: ${e.message}")
+        stage('Test') {
+            steps {
+                echo 'Testing....'
+                sh 'npm test'
             }
-        }
-    }
          }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                sh 'npm start'
             }
         }
     }
