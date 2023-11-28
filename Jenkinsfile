@@ -19,5 +19,4 @@ pipeline {
                 sh 'npm start'
             }
         }
-    }
 }
