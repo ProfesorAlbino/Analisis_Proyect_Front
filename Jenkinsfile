@@ -12,8 +12,7 @@ pipeline {
         script {
             echo 'Running Selenium Tests..'
             try {
-                sh 'npm install'  // Instala las dependencias del proyecto, si es necesario
-                sh 'node login.spec.js'  // Reemplaza con el nombre real de tu archivo de prueba
+                sh 'npm test'  // Reemplaza con el nombre real de tu archivo de prueba
             } catch (Exception e) {
                 currentBuild.result = 'FAILURE'
                 error("Error en la etapa de prueba: ${e.message}")
