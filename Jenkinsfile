@@ -4,22 +4,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh 'npm install'
             }
         }
 
-         stage('Test') {
-    steps {
-        script {
-            echo 'Running Selenium Tests..'
-            try {
-                sh 'npm test'  // Reemplaza con el nombre real de tu archivo de prueba
-            } catch (Exception e) {
-                currentBuild.result = 'FAILURE'
-                error("Error en la etapa de prueba: ${e.message}")
+        stage('Test') {
+            steps {
+                echo 'Testing....'
+                sh 'npm test'
             }
-        }
-    }
          }
 
         stage('Deploy') {
