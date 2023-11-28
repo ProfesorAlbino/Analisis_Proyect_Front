@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { deleteClassRoom, getClassRooms } from "../../service/ClassRoomApi/ClassRoomService";
-import { Button, Table } from 'react-bootstrap';
+import { FaRegEdit, FaRegEye, FaTrashAlt } from 'react-icons/fa';
+import { Button, Col, Form, OverlayTrigger, Row, Table, Tooltip } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { deleteLoanClassRoom, getLoanClassRooms } from '../../service/ClassRoomApi/LoanClassRoomService';
+import { deleteLoanClassRoom, getLoanClassRoom, getLoanClassRooms, updateLoanClassRoom } from '../../service/ClassRoomApi/LoanClassRoomService';
 import { getLoan, getLoans } from '../../service/ClassRoomApi/LoanService';
 import { getUserrs } from '../../service/UsersApi/UserApi';
-function ClassRoom() {
+import { Link } from 'react-router-dom';
+
+function LoanClassRoom() {
     const [classRoom, setClassRoom] = useState([]);
     const [loanClass, setLoanClass] = useState([]);
-    const [loan, setLoan]= useState([]);
-    const [user, setUser]=useState([]);
+    const [loan, setLoan] = useState([]);
+    const [user, setUser] = useState([]);
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         (async () => {
             const response = await getClassRooms();
@@ -20,7 +23,7 @@ function ClassRoom() {
         })();
     }, []);
 
-    
+
     useEffect(() => {
         (async () => {
             const response = await getLoanClassRooms();
@@ -44,49 +47,49 @@ function ClassRoom() {
 
 
 
-
-    async function deleteLoanClassR(id) {
-
-
+    const deleteLoanClassRoom = async (loanClassRoom) => {
         Swal.fire({
-            title: '¿Estás seguro?',
-            text: "No podrás revertir esto.",
+            title: 'Confirmación de eliminación',
+            text: '¿Estás seguro de que deseas eliminar este registro?',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminarlo!'
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    '¡Eliminado!',
-                    'El reguistro ha sido eliminada.',
-                    'success'
-                )
-                await deleteLoanClassRoom(id).then(async (data) => {
-                    const response = await getLoanClassRooms();
-                    setLoanClass(response);
-                })
-                    .catch((error) => {
-                        console.log('error', error)
-                    })
-            } else {
-
-                Swal.fire
-                    (
-                        'Error',
-                        'No se pudo eliminar el reguistro.',
-                        'error'
-                    );
+                try {
+                    console.log(loanClassRoom)
+                    loanClassRoom.inactive = 1
+                    updateLoanClassRoom(loanClassRoom)
+                    Swal.fire({
+                        title: 'Registro eliminado',
+                        text: 'El registro se ha eliminado correctamente.',
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } catch (error) {
+                    console.log(error)
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ocurrió un error al eliminar el registro.',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
             }
-        })
+        });
+    };
+
+
+    function editLoanClassRoom(id) {
+        window.location.href = `/loanClassRooms/editLoanClassRoom/${id}`;
     }
 
-    
-    function editLoanClassR(id) {
-        console.log("id=" + id);
-        navigate("/LoanClassRoom/EditLoanClassRoom/" + id);
-        console.log(id);
+    function viewLoanClassRoom(id){
+        window.location.href = `/loanClassRooms/ViewLoanClassRoom/${id}`;
+
     }
 
     return (
@@ -97,44 +100,55 @@ function ClassRoom() {
                 <thead>
                     <tr>
                         <th>Aula/Laboratorio</th>
-                        <th>Usuario</th>
                         <th>#Personas</th>
                         <th>Requerimientos</th>
                         <th>Estado</th>
-                       
+                        <th colSpan={2}>Acciones</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    
-                        {loanClass.map((loanClassRoom, index) => {
-            
+
+                    {loanClass.map((loanClassRoom, index) => {
+                        if (loanClassRoom.idUser === 3 && loanClassRoom.inactive === 0) {
                             const associatedClassRoom = classRoom.find(
                                 (cr) => cr.id === loanClassRoom.idClassroom
                             );
-
                             const associatedLoan = loan.find(
                                 (cr) => cr.id === loanClassRoom.idLoan
                             );
-                            const associatedUser = user.find(
-                                (cr) => cr.id === loanClassRoom.idUser
-                            );
-                            
-        
+
                             return (
                                 <tr key={loanClassRoom.id}>
                                     <td>{associatedClassRoom ? associatedClassRoom.numeration : '-'}</td>
-                                    <td>{associatedUser ? associatedUser.userId : '-'}</td>
                                     <td>{loanClassRoom.personQuantity}</td>
                                     <td>{loanClassRoom.requirements}</td>
                                     <td>{loanClassRoom.requestState}</td>
-                                    </tr>
-                    );
-                })}
+                                    <td>
+                                        <OverlayTrigger placement="top" overlay={<Tooltip>Ver</Tooltip>}>
+                                            <Button variant="success" onClick={() => viewLoanClassRoom(loanClassRoom.id)}> <FaRegEye />                                            </Button>
+                                        </OverlayTrigger>
+
+                                        <OverlayTrigger placement="top" overlay={<Tooltip>Modificar</Tooltip>}>
+                                            <Button variant="primary" onClick={() => editLoanClassRoom(loanClassRoom.id)}> <FaRegEdit />                                            </Button>
+                                        </OverlayTrigger>
+
+                                        <OverlayTrigger placement="top" overlay={<Tooltip>Eliminar</Tooltip>}>
+                                            <Button variant="danger" onClick={() => deleteLoanClassRoom(loanClassRoom)}><FaTrashAlt /></Button>
+                                        </OverlayTrigger>
+
+
+                                    </td>
+                                </tr>
+                            );
+                        }
+                    })}
+
                 </tbody>
             </Table >
-            
+
         </div>
     );
 
 }
-export default ClassRoom;
+export default LoanClassRoom;

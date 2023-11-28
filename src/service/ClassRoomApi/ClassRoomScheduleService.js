@@ -32,24 +32,31 @@ export async function createClassroomSchedules(data) {
     }
 }
 
-export async function getClassRoom(id){
-    return await axios.get(link+"api/ClassRooms/"+id);
+export async function getClassRoomSchedules(id){
+    return await axios.get(link+"api/ClassroomSchedules/"+id);
 }
 
-export async function updateClassRoom(data){
-    console.log('service',data)
-    const classRoom = {
-        "id":data.id,
-        "type": data.type,
-        "description": data.description,
-        "quantity": data.quantity,
-        "numeration": data.numeration,
-        "classroomSchedules": [],  // Colección vacía
-        "loanClassrooms": []      // Colección vacía
-    }
-    return await axios.put(link+"api/ClassRoom"+data.id,classRoom)
-}
+
 
 export async function deleteClassRoom(id){
     return await axios.delete(link+"api/ClassRooms/"+id);
+}
+
+
+export async function updateClassroomSchedules(data) {
+    const newClassroomSchedules = {
+        "id":data.id,
+        "Day": data.day,
+        "IdClassroom": data.idClassroom,
+        "StartHour": data.startHour+".0000000",
+        "EndHour": data.endHour+".0000000",
+    };
+
+    try {
+        const response = await axios.put(link + "api/ClassroomSchedules/update", newClassroomSchedules);
+        return response.data;
+    } catch (error) {
+        console.error("Error creating classroom schedule:", error);
+        throw error; 
+    }
 }

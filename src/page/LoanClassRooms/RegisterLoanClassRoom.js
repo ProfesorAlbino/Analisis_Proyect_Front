@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -19,7 +18,7 @@ function RegisterLoanClassRoom() {
             console.log(response);
         })();
     }, []);
- 
+
     const [userr, setuserr] = useState([]);
 
     useEffect(() => {
@@ -33,11 +32,15 @@ function RegisterLoanClassRoom() {
     const [loanClassRoom, setLoanClassRoom] = useState({
         id_loan: "",
         id_ClassRoom: "",
-        id_user:"",
+        id_user: "",
         person_quantity: 0,
         requirements: "",
-        request_state: "pendiente"
-      
+        IdSchedule:"",
+        request_state: "pendiente",
+        inactive:0
+
+
+
     });
 
     const setLoanObject = (event) => {
@@ -58,17 +61,17 @@ function RegisterLoanClassRoom() {
         day: "",
         id_ClassRoom: "",
         start_hour: "",
-       end_hour: ""
-      
+        end_hour: ""
+
     })
 
     const [checkAvailability, setCheckAvailability] = useState({
         classroomId: 0,
         day: "",
         startHour: "",
-        endHour:"",
-        startDate:"",
-        endDate:""
+        endHour: "",
+        startDate: "",
+        endDate: ""
     })
 
     const setSchedulesObject = (event) => {
@@ -77,6 +80,9 @@ function RegisterLoanClassRoom() {
 
     const setLoanAndAvailabilityValues = () => {
         loanClassRoom.id_user = userr.id;
+        setCheckAvailability(prevState => ({
+            ...prevState, classroomId: loanClassRoom.classroomId
+        }));
         checkAvailability.classroomId = loanClassRoom.id_ClassRoom;
         checkAvailability.day = classroomSchedules.day;
         checkAvailability.startHour = classroomSchedules.start_hour;
@@ -84,40 +90,43 @@ function RegisterLoanClassRoom() {
         checkAvailability.startDate = loan.start_date;
         checkAvailability.endDate = loan.end_date;
     };
-    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(classroomSchedules);
-    
+
         setLoanAndAvailabilityValues();
         console.log(checkAvailability);
-    
+
         try {
             const availabilityResult = await CheckAvailability(checkAvailability);
             console.log("Availability Check Result:", availabilityResult);
-    
+
             if (availabilityResult === false) {
-               
+
                 Swal.fire(
                     'Advertencia',
                     'El aula no está disponible en el horario seleccionado',
                     'warning'
                 );
             } else if (availabilityResult === true) {
-             
-    
+
+
                 const createLoanResult = await createLoan(loan);
                 loanClassRoom.id_loan = createLoanResult.id;
                 console.log("Loan Created:", createLoanResult);
-    
+
+                const createClassroomSchedulesResult = await createClassroomSchedules(classroomSchedules);
+                loanClassRoom.IdSchedule = createClassroomSchedulesResult.id;
+                console.log("ClassroomSchedules Created:", createClassroomSchedulesResult);
+
                 const createLoanClassRoomResult = await createLoanClassRoom(loanClassRoom);
                 console.log("LoanClassRoom Created:", createLoanClassRoomResult);
-    
-                const createClassroomSchedulesResult = await createClassroomSchedules(classroomSchedules);
-                console.log("ClassroomSchedules Created:", createClassroomSchedulesResult);
-    
-                navigate('/');
-    
+
+               
+
+                navigate('/LoanClassRoom');
+
                 Swal.fire(
                     '¡Guardado!',
                     'Solicitud guardada con éxito',
@@ -126,7 +135,7 @@ function RegisterLoanClassRoom() {
             }
         } catch (error) {
             console.log('Error:', error);
-    
+
             Swal.fire(
                 'Error',
                 'Hubo un problema al guardar la solicitud',
@@ -134,7 +143,7 @@ function RegisterLoanClassRoom() {
             );
         }
     };
-    
+
 
     let quantityValue;
 
@@ -153,8 +162,8 @@ function RegisterLoanClassRoom() {
                         <select required
                             className="form-select text-center"
                             name="id_ClassRoom"
-                            onChange={(event) => { setSchedulesObject(event);setObject(event) }}
-                           
+                            onChange={(event) => { setSchedulesObject(event); setObject(event) }}
+
                         >
                             <option value="">Seleccione</option>
                             {classRoom.map((classR, index) => {
@@ -250,6 +259,7 @@ function RegisterLoanClassRoom() {
                             className="form-control text-center"
                             name="person_quantity"
                             max={quantityValue}
+                            min="0"
                             step="1"
                             onChange={(event) => { setObject(event) }}
                             value={loanClassRoom.person_quantity}

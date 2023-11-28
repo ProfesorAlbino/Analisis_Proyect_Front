@@ -51,6 +51,11 @@ import EditLoanClassRoom from './page/LoanClassRooms/EditLoanClassRoom';
 import LoanVehicle from './page/LoanVehicle/LoanVehicle';
 import MoreInformationComputerEquipment from './page/ComputerEquipments/MoreInformationComputerEquipments';
 import AdminListLoan from './page/LoanComputerEquipment/Admin/AdminListLoan';
+import ViewLoanClassRoom from './page/LoanClassRooms/ViewLoanClassRoom';
+import AdminLoanClassRoom from './page/LoanClassRooms/AdminLoanClassRoom';
+import LoanFieldSport from './page/LoanSports/LoanFieldSport';
+import RegisterLoanFieldSport from './page/LoanSports/RegisterLoanFieldSport';
+import EditFieldSport from './page/LoanSports/EditFieldSport';
 
 function App() {
   return (
@@ -84,7 +89,12 @@ function App() {
           <Route exact path="/AddSanctionsReport" element={<AddSanctionsReport />} />
           <Route exact path="/loanClassRoom/RegisterLoanClassRoom" element={<RegisterLoanClassRoom/>}/>
           <Route exact path='/LoanClassRoom' element={<LoanClassRoom/>}/>
-          <Route exat path="/LoanClassRoom/EditLoanClassRoom/:id" element={<EditLoanClassRoom/>}/>
+          <Route exat path="/LoanClassRooms/EditLoanClassRoom/:id" element={<EditLoanClassRoom/>}/>
+          <Route exact path='/loanClassRooms/ViewLoanClassRoom/:id' element={<ViewLoanClassRoom/>}/>
+          <Route exact path='/AdminLoanClassRoom' element={<AdminLoanClassRoom/>}/>
+          <Route exact path='/LoanFieldSport' element={<LoanFieldSport/>}/>
+          <Route exact path='/RegisterLoanFieldSport' element={<RegisterLoanFieldSport/>}/>
+          <Route exact path='/LoanSports/EditFieldSport/:id' element={<EditFieldSport/>}/>
 
           <Route exact path="/listTitles" element={<ListTitles />} />
           <Route exact path="/addTitle" element={<AddTitle />} />

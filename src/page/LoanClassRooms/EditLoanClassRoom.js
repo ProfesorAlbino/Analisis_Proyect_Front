@@ -1,38 +1,64 @@
-import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getClassRooms } from "../../service/ClassRoomApi/ClassRoomService";
 import { getUserr } from '../../service/UsersApi/UserApi';
-import { CheckAvailability, createLoanClassRoom, getLoanClassRoom } from "../../service/ClassRoomApi/LoanClassRoomService";
-import { createLoan } from "../../service/ClassRoomApi/LoanService";
-import { createClassroomSchedules } from "../../service/ClassRoomApi/ClassRoomScheduleService";
+import { CheckAvailabilityUpdate, getLoanClassRoom, updateLoanClassRoom } from "../../service/ClassRoomApi/LoanClassRoomService";
+import { updateLoan, getLoan } from "../../service/ClassRoomApi/LoanService";
+import { updateClassroomSchedules, getClassRoomSchedules } from "../../service/ClassRoomApi/ClassRoomScheduleService";
 import { format, addDays } from 'date-fns';
-function RegisterLoanClassRoom() {
+function EditLoanClassRoom() {
     const navigate = useNavigate();
-    const {id}=useParams();
+    const { id } = useParams();
 
-    const [loanClassRoom, setLoanClassRoom] = useState({
-        id_loan: "",
-        id_ClassRoom: "",
-        id_user:"",
-        person_quantity: 0,
-        requirements: "",
-        request_state: ""
-      
-    });
+    const [loanClassRoom, setLoanClassRoom] = useState({});
+    const [classroomSchedules, setClassRoomSchedules] = useState({});
 
     useEffect(() => {
-        if (id != undefined) {
-    getLoanClassRoom(id).then((data) => {              
-                setLoanClassRoom(data.data);
-            })
+        if (id !== undefined) {
+            getLoanClassRoom(id)
+                .then((data) => {
+                    setLoanClassRoom(data.data);
+                    console.log(data.data);
+                })
                 .catch((error) => {
                     console.log(error);
-                })
+                });
         }
+    }, [id]);
 
-    }, [])
+    useEffect(() => {
+        if (loanClassRoom && loanClassRoom.idSchedule !== undefined) {
+            getClassRoomSchedules(loanClassRoom.idSchedule)
+                .then((data) => {
+                    setClassRoomSchedules(data.data);
+                    console.log(data.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    }, [loanClassRoom]);
+    useEffect(() => {
+        if (loanClassRoom && loanClassRoom.idLoan !== undefined) {
+            getLoan(loanClassRoom.idLoan)
+                .then((data) => {
+                    const formattedData = {
+                        ...data.data,
+                        startDate: format(new Date(data.data.startDate), 'yyyy-MM-dd'),
+                        endDate: format(new Date(data.data.endDate), 'yyyy-MM-dd'),
+                        registerDate: format(new Date(data.data.registerDate), 'yyyy-MM-dd'),
+                    };
+
+                    setLoan(formattedData);
+                    console.log('Datos del préstamo:', formattedData);
+                })
+                .catch((error) => {
+                    console.error('Error al obtener el préstamo:', error);
+                });
+        }
+    }, [loanClassRoom]);
+
 
     const [classRoom, setClassRoom] = useState([]);
     useEffect(() => {
@@ -42,7 +68,7 @@ function RegisterLoanClassRoom() {
             console.log(response);
         })();
     }, []);
- 
+
     const [userr, setuserr] = useState([]);
 
     useEffect(() => {
@@ -53,37 +79,30 @@ function RegisterLoanClassRoom() {
         })();
     }, []);
 
- 
+
 
     const setLoanObject = (event) => {
         setLoan({ ...loan, [event.target.name]: event.target.value });
     }
 
     const [loan, setLoan] = useState({
-        start_date: format(addDays(new Date(), 2), 'yyyy-MM-dd'),
-        end_date: "",
-        register_date: format(new Date(), 'yyyy-MM-dd')
+        startDate: format(addDays(new Date(), 2), 'yyyy-MM-dd'),
+        endDate: "",
+        registerDate: format(new Date(), 'yyyy-MM-dd')
     })
 
     const setObject = (event) => {
         setLoanClassRoom({ ...loanClassRoom, [event.target.name]: event.target.value });
     }
 
-    const [classroomSchedules, setClassRoomSchedules] = useState({
-        day: "",
-        id_ClassRoom: "",
-        start_hour: "",
-       end_hour: ""
-      
-    })
 
     const [checkAvailability, setCheckAvailability] = useState({
         classroomId: 0,
         day: "",
         startHour: "",
-        endHour:"",
-        startDate:"",
-        endDate:""
+        endHour: "",
+        startDate: "",
+        endDate: ""
     })
 
     const setSchedulesObject = (event) => {
@@ -92,47 +111,48 @@ function RegisterLoanClassRoom() {
 
     const setLoanAndAvailabilityValues = () => {
         loanClassRoom.id_user = userr.id;
-        checkAvailability.classroomId = loanClassRoom.id_ClassRoom;
+        loanClassRoom.inactive=0;
+        checkAvailability.classroomId = loanClassRoom.idClassroom;
         checkAvailability.day = classroomSchedules.day;
-        checkAvailability.startHour = classroomSchedules.start_hour;
-        checkAvailability.endHour = classroomSchedules.end_hour;
-        checkAvailability.startDate = loan.start_date;
-        checkAvailability.endDate = loan.end_date;
+        checkAvailability.startHour = classroomSchedules.startHour;
+        checkAvailability.endHour = classroomSchedules.endHour;
+        checkAvailability.startDate = loan.startDate;
+        checkAvailability.endDate = loan.endDate;
+
     };
-    
+    console.log(checkAvailability);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(classroomSchedules);
-    
+
         setLoanAndAvailabilityValues();
-        console.log(checkAvailability);
-    
+
         try {
-            const availabilityResult = await CheckAvailability(checkAvailability);
+            const availabilityResult = await CheckAvailabilityUpdate(checkAvailability);
             console.log("Availability Check Result:", availabilityResult);
-    
-            if (availabilityResult === 0) {
-               
+            console.log("Loan Created:", loan);
+
+            if (availabilityResult === false) {
+                console.log("Loan Created:", loan);
+
                 Swal.fire(
                     'Advertencia',
                     'El aula no está disponible en el horario seleccionado',
                     'warning'
                 );
-            } else if (availabilityResult === 1) {
-             
-    
-                const createLoanResult = await createLoan(loan);
+            } else if (availabilityResult === true) {
+
+                const createLoanResult = await updateLoan(loan);
                 loanClassRoom.id_loan = createLoanResult.id;
-                console.log("Loan Created:", createLoanResult);
-    
-                const createLoanClassRoomResult = await createLoanClassRoom(loanClassRoom);
+
+                const createLoanClassRoomResult = await updateLoanClassRoom(loanClassRoom);
                 console.log("LoanClassRoom Created:", createLoanClassRoomResult);
-    
-                const createClassroomSchedulesResult = await createClassroomSchedules(classroomSchedules);
+
+                const createClassroomSchedulesResult = await updateClassroomSchedules(classroomSchedules);
                 console.log("ClassroomSchedules Created:", createClassroomSchedulesResult);
-    
-                navigate('/');
-    
+
+                navigate('/LoanClassRoom');
+
                 Swal.fire(
                     '¡Guardado!',
                     'Solicitud guardada con éxito',
@@ -141,7 +161,7 @@ function RegisterLoanClassRoom() {
             }
         } catch (error) {
             console.log('Error:', error);
-    
+
             Swal.fire(
                 'Error',
                 'Hubo un problema al guardar la solicitud',
@@ -149,7 +169,7 @@ function RegisterLoanClassRoom() {
             );
         }
     };
-    
+
 
     let quantityValue;
 
@@ -167,9 +187,9 @@ function RegisterLoanClassRoom() {
                         <label className="form-label fs-5">Aulas/Laboratorios</label>
                         <select required
                             className="form-select text-center"
-                            name="id_ClassRoom"
-                            onChange={(event) => { setSchedulesObject(event);setObject(event) }}
-                           
+                            name="idClassroom"
+                            onChange={(event) => { setSchedulesObject(event); setObject(event) }}
+                            value={loanClassRoom.idClassroom}
                         >
                             <option value="">Seleccione</option>
                             {classRoom.map((classR, index) => {
@@ -188,8 +208,8 @@ function RegisterLoanClassRoom() {
                         <select required
                             className="form-select text-center"
                             name="day"
-                            onChange={(event) => { setSchedulesObject(event) }}>
-                            <option value="">Seleccione</option>
+                            onChange={(event) => { setSchedulesObject(event) }}
+                            value={classroomSchedules.day}>
                             <option value="Lunes">Lunes</option>
                             <option value="Martes">Martes</option>
                             <option value="Miércoles">Miércoles</option>
@@ -204,13 +224,13 @@ function RegisterLoanClassRoom() {
                             <label className="form-label fs-5">Hora Inicio </label>
                             <input
                                 type="time"
-                                name="start_hour"
+                                name="startHour"
                                 min="07:00"
                                 max="20:30"
                                 step="1800"
                                 required
                                 onChange={(event) => { setSchedulesObject(event) }}
-                                value={classroomSchedules.start_hour}
+                                value={classroomSchedules.startHour}
                                 className="form-control text-center"
                             />
                         </div>
@@ -218,13 +238,13 @@ function RegisterLoanClassRoom() {
                             <label className="form-label fs-5">Hora Final </label>
                             <input
                                 type="time"
-                                name="end_hour"
+                                name="endHour"
                                 min={classroomSchedules.start_hour}
                                 max="21:00"
                                 step="1800"
                                 required
                                 onChange={(event) => { setSchedulesObject(event) }}
-                                value={classroomSchedules.end_hour}
+                                value={classroomSchedules.endHour}
                                 className="form-control text-center"
                             />
                         </div>
@@ -235,11 +255,11 @@ function RegisterLoanClassRoom() {
                             <label className="form-label fs-5">Fecha Inicio </label>
                             <input
                                 type="date"
-                                name="start_date"
+                                name="startDate"
                                 required
                                 min={format(addDays(new Date(), 2), 'yyyy-MM-dd')}
                                 onChange={(event) => { setLoanObject(event) }}
-                                value={loan.start_date}
+                                value={loan.startDate}
                                 className="form-control text-center"
                             />
                         </div>
@@ -247,11 +267,11 @@ function RegisterLoanClassRoom() {
                             <label className="form-label fs-5">Fecha Final </label>
                             <input
                                 type="date"
-                                name="end_date"
+                                name="endDate"
                                 required
-                                min={loan.start_date}
+                                min={loan.startDate}
                                 onChange={(event) => { setLoanObject(event) }}
-                                value={loan.end_date}
+                                value={loan.endDate}
                                 className="form-control text-center"
                             />
                         </div>
@@ -263,11 +283,12 @@ function RegisterLoanClassRoom() {
                             type="number"
                             required
                             className="form-control text-center"
-                            name="person_quantity"
+                            name="personQuantity"
                             max={quantityValue}
                             step="1"
+                            min="0"
                             onChange={(event) => { setObject(event) }}
-                            value={loanClassRoom.person_quantity}
+                            value={loanClassRoom.personQuantity}
                         />
                     </div>
 
@@ -293,4 +314,4 @@ function RegisterLoanClassRoom() {
 
 
 }
-export default RegisterLoanClassRoom;
+export default EditLoanClassRoom;
