@@ -43,18 +43,18 @@ export async function createLoanStudyRoom(data){
     return await axios.post(link+"api/LoanStudyRooms/createLoanStudyRoom",newLoanStudyRoom)
 }
 export async function getLoanStudyRoomById(id){
-    let i= await axios.get(link+"api/LoanStudyRooms/getLoanVehicle/"+id);
-   
+    let i= await axios.get(link+"api/LoanStudyRooms/getLoanStudyRoom/"+id);
+    console.log(i.data);
     return i.data;
 }
 export async function updateLoanStudyRoom(data){
     console.log('service',data)
     const loanVehicle = {
         "id":data.id,
-        "numberOfPeople": data.numberPeople,
-        "loanId": data.idLoan,
+        "numberOfPeople": data.numberOfPeople,
+        "loanId": data.loanId,
         "idUserLibrary": data.idUserLibrary,
-        "studyRoomId": data.studyRoom,
+        "studyRoomId": data.studyRoomId,
         "exitHour": data.exitHour,
         "returnHour": data.returnHour,
         "active": data.active==1?true:false,

@@ -5,16 +5,23 @@ import Swal from "sweetalert2";
 
 import { getLoanById, getLoans, updateLoan } from '../../service/LoanApi/LoanApi';
 import { FormatterDateToForms, getTimeActually } from '../../scripts/FormatterDate';
-import { getLoanStudyRoom, getLoanStudyRoomById, updateLoanStudyRoom } from '../../service/LoanStudyRoom/LoanStudyRoom';
+import { getLoanStudyRoom, getLoanStudyRoomById, getLoanStudyRoomByLoan, updateLoanStudyRoom } from '../../service/LoanStudyRoom/LoanStudyRoom';
 import { getStudyRoom } from '../../service/StudyRoom/StudyRoomService';
 
 
 function FormViewEditLoanStudyRoom() {
-   
+    const formatDate = (date) => {
+        const d = new Date(date);
+        const day = d.getUTCDate().toString().padStart(2, '0');
+        const month = (d.getUTCMonth() + 1).toString().padStart(2, '0');
+        const year = d.getUTCFullYear();
+
+        return `${year}-${month}-${day}`;
+    };
     const navigate = useNavigate();
     const { id } = useParams();
     const [loanStudyRoom, setLoanStudyRoom] = useState([]);
- 
+
     let hoy = FormatterDateToForms(new Date());
     const [formLoan, setFormLoan] = useState({
         startDate: hoy,
@@ -22,10 +29,10 @@ function FormViewEditLoanStudyRoom() {
         registerDate: "",
     });
     const [formLoanStudyRoom, setFormLoanStudyRoom] = useState({
-        numberPeople:1,
-        idLoan: 1,
+        numberOfPeople: 1,
+        loanId: 1,
         idUserLibrary: 2,
-        studyRoom: 0,
+        studyRoomId: 0,
         active: 1,
         exitHour: getTimeActually(),
         returnHour: getTimeActually(),
@@ -36,7 +43,7 @@ function FormViewEditLoanStudyRoom() {
             const response = await getStudyRoom();
 
             setLoanStudyRoom(response);
-            
+
             console.log(response);
         })();
     }, []);
@@ -45,27 +52,28 @@ function FormViewEditLoanStudyRoom() {
         (async () => {
             if (id != undefined) {
                 getLoanStudyRoomById(id).then((data) => {
-                    
+
                     setFormLoanStudyRoom(data);
                     console.log(data)
-                    getLoanById(data.idLoan).then((response) => {
-                        response.startDate= FormatterDateToForms(response.startDate);
-                        response.endDate=FormatterDateToForms(response.endDate)
+                    getLoanById(data.loanId).then((response) => {
+                        response.startDate = formatDate(response.startDate);
+                        response.endDate = formatDate(response.endDate)
                         console.log(response);
                         setFormLoan(response);
-    
-    
+
+
                     })
 
                 })
             }
-                    
+
         })();
     }, []);
 
     const setObject = (event) => {
         setFormLoanStudyRoom({ ...formLoanStudyRoom, [event.target.name]: event.target.value });
         setFormLoan({ ...formLoan, [event.target.name]: event.target.value });
+
     }
 
     const initialFormLoan = {
@@ -75,44 +83,44 @@ function FormViewEditLoanStudyRoom() {
     };
 
     const initialFormLoanStudyRoom = {
-        numberPeople:1,
+        numberOfPeople: 1,
         idLoan: 1,
         idUserLibrary: 2,
-        studyRoom: 0,
+        studyRoomId: 0,
         active: 1,
         exitHour: getTimeActually(),
         returnHour: getTimeActually(),
 
     };
     const handleReset = () => {
-       
+
         setFormLoan(initialFormLoan);
-        setFormLoanStudyRoom (initialFormLoanStudyRoom );
+        setFormLoanStudyRoom(initialFormLoanStudyRoom);
     }
-      const handleBack = () => {
-        navigate('/loanVehicle');
+    const handleBack = () => {
+        navigate('/loanStudyRoom');
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (formLoanStudyRoom .numberPeople === "" || formLoanStudyRoom .idLoan === "" || 
-        formLoanStudyRoom .idUserLibrary === "" || formLoanStudyRoom .studyRoom === "" 
-        || formLoanStudyRoom .active === "" || formLoanStudyRoom .exitHour === "" ||
-         formLoanStudyRoom .returnHour === "" || formLoan.startDate === "" || formLoan.endDate === "" || 
-         formLoan.registerDate === "") {
+        if (formLoanStudyRoom.numberPeople === "" || formLoanStudyRoom.idLoan === "" ||
+            formLoanStudyRoom.idUserLibrary === "" || formLoanStudyRoom.studyRoom === ""
+            || formLoanStudyRoom.active === "" || formLoanStudyRoom.exitHour === "" ||
+            formLoanStudyRoom.returnHour === "" || formLoan.startDate === "" || formLoan.endDate === "" ||
+            formLoan.registerDate === "") {
             Swal.fire(
                 'ERROR!',
                 'Existen campos vacíos',
                 'error'
             )
         } else {
-
-             updateLoan(formLoan).then((data) => {
+            console.log("llega");
+            updateLoan(formLoan).then((data) => {
                 console.log('res', data);
                 formLoanStudyRoom.idLoan = (data.id);
                 updateLoanStudyRoom(formLoanStudyRoom).then((data) => {
 
-                    console.log('res',data)
+                    console.log('res', data)
                     navigate('/loanStudyRoom');
                 })
 
@@ -133,19 +141,18 @@ function FormViewEditLoanStudyRoom() {
 
     return (
         <div className="container">
-            <form onSubmit={handleSubmit} className='mb-5'>
+            <form onSubmit={handleSubmit}>
                 <div className="row">
-                    <h1>Solicitud de préstamo de sala de estudio</h1>
-                    
-                    <div className="col-sm-6 text-start mt-2">
+                    <h1>Solicitud de prestamo de sala de estudio</h1>
+                    <div className="col-sm-6 text-start">
                         <label>N° de personas:</label>
-                        <input required min={1} type="number" className="form-control" name="numberPeople" value={formLoanStudyRoom .numberPeople} onChange={(event) => { setObject(event) }} />
+                        <input type="number" min={1} required className="form-control" name="numberOfPeople" value={formLoanStudyRoom.numberOfPeople} onChange={(event) => { setObject(event) }} />
                     </div>
 
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start">
                         <label>Fecha de inicio:</label>
-                        <input type="date" required className="form-control" name="startDate" min={hoy} value={formLoan.startDate} onChange={(event) => { setObject(event) }} />
+                        <input type="date" required className="form-control" name="startDate" value={formLoan.startDate} min={formLoan.startDate} onChange={(event) => { setObject(event) }} />
                     </div>
                     <div className="col-sm-12"></div>
 
@@ -166,20 +173,19 @@ function FormViewEditLoanStudyRoom() {
                         <input type="time" required className="form-control" name="exitHour" value={formLoanStudyRoom.exitHour} onChange={(event) => { setObject(event) }} />
                     </div>
                     <div className="col-sm-12"></div>
-                    <div className="col-sm-6 text-start mt-2">
-                        <label>Sala de estudio: </label>
-                        <select required className='form-select' name="studyRoom" value={formLoanStudyRoom.studyRoom} onChange={(event) => { setObject(event) }}>
-                            <option value="">Selecciona una sala de estudio</option>
-                            {loanStudyRoom.filter(res => { return res.active == 1 }).map((studyRoom, index) => (
-                                <option key={studyRoom.id} value={studyRoom.id}>
-                                    {studyRoom.name}
+                    <div className="col-sm-6 text-start">
+                        <label>Salas de estudio</label>
+                        <select className="form-control" name="studyRoomId" value={formLoanStudyRoom.studyRoomId} onChange={(event) => { setObject(event) }}>
+                            <option value={0}>Seleccione una sala de estudio</option>
+                            {loanStudyRoom.filter(res => { return res.active == 1 }).map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name}
                                 </option>
                             ))}
                         </select>
-                          
-
-                        
                     </div>
+
+
 
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
