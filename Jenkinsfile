@@ -13,7 +13,7 @@ pipeline {
                     echo 'Testing..'
                     try {
                         
-                        sh 'login.spec.js'
+                        sh 'D:/Jeykel/UCR/CuartoYear/Segundo semestre/Analisis de Sistemas/Tarea/Proyecto Analisis Codigo/Analisis_Proyect_Front/login.spec.js'
                     } catch (Exception e) {
                         currentBuild.result = 'FAILURE'
                         error("Error en la etapa de prueba: ${e.message}")
