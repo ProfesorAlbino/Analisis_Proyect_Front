@@ -4,7 +4,7 @@ import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
-import { deleteLoan, getLoans } from '../../service/LoanApi/LoanApi';
+import {  getLoans } from '../../service/LoanApi/LoanApi';
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FormatterDate } from '../../scripts/FormatterDate';
