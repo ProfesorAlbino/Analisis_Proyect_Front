@@ -13,7 +13,7 @@ pipeline {
                     echo 'Testing..'
                     try {
                         
-                        sh 'prueba ./src/Test/login.spec.js'
+                        sh 'login.spec.js'
                     } catch (Exception e) {
                         currentBuild.result = 'FAILURE'
                         error("Error en la etapa de prueba: ${e.message}")
