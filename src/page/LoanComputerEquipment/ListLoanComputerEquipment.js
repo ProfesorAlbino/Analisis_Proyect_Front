@@ -6,9 +6,7 @@ import { FormatterDate } from "../../scripts/FormatterDate";
 export default function ListLoanComputerEquipment() {
     const [loanComputerEquipments, setLoanComputerEquipments] = useState([]);
 
-    var urlActual = window.location.href;
-    var url = new URL(urlActual);
-    var idUser = url.searchParams.get("idUser");
+    var idUser = JSON.parse(sessionStorage.getItem('user')).idLibraryUser;
 
     useEffect(() => {
         loadComputerEquipments();
@@ -29,7 +27,7 @@ export default function ListLoanComputerEquipment() {
                 <div className="col-md-12 my-4">
                     <h3 className="text-center">Préstamo de Equipo Informático</h3>
                     <div>
-                        <Link className="btn btn-primary me-md-4" to={`/addLoanComputerEquipment?idUser=${4}`}>Agregar Préstamo</Link>
+                        <Link className="btn btn-primary me-md-4" to={`/addLoanComputerEquipment`}>Agregar Préstamo</Link>
                     </div>
                 </div>
             </div>

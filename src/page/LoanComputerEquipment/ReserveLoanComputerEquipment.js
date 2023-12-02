@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 
 
 export default function ReserveLoanComputerEquipment() {
-    let idUser = localStorage.getItem("idUser");
+    let idUser = JSON.parse(sessionStorage.getItem('user')).idLibraryUser;
     let idComputerEquipment = localStorage.getItem("idComputerEquipment");
 
     const [loan, setLoans] = useState({
@@ -74,7 +74,7 @@ export default function ReserveLoanComputerEquipment() {
             addLoanComputerEquipment(loanComputerEquipment).then((response) => {
             });
             console.log(loanComputerEquipment);
-            window.location.href = "/ListLoanComputerEquipment?idUser="+idUser;
+            window.location.href = "/ListLoanComputerEquipment";
         });
     }
 

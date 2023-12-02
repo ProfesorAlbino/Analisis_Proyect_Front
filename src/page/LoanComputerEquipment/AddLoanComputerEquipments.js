@@ -10,9 +10,7 @@ export default function AddLoanComputerEquipments() {
 
     const [computerEquipments, setComputerEquipments] = useState([]);
 
-    var urlActual = window.location.href;
-    var url = new URL(urlActual);
-    var idUser = url.searchParams.get("idUser");
+    var idUser = JSON.parse(sessionStorage.getItem('user')).idLibraryUser;
     localStorage.setItem("idUser", idUser);
 
     useEffect(() => {
@@ -30,7 +28,7 @@ export default function AddLoanComputerEquipments() {
 
     function reservar(id) {
         localStorage.setItem("idComputerEquipment", id);
-        window.location.href = "/reserveLoanComputerEquipment?idUser="+idUser;
+        window.location.href = "/reserveLoanComputerEquipment";
     }
 
     function verify(id) {
