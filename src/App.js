@@ -63,7 +63,7 @@ import FormViewEditLoanStudyRoom from './page/LoanStudyRoom/FormViewEditLoanStud
 
 function App() {
   
-  const user = decryptAES(sessionStorage.getItem('user'));
+  const user = sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user'));
   const isUserAdmin = user ? JSON.parse(user).role === 'Administrador' : false;
 
   return (

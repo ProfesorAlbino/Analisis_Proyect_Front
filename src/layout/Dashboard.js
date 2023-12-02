@@ -23,7 +23,7 @@ function OffCanvas({ name, ...props }) {
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
 
-  const user = decryptAES(sessionStorage.getItem('user'));
+  const user = sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user'));
 
   const onClick = () => {
     setShow(false);
