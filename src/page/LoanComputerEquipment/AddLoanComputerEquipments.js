@@ -5,13 +5,13 @@ import { BsBookmarkCheckFill } from "react-icons/bs";
 import { FormatterDate } from '../../scripts/FormatterDate';
 import { verifyLoanComputerEquipment } from "./VerifyLoanComputerEquipment";
 import Swal from 'sweetalert2'
+import { decryptAES } from "../../scripts/AES-256";
 
 export default function AddLoanComputerEquipments() {
 
     const [computerEquipments, setComputerEquipments] = useState([]);
 
-    var idUser = JSON.parse(sessionStorage.getItem('user')).idLibraryUser;
-    localStorage.setItem("idUser", idUser);
+    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
 
     useEffect(() => {
         loadComputerEquipments();
@@ -32,9 +32,8 @@ export default function AddLoanComputerEquipments() {
     }
 
     function verify(id) {
-        verifyLoanComputerEquipment(id, idUser).then((result) => {
+        verifyLoanComputerEquipment(id, user.idLibraryUser).then((result) => {
             if (result) {
-                console.log("El equipo ya está reservado");
                 Swal.fire({
                     position: "center",
                     icon: "error",

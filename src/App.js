@@ -1,7 +1,8 @@
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-//import './css/Footer.css';
+import { BrowserRouter as Router, Routes, Route, json } from 'react-router-dom';
+
+import { decryptAES } from './scripts/AES-256';
 
 import Register from './page/Login/Register';
 import Login from './page/Login/Login';
@@ -12,8 +13,6 @@ import FormViewEditStudyRoom from './page/StudyRoom/FormViewEdit';
 import UserAdd from './page/User/AddUser';
 import Inventory from './page/Inventory/Inventory';
 import InventoryAdd from './page/Inventory/AddInventory';
-import InventoryType from './page/Inventory/Inventory_type';
-import InventoryTypeAdd from './page/Inventory/AddInventory_type';
 import Area from './page/Inventory/Area';
 import AreaAdd from './page/Inventory/AddArea';
 import ListTitles from './page/Title/ListTitles';
@@ -63,14 +62,13 @@ import FormViewLoanStudyRoom from './page/LoanStudyRoom/FormViewLoanStudyRoom';
 import FormViewEditLoanStudyRoom from './page/LoanStudyRoom/FormViewEditLoanStudyRoom';
 
 function App() {
-
-  const user = sessionStorage.getItem('user');
+  
+  const user = sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user'));
   const isUserAdmin = user ? JSON.parse(user).role === 'Administrador' : false;
 
   return (
     <div className="App">
       <Router>
-        {/* <Navbar /> */}
         <NavAndSide />
 
 
@@ -82,8 +80,6 @@ function App() {
           <Route exact path="/users/create" element={isUserAdmin ? <UserAdd /> : <Home />} /> {/* IMPLEMENTAR IGUAL PARA LA SEGURIDAD, PUEDEN SACAR MÁS COSAS EN CONSTANTES  */}
           <Route exact path="/inventory" element={isUserAdmin ? <Inventory /> : <Home />} />
           <Route exact path="/inventory/create" element={isUserAdmin ? <InventoryAdd /> : <Home />} />
-          <Route exact path="/inventory/inventoryType" element={isUserAdmin ? <InventoryType /> : <Home />} />
-          <Route exact path="/inventory/inventoryType/create" element={isUserAdmin ? <InventoryTypeAdd /> : <Home />} />
           <Route exact path="/inventory/area" element={isUserAdmin ? <Area /> : <Home />} />
           <Route exact path="/inventory/area/create" element={isUserAdmin ? <AreaAdd /> : <Home />} />
           <Route exact path="/studyRooms" element={<StudyRoom />} />

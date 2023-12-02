@@ -12,6 +12,5 @@ export function decryptAES(ciphertext) {
     const key = "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6";
     const replacedCiphertext = ciphertext.replace(/_/g, '/'); // Revertir el reemplazo
     const decrypted = CryptoJS.AES.decrypt(replacedCiphertext, key).toString(CryptoJS.enc.Utf8);
-    console.log(decrypted);
     return decrypted;
 }
