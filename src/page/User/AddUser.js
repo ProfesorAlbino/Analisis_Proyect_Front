@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { getRoles } from '../../service/UsersApi/RolApi';
-import { createUser, getUserr, updateUserr } from '../../service/UsersApi/UserApi';
+import { createUser, getUserr, updateUserr, newLog } from '../../service/UsersApi/UserApi';
 import Swal from 'sweetalert2';
 import UserIdVerify from '../../scripts/UserIdVerify';
 import { Toaster, toast } from "sonner";
 
-import SuccessMessages from '../../enums/SuccessMessages';
+//import SuccessMessages from '../../enums/SuccessMessages';
 import ErrorMessages from '../../enums/ErrorMessages';
 
 function UserAdd() {
@@ -71,6 +71,10 @@ function UserAdd() {
                 window.location.href = !isEditing ? "/users?success" : "/users?editSuccess";
             } catch (error) {
                 toast.error(error.response.data === ErrorMessages.USER_EXISTING ? ErrorMessages.USER_EXISTING : ErrorMessages.SOMETHING_WENT_WRONG);
+                newLog({
+                    message: error.response.data === ErrorMessages.USER_EXISTING ? ErrorMessages.USER_EXISTING : ErrorMessages.SOMETHING_WENT_WRONG,
+                    type: true
+                });
             }
 
         }

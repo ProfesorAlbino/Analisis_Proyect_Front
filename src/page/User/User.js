@@ -97,7 +97,7 @@ function User() {
                         <Col xs="auto">
                             <Form.Control
                                 type="text"
-                                placeholder="Nombre o apellido"
+                                placeholder="Nombre, apellido o c&eacute;dula"
                                 className=" mr-sm-2"
                                 id='search'
                                 onChange={(e) => isEmptySearch(e.target.value)}
@@ -115,20 +115,17 @@ function User() {
 
             <Table className='border shadow mt-2 mb-5'>
                 {loading ?
-                    <>
-                        <Loader />
-                        <Loader />
-                        <Loader />
-                    </> :
+                    <Loader />
+                    :
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Cedula</th>
+                            <th>C&eacute;dula</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
-                            <th>Categoría</th>
+                            <th>Categor&iacute;a</th>
                             <th>Rol</th>
-                            <th>Telefono</th>
+                            <th>Tel&eacute;fono</th>
                             <th>Carrera</th>
                             <th>Fecha de creación</th>
                             <th>Acciones</th>

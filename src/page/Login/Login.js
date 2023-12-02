@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { login } from '../../service/UsersApi/LoginApi';
 import { Toaster, toast } from "sonner";
 
+import { encryptAES } from '../../scripts/AES-256';
 import ErrorMessages from '../../enums/ErrorMessages';
 
 import '../../css/LoginCss/Login.css';
@@ -19,7 +20,7 @@ function Login() {
 
         login(user).then((response) => {
             if (response) {
-                sessionStorage.setItem('user', JSON.stringify(response));
+                sessionStorage.setItem('user', encryptAES(JSON.stringify(response)));
                 window.location.href = '/';
             } else {
                 toast.error(ErrorMessages.INVALID_CREDENTIALS);
