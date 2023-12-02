@@ -17,6 +17,7 @@ function InventoryAdd() {
         const form = event.target;
         const units = form.units.value;
         const description = form.description.value;
+        const type = form.type.value;
 
         const result = await Swal.fire({
             title: '¿Estás seguro?',
@@ -29,14 +30,14 @@ function InventoryAdd() {
             confirmButtonText: 'Si, ¡crear!'
         });
 
-        if (!result.isConfirmed) {
-            return;
-        }
+        if (!result.isConfirmed) return;
+        
 
 
         const newInventory = {
             units,
-            description
+            description,
+            type
         };
 
         try {
@@ -95,8 +96,16 @@ function InventoryAdd() {
                             />
                             <label className='ms-2 '>Unidades</label>
                         </div>
-                        {/* DESCRIPTION */}
+                        {/* Tipo */}
                         <div className="mb-4 form-floating col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <input type="text"
+                                className="form-control border border-primary"
+                                id='type'
+                                required />
+                            <label className='ms-2 '>Tipo</label>
+                        </div>
+                        {/* DESCRIPTION */}
+                        <div className="mb-4 form-floating col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <input type="text"
                                 className="form-control border border-primary"
                                 id='description'

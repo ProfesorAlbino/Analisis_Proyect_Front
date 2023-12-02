@@ -1,4 +1,7 @@
 export default function Home() {
+    if (window.location.pathname !== "/") {
+        window.location.replace("/");
+    }
     return (
         <>
             {/* // <!-- Page Content--> */}
@@ -9,13 +12,13 @@ export default function Home() {
                         <div id="carouselExample" class="carousel slide">
                             <div className="carousel-inner">
                                 <div className="carousel-item active">
-                                    <img src="/images/guapi1.jpg" srcSet="/images/guapi1.jpg" className="d-block w-100" alt="..."/>
+                                    <img src="/images/guapi1.jpg" srcSet="/images/guapi1.jpg" className="d-block w-100" alt="..." />
                                 </div>
                                 <div className="carousel-item">
-                                    <img src="/images/guapi2.jpg" srcSet="/images/guapi2.jpg" className="d-block w-100" alt="..."/>
+                                    <img src="/images/guapi2.jpg" srcSet="/images/guapi2.jpg" className="d-block w-100" alt="..." />
                                 </div>
                                 <div className="carousel-item">
-                                    <img src="/images/guapi3.jpg" srcSet="/images/guapi3.jpg" className="d-block w-100" alt="..."/>
+                                    <img src="/images/guapi3.jpg" srcSet="/images/guapi3.jpg" className="d-block w-100" alt="..." />
                                 </div>
                             </div>
                             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">

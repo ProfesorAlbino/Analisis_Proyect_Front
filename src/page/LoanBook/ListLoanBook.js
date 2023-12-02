@@ -10,13 +10,14 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { encryptAES, decryptAES } from '../../scripts/AES-256';
 import { Toaster, toast } from 'sonner';
 import Swal from "sweetalert2";
+import { tr } from 'date-fns/locale';
 
 
 export default function ListLoanBook() {
     const { idUser } = useParams();
     const [loanBook, setLoanBook] = useState([]);
     const [show, setShow] = useState(true);
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const user = JSON.parse(decryptAES(sessionStorage.getItem("user")));
 
     function changeState(state) {
         let newState = "";
@@ -41,7 +42,12 @@ export default function ListLoanBook() {
 
     useEffect(() => {
 
-        if (user.role === "Admin_Library") {
+        //LA IDEA ES QUE SOLO EXISTA UN ROL ADMINISTRADOR, EL CUAL TIENE CIERTOS PRIVILEGIOS Y POR EJEMPLO
+        //SI HAY UN ADMINISTRADOR QUE TIENE PERMISOS DE BIBLIOTECA, ENTONCES PUEDE ENTRAR A ESTA VISTA DE MODO ADMIN
+        //POR ESO VOY A MEDIO MODIFICAR UN TOQUE ACÁ PARA QUE SOLO EXISTA UN ROL ADMINISTRADOR
+        const isAdmin = user && user.privileges.some(privilege => privilege.type === "Admin_Library"); //IMPORTANTE, VERIFICAR SI USER EXISTE SI NO SE CAE
+
+        if (isAdmin) {
             setShow(true);
             getLoanBooks()
                 .then((response) => {
@@ -57,7 +63,7 @@ export default function ListLoanBook() {
                 .catch((error) => {
                     toast.error('Ooops,Algo salió mal');
                 });
-        } else if (user.role === "Estudiante") {
+        } else if (/*SE CAE SIN USER*/user && user.role === "Estudiante") { //CAMBIAR DEPENDIENDO DE LOS PRIVILEGIOS Y SI CUALQUIER ESTUDIANTE PUEDE VER LOS PRESTAMOS DEJAR ASÍ
             setShow(false);
             getLoanBooksByUser(user.idLibraryUser)
                 .then((response) => {

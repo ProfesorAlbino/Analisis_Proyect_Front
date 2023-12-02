@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
 import { createArea, updateArea, getArea } from '../../service/InventoryApi/AreaApi';
+import Swal from 'sweetalert2';
+import { Toaster, toast } from 'sonner';
+
+import SuccessMessages from '../../enums/SuccessMessages';
+import ErrorMessages from '../../enums/ErrorMessages';
 
 function AreaAdd() {
     const [isEditing, setIsEditing] = useState(false);
@@ -9,6 +14,20 @@ function AreaAdd() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        const res = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Desea crear un area?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#dc3545',
+            cancelButtonText: 'No, ¡cancelar!',
+            confirmButtonText: 'Si, ¡crear!'
+        });
+
+        if (!res.isConfirmed) return;
+
         const form = event.target;
         const area1 = form.area.value;
 
@@ -19,20 +38,27 @@ function AreaAdd() {
 
         try {
             if (!isEditing) {
-                const response = await createArea(newArea);
-                console.log(response);
-                alert('Area creado exitosamente');
+                await createArea(newArea).then((res) => {
+                    toast.success(SuccessMessages.CREATED);
+                }).catch((error) => {
+                    toast.error(ErrorMessages.SOMETHING_WENT_WRONG);
+                });
+
             } else {
                 newArea.id = idE;
-                const response = await updateArea(newArea);
-                console.log(response);
-                alert('Area actualizado exitosamente');
+                await updateArea(newArea).then((res) => {
+                    toast.success(SuccessMessages.UPDATED);
+                }).catch((error) => {
+                    toast.error(ErrorMessages.SOMETHING_WENT_WRONG);
+                });
             }
         } catch (error) {
             console.error(error);
         }
 
-        window.location.href = "/inventory/area";
+        setTimeout(() => {
+            window.location.href = "/inventory/area";
+        }, 1000);
     }
 
     const getAreaE = async (id) => {
@@ -56,17 +82,20 @@ function AreaAdd() {
     }, []);
 
     return (
-        <div className='container pt-5'>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="area">
-                    <Form.Label>Area</Form.Label>
-                    <Form.Control type="text" placeholder="Area" />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    {isEditing ? 'Actualizar' : 'Crear'}
-                </Button>
-            </Form>
-        </div>
+        <>
+            <div className='container pt-5'>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="area">
+                        <Form.Label>Area</Form.Label>
+                        <Form.Control type="text" placeholder="Area" />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        {isEditing ? 'Actualizar' : 'Crear'}
+                    </Button>
+                </Form>
+            </div>
+            <Toaster richColors />
+        </>
     );
 }
 

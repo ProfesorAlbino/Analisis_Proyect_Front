@@ -8,6 +8,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import { VscThreeBars } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 
+import { decryptAES } from '../scripts/AES-256';
 
 const options = [
   {
@@ -22,7 +23,7 @@ function OffCanvas({ name, ...props }) {
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
 
-  const user = sessionStorage.getItem('user');
+  const user = sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user'));
 
   const onClick = () => {
     setShow(false);
@@ -100,9 +101,6 @@ function OffCanvas({ name, ...props }) {
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminLoanClassRoom">Prestamos Aulas y Laboratrios</Link>
-
-
-
                 </div>
               </Accordion.Body>
             </Accordion.Item>
@@ -111,22 +109,6 @@ function OffCanvas({ name, ...props }) {
               <Accordion.Body>
                 <div className="row">
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListSanctionsReport">Reporte de sanciones</Link>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="4">
-              <Accordion.Header>Usuario</Accordion.Header>
-              <Accordion.Body>
-                <div className="row">
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Listado</Link>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="5">
-              <Accordion.Header>Inventario</Accordion.Header>
-              <Accordion.Body>
-                <div className="row">
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Inventario</Link>
                 </div>
               </Accordion.Body>
             </Accordion.Item>
