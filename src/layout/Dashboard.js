@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Container from 'react-bootstrap/Container';
@@ -7,8 +7,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import Accordion from 'react-bootstrap/Accordion';
 import { VscThreeBars } from "react-icons/vsc";
 import { Link } from "react-router-dom";
-import { encryptAES, decryptAES } from '../scripts/AES-256';
+import Swal from 'sweetalert2'
+import { set } from 'date-fns';
+import { th } from 'date-fns/locale';
 
+
+import { decryptAES } from '../scripts/AES-256';
 
 const options = [
   {
@@ -20,10 +24,15 @@ const options = [
 function OffCanvas({ name, ...props }) {
   const [show, setShow] = useState(false);
 
+  //Muestra las opciones de administrador si el usuario es administrador
+  const [showAdmin, setShowAdmin] = useState(true);
+
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
 
-  const user = sessionStorage.getItem('user');
+  //Le agregue el JSON.parse porque no agarra los datos hasta convertirlos en JSON (Jeykel)
+  const user = JSON.parse( sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
+  console.log(user);
 
   const onClick = () => {
     setShow(false);
@@ -32,6 +41,57 @@ function OffCanvas({ name, ...props }) {
   const logout = () => {
     sessionStorage.removeItem('user');
     window.location.href = '/login';
+  }
+
+  useEffect(() => {
+    verifyAdmin();
+  }, []);
+
+  function verifyUser() {
+    if (user === null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  //Pregunta si el usuario no es administrador
+
+  function verifyAdmin() {
+    if (verifyUser()) {
+      if (user.role !== "Administrador") {
+        //Cambia el useState a false
+        setShowAdmin(false);
+      }
+    }
+  }
+
+  function verifyUserLibrary(url) {
+    if (verifyUser()) {
+      if (user.idLibraryUser === null) {
+        Swal.fire({
+          title: "No puedes realizar prestamos",
+          text: "No eres un usuario de biblioteca",
+          icon: "error",
+          confirmButtonText: "Aceptar",
+        });
+
+      } else {
+        window.location.href = url;
+      }
+    } else {
+      Swal.fire({
+        title: "No puedes realizar prestamos",
+        text: "Debes iniciar sesión",
+        showCancelButton: true,
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '/login';
+          }
+          });
+    }
   }
 
   return (
@@ -73,9 +133,9 @@ function OffCanvas({ name, ...props }) {
               <Accordion.Header>Prestamos de Biblioteca</Accordion.Header>
               <Accordion.Body>
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to={"/listLoanBook"}>Libros</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12"  to={"/loanStudyRoom"}>Salas de Estudio</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to={`/listLoanComputerEquipment?idUser=${4}`}>Equipo Informático</Link>
-                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Informático</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" to={"/loanStudyRoom"}>Salas de Estudio</Link>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12" onClick={() => verifyUserLibrary("listLoanComputerEquipment")}>Equipo Informático</Link>
+                {/* <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Informático</Link> */}
 
               </Accordion.Body>
             </Accordion.Item>
@@ -87,7 +147,10 @@ function OffCanvas({ name, ...props }) {
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to={"/LoanClassRoom"}>Aulas y Laboratorios</Link>
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="2">
+
+            {/* //Si el usuario es administrador muestra las opciones de administrador */}
+            {showAdmin && (
+              <Accordion.Item eventKey="2">
               <Accordion.Header>Administrativos</Accordion.Header>
               <Accordion.Body>
                 <div className="row">
@@ -101,33 +164,16 @@ function OffCanvas({ name, ...props }) {
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminLoanClassRoom">Prestamos Aulas y Laboratrios</Link>
-
-
-
                 </div>
               </Accordion.Body>
             </Accordion.Item>
+            )}
+
             <Accordion.Item eventKey="3">
               <Accordion.Header>Sanciones</Accordion.Header>
               <Accordion.Body>
                 <div className="row">
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListSanctionsReport">Reporte de sanciones</Link>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="4">
-              <Accordion.Header>Usuario</Accordion.Header>
-              <Accordion.Body>
-                <div className="row">
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Listado</Link>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="5">
-              <Accordion.Header>Inventario</Accordion.Header>
-              <Accordion.Body>
-                <div className="row">
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Inventario</Link>
                 </div>
               </Accordion.Body>
             </Accordion.Item>

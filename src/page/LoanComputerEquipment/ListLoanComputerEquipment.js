@@ -2,21 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getLoanComputerEquipment } from "../../service/LoanComputerEquipment/LoanComputerEquipmentApi";
 import { FormatterDate } from "../../scripts/FormatterDate";
+import { decryptAES } from "../../scripts/AES-256";
 
 export default function ListLoanComputerEquipment() {
     const [loanComputerEquipments, setLoanComputerEquipments] = useState([]);
 
-    var urlActual = window.location.href;
-    var url = new URL(urlActual);
-    var idUser = url.searchParams.get("idUser");
+    const user =JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
 
     useEffect(() => {
         loadComputerEquipments();
     }, []);
 
     const loadComputerEquipments = async () => {
-        getLoanComputerEquipment(idUser).then((result) => {
-            console.log(result);
+        getLoanComputerEquipment(user.idLibraryUser).then((result) => {
             setLoanComputerEquipments(result);
         }).catch(() => {
             console.log("Error al cargar los datos");
@@ -29,7 +27,7 @@ export default function ListLoanComputerEquipment() {
                 <div className="col-md-12 my-4">
                     <h3 className="text-center">Préstamo de Equipo Informático</h3>
                     <div>
-                        <Link className="btn btn-primary me-md-4" to={`/addLoanComputerEquipment?idUser=${4}`}>Agregar Préstamo</Link>
+                        <Link className="btn btn-primary me-md-4" to={`/addLoanComputerEquipment`}>Agregar Préstamo</Link>
                     </div>
                 </div>
             </div>

@@ -4,10 +4,11 @@ import { createLoan } from "../../service/LoanApi/LoanApi";
 import { addLoanComputerEquipment } from "../../service/LoanComputerEquipment/LoanComputerEquipmentApi";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
+import { decryptAES } from "../../scripts/AES-256";
 
 
 export default function ReserveLoanComputerEquipment() {
-    let idUser = localStorage.getItem("idUser");
+    const user = JSON.parse( sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
     let idComputerEquipment = localStorage.getItem("idComputerEquipment");
 
     const [loan, setLoans] = useState({
@@ -20,7 +21,7 @@ export default function ReserveLoanComputerEquipment() {
     const [loanComputerEquipment, setLoanComputerEquipment] = useState({
         idLoan: 0,
         idComputerEquipment: idComputerEquipment,
-        idLibraryUser: idUser,
+        idLibraryUser: user.idLibraryUser,
         assets: "",
         assetEvaluation: 0,
         destinationPlace: "",
@@ -74,7 +75,7 @@ export default function ReserveLoanComputerEquipment() {
             addLoanComputerEquipment(loanComputerEquipment).then((response) => {
             });
             console.log(loanComputerEquipment);
-            window.location.href = "/ListLoanComputerEquipment?idUser="+idUser;
+            window.location.href = "/ListLoanComputerEquipment";
         });
     }
 

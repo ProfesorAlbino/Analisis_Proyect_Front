@@ -18,6 +18,7 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 bat 'npm start'
+                //sg
             }
         }
     }
