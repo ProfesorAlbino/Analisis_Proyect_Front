@@ -31,7 +31,7 @@ function FormViewStudyRoomSchedule() {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (formStudyRoomSchedule.day === "" || formStudyRoomSchedule.startHourart_hour === "" || formStudyRoomSchedule.end_hour_hour === "") {
+        if (formStudyRoomSchedule.day === "" || formStudyRoomSchedule.start_hour === "" || formStudyRoomSchedule.end_hour_hour === "") {
             Swal.fire(
                 'ERROR!',
                 'Existen campos vacíos',

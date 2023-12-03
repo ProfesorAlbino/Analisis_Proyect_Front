@@ -5,10 +5,10 @@ const url = 'https://localhost:7210/api/Userrs/';
 export async function getUserrs() {
     try {
         const response = await axios.get(url + 'getAll/');
-        return response.data; 
+        return response.data;
     } catch (error) {
         console.error('Error al obtener los datos:', error);
-        throw error; 
+        throw error;
     }
 }
 
@@ -18,7 +18,7 @@ export async function getUserr(id) {
         return response.data;
     } catch (error) {
         console.error('Error al obtener los datos:', error);
-        throw error; 
+        throw error;
     }
 }
 
@@ -28,7 +28,7 @@ export async function createUser(data) {
         return response.data;
     } catch (error) {
         console.error('Error al crear el usuario:', error);
-        throw error; 
+        throw error;
     }
 }
 
@@ -38,7 +38,7 @@ export async function updateUserr(data) {
         return response.data;
     } catch (error) {
         console.error('Error al actualizar el usuario:', error);
-        throw error; 
+        throw error;
     }
 }
 
@@ -48,6 +48,16 @@ export async function deleteUserr(id) {
         return response.data;
     } catch (error) {
         console.error('Error al eliminar el usuario:', error);
+        throw error;
+    }
+}
+
+export async function newLog(data) {
+    try {
+        const response = await axios.post(url + 'newLog/', data);
+        return response.data;
+    } catch (error) {
+        console.error('Error al crear el log:', error);
         throw error;
     }
 }

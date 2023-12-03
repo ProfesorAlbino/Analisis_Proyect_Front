@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
 import { createInventory, getInventory, updateInventory } from '../../service/InventoryApi/InventoryApi';
+
+import Swal from 'sweetalert2';
+import { Toaster, toast } from 'sonner';
+
+import SuccessMessages from '../../enums/SuccessMessages';
+import ErrorMessages from '../../enums/ErrorMessages';
 
 function InventoryAdd() {
     const [isEditing, setIsEditing] = useState(false);
@@ -8,29 +13,44 @@ function InventoryAdd() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         const form = event.target;
         const units = form.units.value;
         const description = form.description.value;
+        const type = form.type.value;
+
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Desea crear un inventario?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#dc3545',
+            cancelButtonText: 'No, ¡cancelar!',
+            confirmButtonText: 'Si, ¡crear!'
+        });
+
+        if (!result.isConfirmed) return;
+        
 
 
         const newInventory = {
             units,
-            description
+            description,
+            type
         };
 
         try {
             if (!isEditing) {
                 const response = await createInventory(newInventory);
-                console.log(response);
-                alert('Inventario creado exitosamente');
+                toast.success(SuccessMessages.CREATED);
             } else {
                 newInventory.id = idE;
                 const response = await updateInventory(newInventory);
-                console.log(response);
-                alert('Inventario actualizado exitosamente');
+                toast.success(SuccessMessages.UPDATED);
             }
         } catch (error) {
-            console.error(error);
+            toast.error(ErrorMessages.SOMETHING_WENT_WRONG);
         }
 
         window.location.href = "/inventory";
@@ -57,22 +77,54 @@ function InventoryAdd() {
         }
     }, []);
 
+    const onClick = () => {
+        window.location.href = "/inventory";
+    }
+
     return (
-        <div className='container pt-5'>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="units">
-                    <Form.Label>Unidades</Form.Label>
-                    <Form.Control type="number" placeholder="Unidades" required />
-                </Form.Group>
-                <Form.Group controlId="description">
-                    <Form.Label>Descripción</Form.Label>
-                    <Form.Control type="text" placeholder="Descripción" required />
-                </Form.Group> 
-                <Button variant="primary" type="submit">
-                    {isEditing ? 'Actualizar' : 'Crear'}
-                </Button>
-            </Form>
-        </div>
+        <>
+            <form onSubmit={handleSubmit}>
+                <h2 className="text-center">Registrar inventario</h2>
+                <div className="container py-4">
+                    <div className='row' >
+                        {/* UNITS */}
+                        <div className="mb-4 form-floating col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <input type="text"
+                                className="form-control border border-primary"
+                                id='units'
+                                required
+                            />
+                            <label className='ms-2 '>Unidades</label>
+                        </div>
+                        {/* Tipo */}
+                        <div className="mb-4 form-floating col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <input type="text"
+                                className="form-control border border-primary"
+                                id='type'
+                                required />
+                            <label className='ms-2 '>Tipo</label>
+                        </div>
+                        {/* DESCRIPTION */}
+                        <div className="mb-4 form-floating col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <input type="text"
+                                className="form-control border border-primary"
+                                id='description'
+                                required />
+                            <label className='ms-2 '>Descripción</label>
+                        </div>
+                    </div>
+                </div>
+                <div className="container d-flex justify-content-center">
+                    <button type="submit" className="btn btn-primary">{isEditing ? 'Actualizar' : 'Crear'}</button>
+                </div>
+            </form>
+            <div className="my-4 col-lg-12 col-md-12 col-sm-6 col-xs-12">
+                <button className="btn btn-primary" onClick={onClick}>
+                    Regresar
+                </button>
+            </div>
+            <Toaster richColors />
+        </>
     );
 }
 

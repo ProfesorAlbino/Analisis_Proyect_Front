@@ -89,7 +89,7 @@ function LoanStudyRoom() {
 
         <div>
             <h1>Listado de préstamo de sala de estudio</h1>
-            <Button className="mb-2" variant="primary" href="/loanStudyRoom/create">Crear Prestámo de Sala de estudio</Button>
+            <Button className="mb-2" variant="primary" href="/loanStudyRoom/create">Crear Préstamo de Sala de estudio</Button>
             <div className=" py-4 col-6 offset-3 row justify-content-center">
                 <Table className="table border shadow py-4 mb-5">
                     <thead>
