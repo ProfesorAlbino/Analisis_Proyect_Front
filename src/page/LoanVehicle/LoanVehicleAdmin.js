@@ -1,23 +1,24 @@
-//VERIFICAR
-import axios from "axios";
+
 import React, { useState, useEffect } from 'react';
-import { deleteStudyRoomSchedule, getStudyRoomSchedule, getStudyRoomScheduleById } from "../../service/StudyRoomSchedule/StudyRoomScheduleService";
 import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { getStudyRoomById } from "../../service/StudyRoom/StudyRoomService";
+import { deleteLoanVehicle, getLoanVehicle, getLoanVehicleUser } from "../../service/LoanVehicle/LoanVehicleService";
+import {  getLoans } from '../../service/LoanApi/LoanApi';
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
-import { FormatterDate } from '../../scripts/FormatterDate';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { decryptAES } from "../../scripts/AES-256";
-function StudyRoomSchedule() {
-    const [studyRoomSchedule, setStudyRoomSchedule] = useState([]);
+import { FormatterDate } from '../../scripts/FormatterDate';
+import ActivityType from './components/ActivityType';
+import { decryptAES } from '../../scripts/AES-256';
+function LoanVehicleAdmin() {
+    const [loanVehicle, setLoanVehicle] = useState([]);
+    const [loans, setLoans] = useState([]);
     const navigate = useNavigate();
-    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
+   const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
     useEffect(() => {
         if (!user || !user.idLibraryUser) {
             Swal.fire({
-                title: "No puedes acceder horarios de salas de estudios",
+                title: "No puedes acceder servicios de vehículo",
                 text: "No eres un usuario administrador",
                 icon: "error",
                 confirmButtonText: "Aceptar",
@@ -39,26 +40,20 @@ function StudyRoomSchedule() {
             return;
         }
         (async () => {
-            const response = await getStudyRoomSchedule();
+           
+            const response = await getLoanVehicle();
 
-            let temporal = [];
-            for (let i = 0; i < response.length; i++) {
-                response[i].name = "";
-            }
-            for (let i = 0; i < response.length; i++) {
-                let res = await getStudyRoomById(response[i].idStudyRoom);
+            setLoanVehicle(response);
+            const responseLoan = await getLoans();
 
-                response[i].name = res.name;
-            }
+            setLoans(responseLoan);
 
-            setStudyRoomSchedule(response);
-
+            console.log(responseLoan);
+            console.log(response);
         })();
     }, []);
 
-    async function deleteStudy(id) {
-        console.log("eliminar" + id);
-        //deleteStudyRoom(id);
+    async function deleteLoanV(id) {
 
         Swal.fire({
             title: '¿Estás seguro?',
@@ -72,12 +67,13 @@ function StudyRoomSchedule() {
             if (result.isConfirmed) {
                 Swal.fire(
                     '¡Eliminado!',
-                    'El horario de la sala de estudio ha sido eliminado.',
+                    'El Prestámo de Vehículo ha sido eliminado.',
                     'success'
                 )
-                await deleteStudyRoomSchedule(id).then(async (data) => {
-                    const response = await getStudyRoomSchedule();
-                    setStudyRoomSchedule(response);
+               
+                await deleteLoanVehicle(id).then(async (data) => {
+                   window.location.reload();
+                   
                 })
                     .catch((error) => {
                         console.log('error', error)
@@ -87,50 +83,63 @@ function StudyRoomSchedule() {
                 Swal.fire
                     (
                         'Error',
-                        'No se pudo eliminar el horario de la sala de estudio.',
+                        'No se pudo eliminar el Prestámo de Vehículo.',
                         'error'
                     );
             }
         })
     }
 
-    function editStudyRoom(id) {
-
-        navigate("/studyRoomsSchedule/edit/" + id);
+    function editLoanVehicle(id) {
+        console.log("entrando a editar");
+        navigate("/loanVehicleAdmin/edit/" + id);
 
     }
     return (
 
-        <div >
-            <h1>Listado de horario de sala de estudio</h1>
-            <Button className="mb-2" variant="primary" href="/studyRoomsSchedule/create">Crear el horario  de la sala de estudio</Button>
+        <div>
+            <h1 className="text-center">Listado de préstamo de vehículo</h1>
             <div className=" py-4 col-6 offset-3 row justify-content-center">
                 <Table className="table border shadow py-4 mb-5">
                     <thead>
                         <tr>
-                        <th>#</th>
-                            <th>Día</th>
-                            <th>Sala de estudio</th>
-                            <th>Hora inicio</th>
-                            <th>Hora fin</th>
+                            <th>#</th>
+                            <th>Unidad o Carrera</th>
+                            <th>Responsable</th>
+                            <th>Cantidad de personas</th>
+                            <th>Destino</th>
+                            <th>Lugar de salida</th>
+                            <th>Fecha salida - regreso</th>
+                            <th>Hora salida - regreso</th>
+                            <th>Tipo de actividad</th>
+                            <th>Vehiculo</th>
+                            <th>Estado</th>
+
                             <th colSpan={2}>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            studyRoomSchedule.filter(res => { return res.active == 1 }).map((study, index) => (
-                                <tr key={study.id}>
+                          loanVehicle.length !== 0 && loanVehicle.filter(res => { return res.active == 1 }).map((loan, index) => (
+
+                                <tr key={loan.id}>
                                     <td>{index + 1}</td>
-                                    <td>{FormatterDate(study.day)}</td>
-                                    <td>{study.name}</td>
-                                    <td>{study.startHour}</td>
-                                    <td>{study.endHour}</td>
+                                    <td>{loan.unityOrCarrer}</td>
+                                    <td>{loan.responsible}</td>
+                                    <td>{loan.personQuantity}</td>
+                                    <td>{loan.destination}</td>
+                                    <td>{loan.startingPlace}</td>
+                                    <td>{FormatterDate(loan.startDate)} - {FormatterDate(loan.endDate)} </td>
+                                    <td>{loan.exitHour} - {loan.returnHour}</td>
+                                    <td><ActivityType activity={loan.activityType} /></td>
+                                    <td>{loan.assignedVehicle}</td>
+                                    <td>{loan.state}</td>
                                     <td>
                                         <OverlayTrigger
                                             placement="top"
                                             overlay={<Tooltip>Modificar</Tooltip>}
                                         >
-                                            <button className="btn btn-warning" onClick={() => editStudyRoom(study.id)}>
+                                            <button className="btn btn-warning" onClick={() => editLoanVehicle(loan.id)}>
                                                 <FaRegEdit />
                                             </button>
                                         </OverlayTrigger>
@@ -140,16 +149,21 @@ function StudyRoomSchedule() {
                                             placement="top"
                                             overlay={<Tooltip>Eliminar</Tooltip>}
                                         >
-                                            <button className="btn btn-danger" onClick={() => deleteStudy(study.id)}>
+                                            <button className="btn btn-danger" onClick={() => deleteLoanV(loan.id)}>
                                                 <FaTrashAlt />
                                             </button>
                                         </OverlayTrigger>
 
                                     </td>
-
                                 </tr>
                             ))
+
                         }
+                        {loanVehicle.length === 0 && (
+                            <tr>
+                                <td colSpan={11}>No hay datos para mostrar</td>
+                            </tr>
+                        )}
                     </tbody>
                 </Table >
             </div>
@@ -157,4 +171,4 @@ function StudyRoomSchedule() {
     );
 
 }
-export default StudyRoomSchedule;
+export default LoanVehicleAdmin;

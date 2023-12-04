@@ -160,7 +160,8 @@ function OffCanvas({ name, ...props }) {
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Salas de estudio</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Horario de Salas de estudio</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Muebles de Salas de estudio</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/admLoanVehicle">Servicio de Transporte</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanVehicleAdmin">Servicio de Transporte</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanStudyRoomAdmin">Servicios de Sala de estudios</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
                   <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminLoanClassRoom">Prestamos Aulas y Laboratrios</Link>

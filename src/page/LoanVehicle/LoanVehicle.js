@@ -3,21 +3,44 @@ import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { deleteLoanVehicle, getLoanVehicle } from "../../service/LoanVehicle/LoanVehicleService";
+import { deleteLoanVehicle, getLoanVehicle, getLoanVehicleUser } from "../../service/LoanVehicle/LoanVehicleService";
 import { deleteLoan, getLoans } from '../../service/LoanApi/LoanApi';
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FormatterDate } from '../../scripts/FormatterDate';
-
 import ActivityType from './components/ActivityType';
+import { decryptAES } from '../../scripts/AES-256';
 function LoanVehicle() {
     const [loanVehicle, setLoanVehicle] = useState([]);
     const [loans, setLoans] = useState([]);
-    const activity = "";
     const navigate = useNavigate();
+    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
     useEffect(() => {
+        if (!user || !user.idLibraryUser) {
+            Swal.fire({
+                icon: "error",
+                title: "Usuario no autenticado",
+                text: "Por favor inicie sesión",
+            });
+            navigate("/login");
+            return;
+        }
+        if (user.role != "Estudiante") {
+            Swal.fire({
+                title: "No puedes acceder a esta acción",
+                text: "Debes iniciar sesión",
+                showCancelButton: true,
+                icon: "error",
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login';
+                }
+            });
+        }
         (async () => {
-            const response = await getLoanVehicle();
+            console.log("ID USER: ", user.id);
+            const response = await getLoanVehicleUser(user.id);
 
             setLoanVehicle(response);
             const responseLoan = await getLoans();
@@ -46,9 +69,10 @@ function LoanVehicle() {
                     'El Prestámo de Vehículo ha sido eliminado.',
                     'success'
                 )
+
                 await deleteLoanVehicle(id).then(async (data) => {
-                    const response = await getLoanVehicle();
-                    setLoanVehicle(response);
+                    window.location.reload();
+
                 })
                     .catch((error) => {
                         console.log('error', error)
@@ -94,7 +118,7 @@ function LoanVehicle() {
                     </thead>
                     <tbody>
                         {
-                            loanVehicle.filter(res => { return res.active == 1 }).map((loan, index) => (
+                            loanVehicle.length !== 0 && loanVehicle.filter(res => { return res.active == 1 }).map((loan, index) => (
 
                                 <tr key={loan.id}>
                                     <td>{index + 1}</td>
@@ -108,7 +132,7 @@ function LoanVehicle() {
 
 
                                     <td>{loan.exitHour} - {loan.returnHour}</td>
-                                    <td><ActivityType activity={loan.activityType}/></td>
+                                    <td><ActivityType activity={loan.activityType} /></td>
                                     <td>{loan.state}</td>
                                     <td>
                                         <OverlayTrigger
@@ -133,7 +157,13 @@ function LoanVehicle() {
                                     </td>
                                 </tr>
                             ))
+
                         }
+                        {loanVehicle.length === 0 && (
+                            <tr>
+                                <td colSpan={11}>No hay datos para mostrar</td>
+                            </tr>
+                        )}
                     </tbody>
                 </Table >
             </div>

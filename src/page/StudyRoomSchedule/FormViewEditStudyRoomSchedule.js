@@ -3,16 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getStudyRoom } from "../../service/StudyRoom/StudyRoomService";
-import {  getStudyRoomScheduleById, updateStudyRoomSchedule } from "../../service/StudyRoomSchedule/StudyRoomScheduleService";
+import { getStudyRoomScheduleById, updateStudyRoomSchedule } from "../../service/StudyRoomSchedule/StudyRoomScheduleService";
 function FormViewEditStudyRoomSchedule() {
-    const {id} = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
     const [studyRooms, setStudyRooms] = useState([]);
     useEffect(() => {
         (async () => {
             const response = await getStudyRoom();
             setStudyRooms(response);
-          
+
         })();
     }, []);
     const [formStudyRoomSchedule, setFormStudyRoomSchedule] = useState({
@@ -22,16 +22,16 @@ function FormViewEditStudyRoomSchedule() {
         endHour: "",
         active: 1
     });
-     const formatTime = (timeString) => {
+    const formatTime = (timeString) => {
         const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 1 };
         return new Date(`2000-01-01T${timeString}`).toLocaleTimeString('en-US', options);
     };
     useEffect(() => {
         if (id != undefined) {
             getStudyRoomScheduleById(id).then((data) => {
-                
+
                 setFormStudyRoomSchedule(data.data);
-            
+
 
             })
                 .catch((error) => {
@@ -43,18 +43,18 @@ function FormViewEditStudyRoomSchedule() {
     const setObject = (event) => {
         setFormStudyRoomSchedule({ ...formStudyRoomSchedule, [event.target.name]: event.target.value });
     }
-    
-    const handleSubmit = async (event ) => {
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        if (formStudyRoomSchedule.day === "" || formStudyRoomSchedule.start_hour=== ""|| formStudyRoomSchedule.end_hour_hour=== "" ) {
+        if (formStudyRoomSchedule.day === "" || formStudyRoomSchedule.start_hour === "" || formStudyRoomSchedule.end_hour_hour === "") {
             Swal.fire(
                 'ERROR!',
                 'Existen campos vacíos',
                 'error'
             )
         } else {
-            if(  formStudyRoomSchedule.active === ""){
-                formStudyRoomSchedule.active=true;
+            if (formStudyRoomSchedule.active === "") {
+                formStudyRoomSchedule.active = true;
 
             }
             console.log(formStudyRoomSchedule);
@@ -103,7 +103,7 @@ function FormViewEditStudyRoomSchedule() {
                                 </option>
                             ))}
                         </select>
-                        
+
                     </div>
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start">
@@ -118,7 +118,7 @@ function FormViewEditStudyRoomSchedule() {
                     </div>
 
                     <div className="col-sm-12"></div>
-                    
+
                     <div className="col-sm-6 text-start mt-2">
                         <label>Hora de finalización:</label>
                         <input type="time" className="form-control" name="endHour" value={formStudyRoomSchedule.endHour} onChange={(event) => { setObject(event) }} />
@@ -133,9 +133,9 @@ function FormViewEditStudyRoomSchedule() {
                     </div>
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
-                        <button type="submit" className="btn btn-primary" >Guardar</button>
-                        <button type="reset" className="btn btn-warning" onClick={resetForm}>Limpiar</button>
-                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button>
+                        <button type="submit" className="btn btn-primary mb-3">Guardar</button>
+                        <button type="button" className="btn btn-warning mb-3 mx-2" onClick={handleReset}>Limpiar</button>
+                        <button type="button" className="btn btn-danger mb-3" onClick={handleBack}>Regresar</button>
                     </div>
                 </div>
 
