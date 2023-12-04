@@ -50,3 +50,13 @@ export async function updateActiveLoanComputerEquipment(idLoanComputerEquipment,
         throw error;
     }
 }
+
+export async function deleteLoanComputerEquipment(idLoanComputerEquipment) {
+    try {
+        const response = await axios.delete(url + 'LoanComputerEquipments/'+idLoanComputerEquipment);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error;
+    }
+}

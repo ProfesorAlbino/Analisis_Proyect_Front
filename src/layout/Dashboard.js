@@ -62,7 +62,7 @@ function OffCanvas({ name, ...props }) {
         //Cambia el useState a false
         setShowAdmin(false);
       }
-    } else{
+    } else {
       setShowAdmin(false);
     }
   }
@@ -152,26 +152,38 @@ function OffCanvas({ name, ...props }) {
             {/* //Si el usuario es administrador muestra las opciones de administrador */}
             {showAdmin && (
               <Accordion.Item eventKey="2">
-              <Accordion.Header>Administrativos</Accordion.Header>
-              <Accordion.Body>
-                <div className="row">
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Inventario</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Libros</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Usuarios</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Salas de estudio</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Horario de Salas de estudio</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Muebles de Salas de estudio</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanVehicleAdmin">Servicio de Transporte</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanStudyRoomAdmin">Servicios de Sala de estudios</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminLoanClassRoom">Prestamos Aulas y Laboratrios</Link>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
+                <Accordion.Header>Administrativos</Accordion.Header>
+                <Accordion.Body>
+                  <div className="row">
+
+                    <Accordion>
+                      <Accordion.Item eventKey="1">
+                        <Accordion.Header>Prestamos</Accordion.Header>
+                        <Accordion.Body>
+                        <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    </Accordion>
+
+                    {/* Deja un espacio para que no se encuentre pegado el acordeon con el boton */}
+                    <h1></h1>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Inventario</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Libros</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Usuarios</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Salas de estudio</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Horario de Salas de estudio</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Muebles de Salas de estudio</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanVehicleAdmin">Servicio de Transporte</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanStudyRoomAdmin">Servicios de Sala de estudios</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminLoanClassRoom">Prestamos Aulas y Laboratrios</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/ListComputerEquipments">Equipos Informaticos</Link>
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
             )}
 
-            <Accordion.Item eventKey="3">
+            <Accordion.Item eventKey="4">
               <Accordion.Header>Sanciones</Accordion.Header>
               <Accordion.Body>
                 <div className="row">

@@ -5,6 +5,7 @@ import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { BsBookmark } from "react-icons/bs";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FormatterDate } from '../../scripts/FormatterDate';
+import Swal from 'sweetalert2';
 
 export default function ComputerEquipments() {
 
@@ -24,12 +25,31 @@ export default function ComputerEquipments() {
     }
 
     const deleteComputerEquipmentById = async (id) => {
-        deleteComputerEquipment(id).then((result) => {
-            loadComputerEquipments();
-            console.log(result);
-        }).catch(() => {
-            console.log("Error al cargar los datos");
-        });
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Se eliminará el equipo informatico",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Si, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Eliminado!',
+                    'El equipo informatico ha sido eliminado.',
+                    'success'
+                ).then(() => {
+                    deleteComputerEquipment(id).then((result) => {
+                        loadComputerEquipments();
+                        console.log(result);
+                    }).catch(() => {
+                        console.log("Error al cargar los datos");
+                    });
+                })
+            }
+        })
     }
 
     function ModifyComputerEquipments(computerEquipment) {
@@ -75,7 +95,10 @@ export default function ComputerEquipments() {
                 </div>
 
                 <div className="col-md-8 my-4">
-                    <table className="table border shadow py-4 mb-5">
+                {computerEquipments.length === 0 ? (
+                        <h3>No hay equipos informaticos</h3>
+                    ) : (
+                        <table className="table border shadow py-4 mb-5">
                         <thead>
                             <tr>
                                 <th scope='col'>#</th>
@@ -129,6 +152,7 @@ export default function ComputerEquipments() {
                             ))}
                         </tbody>
                     </table>
+                    )}
                 </div>
             </div>
         </div>
