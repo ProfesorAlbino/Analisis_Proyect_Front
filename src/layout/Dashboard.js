@@ -31,8 +31,7 @@ function OffCanvas({ name, ...props }) {
   const toggleShow = () => setShow((s) => !s);
 
   //Le agregue el JSON.parse porque no agarra los datos hasta convertirlos en JSON (Jeykel)
-  const user = JSON.parse( sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
-  console.log(user);
+  const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
 
   const onClick = () => {
     setShow(false);
@@ -89,8 +88,8 @@ function OffCanvas({ name, ...props }) {
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = '/login';
-          }
-          });
+        }
+      });
     }
   }
 
@@ -100,7 +99,7 @@ function OffCanvas({ name, ...props }) {
       <div>
         <Navbar className="colorNav">
           <Container>
-            <Button variant="primary" onClick={toggleShow} className="me-2 start colorButton">
+            <Button variant="primary" onClick={toggleShow} className="me-2 start colorButton" id='toggle'>
               <VscThreeBars />
             </Button>
 
@@ -184,7 +183,7 @@ function OffCanvas({ name, ...props }) {
           <footer className="footer mt-auto col-12 py-3 bg-light">
             <div className="container">
               <label className="text">SIPR</label>
-              {user ? <button type="button" className="btn btn-outline-primary ms-4 button-footer" onClick={logout}>Cerrar Sesión</button> :
+              {user ? <button type="button" className="btn btn-outline-primary ms-4 button-footer" onClick={logout} id='logout'>Cerrar Sesión</button> :
                 <Link type="button" className="btn btn-outline-primary ms-4" to="/login" onClick={onClick}>Iniciar Sesión</Link>}
               {/* <button type="button" className="btn btn-primary ms-2 button-footer">Iniciar Sesión</button> */}
             </div>
