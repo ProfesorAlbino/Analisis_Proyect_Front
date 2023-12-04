@@ -8,18 +8,41 @@ import {  getLoans } from '../../service/LoanApi/LoanApi';
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FormatterDate } from '../../scripts/FormatterDate';
-import { deleteLoanStudyRoom, getLoanStudyRoom } from '../../service/LoanStudyRoom/LoanStudyRoom';
+import { deleteLoanStudyRoom, getLoanStudyRoom, getLoanStudyRoomUser } from '../../service/LoanStudyRoom/LoanStudyRoom';
 import { getStudyRoomById } from '../../service/StudyRoom/StudyRoomService';
-
-
+import { decryptAES } from '../../scripts/AES-256';
 function LoanStudyRoom() {
     const [loanStudyRoom, setLoanStudyRoom] = useState([]);
     const [loans, setLoans] = useState([]);
-   
+    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
     const navigate = useNavigate();
     useEffect(() => {
+        if (!user || !user.idLibraryUser) {
+            Swal.fire({
+                icon: "error",
+                title: "Usuario no autenticado",
+                text: "Por favor inicie sesión",
+              });
+            navigate("/login");
+            return;
+        }
+        if (user.role != "Estudiante") {
+            Swal.fire({
+                title: "No puedes realizar esta acción",
+                text: "Debes iniciar sesión",
+                showCancelButton: true,
+                icon: "error",
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login';
+                }
+            });
+        }
+
         (async () => {
-            const response = await getLoanStudyRoom();
+            console.log("ID USER: ", user.idLibraryUser);
+            const response = await getLoanStudyRoomUser(user.idLibraryUser);
 
            
             let temporal = [];
@@ -61,8 +84,7 @@ function LoanStudyRoom() {
                     'success'
                 )
                 await deleteLoanStudyRoom(id).then(async (data) => {
-                    const response = await getLoanStudyRoom();
-                    setLoanStudyRoom(response);
+                    window.location.reload();
                 })
                     .catch((error) => {
                         console.log('error', error)
@@ -107,7 +129,7 @@ function LoanStudyRoom() {
                     </thead>
                     <tbody>
                         {
-                            loanStudyRoom.filter(res => { return res.active == 1 }).map((loan, index) => (
+                           loanStudyRoom.length !== 0 && loanStudyRoom.filter(res => { return res.active == 1 }).map((loan, index) => (
 
                                 <tr key={loan.id}>
                                     <td>{index + 1}</td>
@@ -142,6 +164,11 @@ function LoanStudyRoom() {
                                 </tr>
                             ))
                         }
+                         {loanStudyRoom.length === 0 && (
+                            <tr>
+                                <td colSpan={11}>No hay datos para mostrar</td>
+                            </tr>
+                        )}
                     </tbody>
                 </Table >
             </div>

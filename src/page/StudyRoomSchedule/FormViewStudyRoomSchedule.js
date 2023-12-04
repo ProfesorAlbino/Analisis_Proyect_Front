@@ -5,10 +5,13 @@ import Swal from "sweetalert2";
 import { getStudyRoom } from "../../service/StudyRoom/StudyRoomService";
 import { FormatterDateToForms, getTimeActually } from '../../scripts/FormatterDate';
 import { createStudyRoomSchedule } from "../../service/StudyRoomSchedule/StudyRoomScheduleService";
+import { decryptAES } from '../../scripts/AES-256';
 function FormViewStudyRoomSchedule() {
     const navigate = useNavigate();
     const [studyRooms, setStudyRooms] = useState([]);
+   
     useEffect(() => {
+       
         (async () => {
             const response = await getStudyRoom();
             setStudyRooms(response);
@@ -27,8 +30,8 @@ function FormViewStudyRoomSchedule() {
     const setObject = (event) => {
         setFormStudyRoomSchedule({ ...formStudyRoomSchedule, [event.target.name]: event.target.value });
     }
-    
-    
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (formStudyRoomSchedule.day === "" || formStudyRoomSchedule.start_hour === "" || formStudyRoomSchedule.end_hour_hour === "") {
@@ -79,7 +82,7 @@ function FormViewStudyRoomSchedule() {
                     <h1>Formulario para crear el horario de las salas de estudio</h1>
                     <div className="col-sm-6 text-start mt-2">
                         <label>Sala de estudio: </label>
-                        <select  required className='form-select' name="idStudyRoom" value={formStudyRoomSchedule.idStudyRoom} onChange={(event) => { setObject(event) }}>
+                        <select required className='form-select' name="idStudyRoom" value={formStudyRoomSchedule.idStudyRoom} onChange={(event) => { setObject(event) }}>
                             <option value="">Selecciona una sala de estudio</option>
                             {studyRooms.filter(res => { return res.active == 1 }).map((studyRoom, index) => (
                                 <option key={studyRoom.id} value={studyRoom.id}>
@@ -98,7 +101,7 @@ function FormViewStudyRoomSchedule() {
 
                     <div className="col-sm-6 text-start mt-2">
                         <label>Hora de inicio:</label>
-                        <input  required type="time" className="form-control" name="startHour" value={formStudyRoomSchedule.startHour} onChange={(event) => { setObject(event) }} />
+                        <input required type="time" className="form-control" name="startHour" value={formStudyRoomSchedule.startHour} onChange={(event) => { setObject(event) }} />
                     </div>
 
                     <div className="col-sm-12"></div>
@@ -110,12 +113,12 @@ function FormViewStudyRoomSchedule() {
 
                     <div className="col-sm-12"></div>
 
-                   
+
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
-                        <button type="submit" className="btn btn-primary" >Guardar</button>
-                        <button type="reset" className="btn btn-warning" onClick={resetForm}>Limpiar</button>
-                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button>
+                        <button type="submit" className="btn btn-primary mb-3">Guardar</button>
+                        <button type="button" className="btn btn-warning mb-3 mx-2" onClick={handleReset}>Limpiar</button>
+                        <button type="button" className="btn btn-danger mb-3" onClick={handleBack}>Regresar</button>
                     </div>
                 </div>
 

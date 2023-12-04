@@ -14,6 +14,18 @@ export async function getLoanStudyRoom() {
         throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en otro lugar.
     }
 }
+export async function getLoanStudyRoomUser(id) {
+    try {
+        console.log(link);
+        const response = await axios.get(link + 'api/LoanStudyRooms/getLoanStudyRoomUser/'+id);
+        //console.log(response.data);
+        return response.data; // Devuelve el contenido JSON de la respuesta
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en otro lugar.
+    }
+}
+
 export async function getLoanStudyRoomByLoan(id) {
     try {
         console.log(link);

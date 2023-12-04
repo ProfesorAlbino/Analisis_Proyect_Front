@@ -150,22 +150,23 @@ function OffCanvas({ name, ...props }) {
             {/* //Si el usuario es administrador muestra las opciones de administrador */}
             {showAdmin && (
               <Accordion.Item eventKey="2">
-                <Accordion.Header>Administrativos</Accordion.Header>
-                <Accordion.Body>
-                  <div className="row">
-                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Inventario</Link>
-                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Libros</Link>
-                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Usuarios</Link>
-                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Salas de estudio</Link>
-                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Horario de Salas de estudio</Link>
-                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Muebles de Salas de estudio</Link>
-                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/admLoanVehicle">Servicio de Transporte</Link>
-                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
-                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
-                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminLoanClassRoom">Prestamos Aulas y Laboratrios</Link>
-                  </div>
-                </Accordion.Body>
-              </Accordion.Item>
+              <Accordion.Header>Administrativos</Accordion.Header>
+              <Accordion.Body>
+                <div className="row">
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Inventario</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Libros</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Usuarios</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Salas de estudio</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Horario de Salas de estudio</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Muebles de Salas de estudio</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanVehicleAdmin">Servicio de Transporte</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanStudyRoomAdmin">Servicios de Sala de estudios</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
+                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminLoanClassRoom">Prestamos Aulas y Laboratrios</Link>
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
             )}
 
             <Accordion.Item eventKey="3">
