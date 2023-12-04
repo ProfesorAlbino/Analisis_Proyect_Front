@@ -31,8 +31,7 @@ function OffCanvas({ name, ...props }) {
   const toggleShow = () => setShow((s) => !s);
 
   //Le agregue el JSON.parse porque no agarra los datos hasta convertirlos en JSON (Jeykel)
-  const user = JSON.parse( sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
-  console.log(user);
+  const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
 
   const onClick = () => {
     setShow(false);
@@ -89,8 +88,8 @@ function OffCanvas({ name, ...props }) {
       }).then((result) => {
         if (result.isConfirmed) {
           window.location.href = '/login';
-          }
-          });
+        }
+      });
     }
   }
 
@@ -100,7 +99,7 @@ function OffCanvas({ name, ...props }) {
       <div>
         <Navbar className="colorNav">
           <Container>
-            <Button variant="primary" onClick={toggleShow} className="me-2 start colorButton">
+            <Button variant="primary" onClick={toggleShow} className="me-2 start colorButton" id='toggle'>
               <VscThreeBars />
             </Button>
 
@@ -151,22 +150,22 @@ function OffCanvas({ name, ...props }) {
             {/* //Si el usuario es administrador muestra las opciones de administrador */}
             {showAdmin && (
               <Accordion.Item eventKey="2">
-              <Accordion.Header>Administrativos</Accordion.Header>
-              <Accordion.Body>
-                <div className="row">
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Inventario</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Libros</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Usuarios</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Salas de estudio</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Horario de Salas de estudio</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Muebles de Salas de estudio</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/admLoanVehicle">Servicio de Transporte</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
-                  <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminLoanClassRoom">Prestamos Aulas y Laboratrios</Link>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
+                <Accordion.Header>Administrativos</Accordion.Header>
+                <Accordion.Body>
+                  <div className="row">
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/inventory">Inventario</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/listTitles">Libros</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/users">Usuarios</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRooms">Salas de estudio</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/studyRoomsSchedule">Horario de Salas de estudio</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/furnitures">Muebles de Salas de estudio</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/admLoanVehicle">Servicio de Transporte</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/classRoom">Aulas</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminListLoan">Equipos Informaticos</Link>
+                    <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/adminLoanClassRoom">Prestamos Aulas y Laboratrios</Link>
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
             )}
 
             <Accordion.Item eventKey="3">
@@ -183,7 +182,7 @@ function OffCanvas({ name, ...props }) {
           <footer className="footer mt-auto col-12 py-3 bg-light">
             <div className="container">
               <label className="text">SIPR</label>
-              {user ? <button type="button" className="btn btn-outline-primary ms-4 button-footer" onClick={logout}>Cerrar Sesión</button> :
+              {user ? <button type="button" className="btn btn-outline-primary ms-4 button-footer" onClick={logout} id='logout'>Cerrar Sesión</button> :
                 <Link type="button" className="btn btn-outline-primary ms-4" to="/login" onClick={onClick}>Iniciar Sesión</Link>}
               {/* <button type="button" className="btn btn-primary ms-2 button-footer">Iniciar Sesión</button> */}
             </div>
