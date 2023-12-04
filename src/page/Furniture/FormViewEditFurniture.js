@@ -90,6 +90,11 @@ function FormViewEditFurniture() {
     const handleBack = () => {
         navigate('/furnitures');
     }
+
+    const handleReset = () => {
+        resetForm();
+    }
+    
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>

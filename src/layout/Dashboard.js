@@ -62,6 +62,8 @@ function OffCanvas({ name, ...props }) {
         //Cambia el useState a false
         setShowAdmin(false);
       }
+    } else{
+      setShowAdmin(false);
     }
   }
 
