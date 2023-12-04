@@ -58,6 +58,11 @@ function FormViewStudyRoom() {
             active: 1
         });
     };
+
+    const handleReset = () => {
+        resetForm();
+    }
+    
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>

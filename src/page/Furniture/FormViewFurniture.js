@@ -77,6 +77,10 @@ function FormViewFurniture() {
         navigate('/furnitures');
     }
 
+    const handleReset = () => {
+        resetForm();
+    }
+
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -117,9 +121,6 @@ function FormViewFurniture() {
                         <button type="button" className="btn btn-warning mb-3 mx-2" onClick={handleReset}>Limpiar</button>
                         <button type="button" className="btn btn-danger mb-3" onClick={handleBack}>Regresar</button>
                     </div>
-
-
-
                 </div>
 
             </form>
