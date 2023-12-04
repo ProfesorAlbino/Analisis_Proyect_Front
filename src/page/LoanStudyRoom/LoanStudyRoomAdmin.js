@@ -101,7 +101,7 @@ function LoanStudyRoomAdmin() {
 
     function editLoanStudyRoom(id) {
 
-        navigate("/loanStudyRoom/edit/" + id);
+        navigate("/loanStudyRoomAdmin/edit/" + id);
         
 
     }
@@ -110,7 +110,6 @@ function LoanStudyRoomAdmin() {
 
         <div>
             <h1>Listado de préstamo de sala de estudio</h1>
-            <Button className="mb-2" variant="primary" href="/loanStudyRoom/create">Crear Préstamo de Sala de estudio</Button>
             <div className=" py-4 col-6 offset-3 row justify-content-center">
                 <Table className="table border shadow py-4 mb-5">
                     <thead>
@@ -122,6 +121,7 @@ function LoanStudyRoomAdmin() {
                             <th>Hora de finalización</th>
                             <th>Cantidad de personas</th>
                             <th>Sala de estudio</th>
+                            <th>Estado</th>
                             <th colSpan={2}>Acciones</th>
                         </tr>
                     </thead>
@@ -137,7 +137,7 @@ function LoanStudyRoomAdmin() {
                                     <td>{loan.exitHour}</td>
                                     <td>{loan.numberOfPeople}</td>
                                     <td>{loan.name}</td>
-                                   
+                                   <td>{loan.state}</td>
                                     <td>
                                         <OverlayTrigger
                                             placement="top"

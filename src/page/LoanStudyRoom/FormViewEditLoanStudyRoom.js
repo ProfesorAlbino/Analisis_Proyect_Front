@@ -38,6 +38,7 @@ function FormViewEditLoanStudyRoom() {
         active: 1,
         exitHour: getTimeActually(),
         returnHour: getTimeActually(),
+        state:"Pendiente"
 
     });
     useEffect(() => {
@@ -92,6 +93,7 @@ function FormViewEditLoanStudyRoom() {
         active: 1,
         exitHour: getTimeActually(),
         returnHour: getTimeActually(),
+        state:"Pendiente"
 
     };
     const handleReset = () => {

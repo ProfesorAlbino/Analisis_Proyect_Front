@@ -125,7 +125,7 @@ function LoanStudyRoom() {
                             <th>Hora de finalización</th>
                             <th>Cantidad de personas</th>
                             <th>Sala de estudio</th>
-                            
+                            <th>Estado</th>
                             <th colSpan={2}>Acciones</th>
                         </tr>
                     </thead>
@@ -141,7 +141,7 @@ function LoanStudyRoom() {
                                     <td>{loan.exitHour}</td>
                                     <td>{loan.numberOfPeople}</td>
                                     <td>{loan.name}</td>
-                                   
+                                   <td>{loan.state}</td>
                                     <td>
                                         <OverlayTrigger
                                             placement="top"
