@@ -19,7 +19,7 @@ describe('Login Page', function() {
     await driver.findElement(By.id('userPass')).sendKeys('1234567');
     await driver.findElement(By.id('submit')).click();
 
-    //await driver.wait(until.urlIs('http://localhost:3000/'), 100000);
+    await driver.wait(until.urlIs('http://localhost:3000/'), 5000);
 
     await driver.sleep(5000);
 
