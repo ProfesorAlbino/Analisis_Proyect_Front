@@ -44,24 +44,26 @@ function LoanStudyRoom() {
             console.log("ID USER: ", user.idLibraryUser);
             const response = await getLoanStudyRoomUser(user.idLibraryUser);
 
-           
+            
             let temporal = [];
             for (let i = 0; i < response.length; i++) {
                 response[i].name = "";
             }
+            
             for (let i = 0; i < response.length; i++) {
+              
                 let res = await getStudyRoomById(response[i].studyRoomId);
-
+                console.log("ID: ", response[i].studyRoomId);
                 response[i].name = res.name;
             }
-
+            console.log(response);
             setLoanStudyRoom(response);
             const responseLoan = await getLoans();
 
             setLoans(responseLoan);
 
             console.log(responseLoan);
-            console.log(response);
+            
         })();
     }, []);
     
