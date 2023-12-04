@@ -63,6 +63,7 @@ import FormViewEditLoanStudyRoom from './page/LoanStudyRoom/FormViewEditLoanStud
 import LoanVehicleAdmin from './page/LoanVehicle/LoanVehicleAdmin';
 import FormViewEditLoanVehicleAdmin from './page/LoanVehicle/FormViewEditLoanVehicleAdmin';
 import LoanStudyRoomAdmin from './page/LoanStudyRoom/LoanStudyRoomAdmin';
+import FormViewEditLoanStudyRoomAdmin from './page/LoanStudyRoom/FormViewEditLoanStudyRoomAdmin';
 
 
 function App() {
@@ -135,6 +136,7 @@ function App() {
           <Route exact path="/loanStudyRoom/edit/:id" element={<FormViewEditLoanStudyRoom />} />
           <Route exact path="/loanVehicleAdmin" element={<LoanVehicleAdmin />} />
           <Route exact path="/loanVehicleAdmin/edit/:id" element={<FormViewEditLoanVehicleAdmin/>} />
+          <Route exact path="/loanStudyRoomAdmin/edit/:id" element={<FormViewEditLoanStudyRoomAdmin />} />
         </Routes>
         <Footer />
       </Router>

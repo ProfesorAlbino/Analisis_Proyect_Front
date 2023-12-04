@@ -49,6 +49,7 @@ export async function createLoanStudyRoom(data){
         "exitHour": data.exitHour,
         "returnHour": data.returnHour,
         "active": data.active==1?true:false,
+        "state":data.state
        
     }
     console.log('prestamo despues: ',newLoanStudyRoom);
@@ -70,6 +71,7 @@ export async function updateLoanStudyRoom(data){
         "exitHour": data.exitHour,
         "returnHour": data.returnHour,
         "active": data.active==1?true:false,
+        "state":data.state
     }
     return await axios.put(link+"api/LoanStudyRooms/updateLoanStudyRooms/"+data.id,loanVehicle);
 }

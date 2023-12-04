@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getLoanVehicleById, updateLoanVehicle } from "../../service/LoanVehicle/LoanVehicleService";
 import { getLoanById, updateLoan } from "../../service/LoanApi/LoanApi";
 import Swal from "sweetalert2";
-import { getDate } from "date-fns/esm";
 function FormViewEditLoanVehicleAdmin() {
 
     const navigate = useNavigate();
@@ -151,7 +150,7 @@ function FormViewEditLoanVehicleAdmin() {
 
             <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                 <label>Fecha de partida:</label>
-                <input type="date" required className="form-control" name="startDate" min={getDate} value={formLoan.startDate} onChange={(event) => { setObject(event) }} />
+                <input type="date" required className="form-control" name="startDate" min={formLoan.startDate} value={formLoan.startDate} onChange={(event) => { setObject(event) }} />
             </div>
 
             <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
@@ -195,7 +194,7 @@ function FormViewEditLoanVehicleAdmin() {
 
             <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                 <label>Vehículo asignado:</label>
-                <select required className="form-control" name="assignedVehicle" value={formLoanVehicle.assignedVehicle} onChange={(event) => { setObject(event) }}>
+                <select  className="form-control" name="assignedVehicle" value={formLoanVehicle.assignedVehicle} onChange={(event) => { setObject(event) }}>
                     <option value="">Seleccione un vehículo</option>
                     <option value="Buseta">Buseta</option>
                     <option value="Automovil">Automóvil</option>

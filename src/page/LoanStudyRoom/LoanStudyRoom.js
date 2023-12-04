@@ -44,24 +44,26 @@ function LoanStudyRoom() {
             console.log("ID USER: ", user.idLibraryUser);
             const response = await getLoanStudyRoomUser(user.idLibraryUser);
 
-           
+            
             let temporal = [];
             for (let i = 0; i < response.length; i++) {
                 response[i].name = "";
             }
+            
             for (let i = 0; i < response.length; i++) {
+              
                 let res = await getStudyRoomById(response[i].studyRoomId);
-
+                console.log("ID: ", response[i].studyRoomId);
                 response[i].name = res.name;
             }
-
+            console.log(response);
             setLoanStudyRoom(response);
             const responseLoan = await getLoans();
 
             setLoans(responseLoan);
 
             console.log(responseLoan);
-            console.log(response);
+            
         })();
     }, []);
     
@@ -123,7 +125,7 @@ function LoanStudyRoom() {
                             <th>Hora de finalización</th>
                             <th>Cantidad de personas</th>
                             <th>Sala de estudio</th>
-                            
+                            <th>Estado</th>
                             <th colSpan={2}>Acciones</th>
                         </tr>
                     </thead>
@@ -139,7 +141,7 @@ function LoanStudyRoom() {
                                     <td>{loan.exitHour}</td>
                                     <td>{loan.numberOfPeople}</td>
                                     <td>{loan.name}</td>
-                                   
+                                   <td>{loan.state}</td>
                                     <td>
                                         <OverlayTrigger
                                             placement="top"
