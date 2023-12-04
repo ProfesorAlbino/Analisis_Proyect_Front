@@ -50,7 +50,7 @@ function Login() {
                 <br></br>
                 <Link type="button" className="btn btn-outline-primary " to="/register">Registrarse</Link>
             </div>
-            <Toaster richColors />
+            <Toaster className='toaster' richColors />
         </>
     );
 }
