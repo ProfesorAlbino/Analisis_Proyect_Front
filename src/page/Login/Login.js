@@ -33,7 +33,7 @@ function Login() {
     return (
         <>
             <div className="login-box">
-                <form onSubmit={onSubmit}>
+                <form onSubmit={onSubmit} id='loginForm'>
                     <div className="user-box">
                         <input type="text" name="" required id='userId' />
                         <label>Cedula</label>
