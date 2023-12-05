@@ -3,7 +3,7 @@ import { getAll, deleteTitle } from '../../service/TitlesApi/TitleApi';
 import { FormatterDate } from '../../scripts/FormatterDate';
 import { FaList, FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { encryptAES } from '../../scripts/AES-256';
+import { decryptAES, encryptAES } from '../../scripts/AES-256';
 import Swal from "sweetalert2";
 import { Toaster, toast } from 'sonner';
 
@@ -14,7 +14,7 @@ function ListTitles() {
     const [titles, setTitles] = useState([]); // Utiliza useState para manejar titles
     const [show, setShow] = useState(true);
 
-    const user = JSON.parse(sessionStorage.getItem("user")).role;
+    const user = sessionStorage.getItem("user") && JSON.parse(decryptAES(sessionStorage.getItem("user"))).role;
     useEffect(() => {
 
         if (user === "Estudiante") {
