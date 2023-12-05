@@ -7,13 +7,39 @@ import Swal from "sweetalert2";
 import { deleteLoanClassRoom, getLoanClassRooms, updateLoanClassRoom } from '../../service/ClassRoomApi/LoanClassRoomService';
 import { getLoan, getLoans } from '../../service/ClassRoomApi/LoanService';
 import { getUserrs } from '../../service/UsersApi/UserApi';
+import { decryptAES } from '../../scripts/AES-256';
 
 function AdminLoanClassRoom() {
     const [classRoom, setClassRoom] = useState([]);
     const [loanClass, setLoanClass] = useState([]);
     const [loan, setLoan] = useState([]);
-    const [user, setUser] = useState([]);
+    const [users, setUsers] = useState([]);
     const navigate = useNavigate();
+
+    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
+    useEffect(() => {
+        // Si el usuario no está autenticado, redirige a la página de inicio de sesión
+        if (user === null) {
+            Swal.fire({
+                icon: "error",
+                title: "Usuario no autenticado",
+                text: "Por favor, inicie sesión",
+            });
+            navigate('/login');
+        } if  (user.role !== "Administrador") {
+            Swal.fire({
+                title: "No puedes acceder a esta acción",
+                text: "Debes iniciar sesión",
+                showCancelButton: true,
+                icon: "error",
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login';
+                }
+            });
+        }
+    }, [user]);
 
     useEffect(() => {
         (async () => {
@@ -40,41 +66,12 @@ function AdminLoanClassRoom() {
     useEffect(() => {
         (async () => {
             const response = await getUserrs();
-            setUser(response);
+            setUsers(response);
         })();
     }, []);
 
 
-    /*
-        function deleteUser(id) {
-            Swal.fire({
-                title: '¿Deseas continuar?',
-                text: 'Se eliminará el usuario',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#007bff',
-                cancelButtonColor: '#dc3545',
-                confirmButtonText: 'Si',
-                cancelButtonText: 'No'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    deleteUserr(id).then((res) => {
-                        getUsers();
-                        toast.success("Eliminado exitosamente");
-                    }).catch((err) => {
-                        console.log(err);
-                        toast.error("Error al eliminar");
-                    });
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-    
-                }
-            });
-        }
-    
-      
-    */
+   
 
         const deleteLoanClassRoom = async (loanClassRoom) => {
             Swal.fire({
@@ -147,7 +144,7 @@ function AdminLoanClassRoom() {
         };
 
     function viewLoanClassRoom(id){
-        window.location.href = `/loanClassRooms/ViewLoanClassRoom/${id}`;
+        window.location.href = `/loanClassRooms/AdminViewLoanClassRoom/${id}`;
 
     }
     return (
@@ -176,7 +173,7 @@ function AdminLoanClassRoom() {
                         const associatedLoan = loan.find(
                             (cr) => cr.id === loanClassRoom.idLoan
                         );
-                        const associatedUser = user.find(
+                        const associatedUser = users.find(
                             (cr) => cr.id === loanClassRoom.idUser
                         );
 
@@ -190,15 +187,15 @@ function AdminLoanClassRoom() {
                                 <td>{loanClassRoom.requestState}</td>
                                 <td>
                                 <OverlayTrigger placement="top" overlay={<Tooltip>Ver</Tooltip>}>
-                                            <Button variant="success" onClick={() => viewLoanClassRoom(loanClassRoom.id)}> <FaRegEye />                                            </Button>
+                                            <Button id="view" variant="success" onClick={() => viewLoanClassRoom(loanClassRoom.id)}> <FaRegEye />                                            </Button>
                                         </OverlayTrigger>
 
                                         <OverlayTrigger placement="top" overlay={<Tooltip>Aprobar</Tooltip>}>
-                                            <Button variant="primary" onClick={() => editLoanClassRoom(loanClassRoom)}> <FaRegCheckCircle />                                            </Button>
+                                            <Button id="aprobar" variant="primary" onClick={() => editLoanClassRoom(loanClassRoom)}> <FaRegCheckCircle />                                            </Button>
                                         </OverlayTrigger>
 
                                         <OverlayTrigger placement="top" overlay={<Tooltip>Denegar</Tooltip>}>
-                                            <Button variant="danger" onClick={() => deleteLoanClassRoom(loanClassRoom)}><FaRegTimesCircle /></Button>
+                                            <Button id="denegar" variant="danger" onClick={() => deleteLoanClassRoom(loanClassRoom)}><FaRegTimesCircle /></Button>
                                         </OverlayTrigger>
 
                                 </td>

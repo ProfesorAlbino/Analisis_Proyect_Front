@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Button, Col, Form, OverlayTrigger, Row, Table, Tooltip } from 'react-bootstrap';
+
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getClassRooms } from "../../service/ClassRoomApi/ClassRoomService";
@@ -68,16 +70,20 @@ function EditLoanClassRoom() {
             console.log(response);
         })();
     }, []);
-
     const [userr, setuserr] = useState([]);
 
+   
     useEffect(() => {
-        (async () => {
-            const response = await getUserr(3);
-            setuserr(response);
-            console.log(response);
-        })();
-    }, []);
+        if (loanClassRoom && loanClassRoom.idUser !== undefined) {
+        getUserr(loanClassRoom.idUser)
+        .then((response) => {
+        setuserr(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+}, [loanClassRoom]);
 
 
 
@@ -308,10 +314,14 @@ function EditLoanClassRoom() {
                     </div>
                     <div className="mb-5"></div>
                 </div>
+                <div>            
+                        <Button variant="primary" href="/loanClassRoom">Regresar</Button>
+                    </div>
+                    <div className="mb-5"></div>
             </form>
+            
         </div>
     );
-
 
 }
 export default EditLoanClassRoom;
