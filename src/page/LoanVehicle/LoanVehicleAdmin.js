@@ -16,15 +16,8 @@ function LoanVehicleAdmin() {
     const navigate = useNavigate();
    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
     useEffect(() => {
-        if (!user || !user.idLibraryUser) {
-            Swal.fire({
-                title: "No puedes acceder servicios de vehículo",
-                text: "No eres un usuario administrador",
-                icon: "error",
-                confirmButtonText: "Aceptar",
-              });
-            return;
-        }else if(user.role!="Administrador"){
+        console.log(user.role);
+       if(user.role!="Administrador"){
             Swal.fire({
                 title: "No puedes realizar esta acción",
                 text: "Debes iniciar sesión",

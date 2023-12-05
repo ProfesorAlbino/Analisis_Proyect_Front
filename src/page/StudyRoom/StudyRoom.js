@@ -14,15 +14,7 @@ function StudyRoom() {
 
     useEffect(() => {
         
-        if (!user || !user.idLibraryUser) {
-            Swal.fire({
-                title: "No puedes acceder salas de estudio",
-                text: "No eres un usuario administrador",
-                icon: "error",
-                confirmButtonText: "Aceptar",
-              });
-            return;
-        }else if(user.role!="Administrador"){
+         if(user.role!="Administrador"){
             Swal.fire({
                 title: "No puedes realizar esta acción",
                 text: "Debes iniciar sesión",

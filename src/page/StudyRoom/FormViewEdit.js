@@ -99,7 +99,7 @@ function FormViewEditStudyRoom() {
 
                     <div className="col-sm-6 text-start mt-2">
                         <label>Disponibilidad: </label>
-                        <select className="form-select" name="active" value={formStudyRoom.isAvailable} onChange={(event) => { setFormStudyRoomSchedule({ ...formStudyRoomSchedule, "active": parseInt(event.target.value) }) }}>
+                        <select className="form-select" name="active" value={formStudyRoom.isAvailable} onChange={(event) => { setFormStudyRoom({ ...formStudyRoom, "active": parseInt(event.target.value) }) }}>
                             <option value={1}>Sí</option>
                             <option value={0}>No</option>
                         </select>
