@@ -104,16 +104,16 @@ function User() {
                             />
                         </Col>
                         <Col xs="auto">
-                            <Button type="button" onClick={searchUser}>Buscar</Button>
+                            <Button type="button" onClick={searchUser} id='search-btn'>Buscar</Button>
                         </Col>
                     </Row>
                 </Form>
             </div>
             <Button variant="primary" onClick={returnHome}>Regresar</Button>
             <h1>Usuarios</h1>
-            <Button variant="primary" href="/users/create">Crear usuario</Button>
+            <Button variant="primary" href="/users/create" id='btn-create'>Crear usuario</Button>
 
-            <Table className='border shadow mt-2 mb-5'>
+            <Table className='border shadow mt-2 mb-5' id='users-table'>
                 {loading ?
                     <Loader />
                     :
