@@ -45,36 +45,7 @@ function AdminLoanClassRoom() {
     }, []);
 
 
-    /*
-        function deleteUser(id) {
-            Swal.fire({
-                title: '¿Deseas continuar?',
-                text: 'Se eliminará el usuario',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#007bff',
-                cancelButtonColor: '#dc3545',
-                confirmButtonText: 'Si',
-                cancelButtonText: 'No'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    deleteUserr(id).then((res) => {
-                        getUsers();
-                        toast.success("Eliminado exitosamente");
-                    }).catch((err) => {
-                        console.log(err);
-                        toast.error("Error al eliminar");
-                    });
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-    
-                }
-            });
-        }
-    
-      
-    */
+   
 
         const deleteLoanClassRoom = async (loanClassRoom) => {
             Swal.fire({
@@ -147,7 +118,7 @@ function AdminLoanClassRoom() {
         };
 
     function viewLoanClassRoom(id){
-        window.location.href = `/loanClassRooms/ViewLoanClassRoom/${id}`;
+        window.location.href = `/loanClassRooms/AdminViewLoanClassRoom/${id}`;
 
     }
     return (

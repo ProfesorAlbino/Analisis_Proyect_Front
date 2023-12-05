@@ -98,6 +98,8 @@ return (
             <th>Hora Inicio</th>
             <th>Hora Fin</th>
             <th>Luz</th>
+            <th>Cancha</th>
+            <th>Equipo</th>
             <th colSpan={2}>Acciones</th>
         </tr>
     </thead>
@@ -114,6 +116,8 @@ return (
                         <td>{FieldSport.startHour}</td>
                         <td>{FieldSport.endHour}</td>
                         <td>{FieldSport.lightning ? 'on' : 'off'}</td>
+                        <td>{FieldSport.field ? 'si' : 'no'}</td>
+                        <td>{FieldSport.materials}</td>
                         <td>
 
                             <OverlayTrigger placement="top" overlay={<Tooltip>Modificar</Tooltip>}>

@@ -142,7 +142,7 @@ function OffCanvas({ name, ...props }) {
             <Accordion.Item eventKey="1">
               <Accordion.Header>Prestamos</Accordion.Header>
               <Accordion.Body>
-                <button type="button" className="btn btn-outline-primary mb-2 col-12" >Cancha</button>
+                <Link type="button" className="btn btn-outline-primary mb-2 col-12"to="/LoanFieldSport" >Cancha</Link>
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to="/loanVehicle">Vehiculos</Link>
                 <Link type="button" className="btn btn-outline-primary mb-2 col-12" to={"/LoanClassRoom"}>Aulas y Laboratorios</Link>
               </Accordion.Body>
