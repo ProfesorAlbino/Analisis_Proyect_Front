@@ -26,7 +26,7 @@ describe('Login Page', function() {
     assert(await dr, 'User should be stored in session storage');
   });
 
-  /*it('should display error message with invalid credentials', async function() {
+  it('should display error message with invalid credentials', async function() {
     await driver.get('http://localhost:3000/login');
 
     await driver.findElement(By.id('userId')).sendKeys('invalid_username');
@@ -37,5 +37,5 @@ describe('Login Page', function() {
 
     const errorMessage = await driver.findElement(By.className('toaster')).getText();
     assert(errorMessage.includes('Credenciales incorrectas'), 'Error message should be displayed');
-  });*/
+  });
 });
