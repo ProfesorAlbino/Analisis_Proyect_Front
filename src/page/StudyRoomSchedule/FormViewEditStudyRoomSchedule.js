@@ -129,13 +129,7 @@ function FormViewEditStudyRoomSchedule() {
                         <input type="time" className="form-control" name="endHour" value={formStudyRoomSchedule.endHour} onChange={(event) => { setObject(event) }} />
                     </div>
 
-                    <div className="col-sm-12"></div>
-
-                    <div className="col-sm-6 text-start mt-2">
-                        <label>Activo: </label>
-                        <input type="radio" onChange={(event) => { setFormStudyRoomSchedule({ ...formStudyRoomSchedule, "active": 1 }) }} checked={formStudyRoomSchedule.active == 1} /> Sí
-                        <input type="radio" className="ml-2" onChange={(event) => { setFormStudyRoomSchedule({ ...formStudyRoomSchedule, "active": 0 }) }} checked={formStudyRoomSchedule.active == 0} /> No
-                    </div>
+                   
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <button type="submit" className="btn btn-primary mb-3">Guardar</button>

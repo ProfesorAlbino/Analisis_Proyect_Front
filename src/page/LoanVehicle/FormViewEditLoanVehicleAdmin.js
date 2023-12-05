@@ -169,29 +169,17 @@ function FormViewEditLoanVehicleAdmin() {
             </div>
 
             <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                <div>
-                    <label>Tipo de actividad:</label>
-                </div>
-                <div>
-                    <input type="radio" onChange={(event) => { setFormLoanVehicle({ ...formLoanVehicle, "activityType": 1 }) }} checked={formLoanVehicle.activityType == 1} /> Investigación
-                </div>
-                <div>
-                    <input type="radio" onChange={(event) => { setFormLoanVehicle({ ...formLoanVehicle, "activityType": 2 }) }} checked={formLoanVehicle.activityType == 2} /> Docente
-                </div>
-                <div>
-                    <input type="radio" onChange={(event) => { setFormLoanVehicle({ ...formLoanVehicle, "activityType": 3 }) }} checked={formLoanVehicle.activityType == 3} /> Acción Social
-                </div>
-                <div>
-                    <input type="radio" onChange={(event) => { setFormLoanVehicle({ ...formLoanVehicle, "activityType": 4 }) }} checked={formLoanVehicle.activityType == 4} /> Administrativa
-                </div>
-                <div>
-                    <input type="radio" onChange={(event) => { setFormLoanVehicle({ ...formLoanVehicle, "activityType": 5 }) }} checked={formLoanVehicle.activityType == 5} /> Vida Estudiantil
-                </div>
-                <div>
-                    <input type="radio" onChange={(event) => { setFormLoanVehicle({ ...formLoanVehicle, "activityType": 6 }) }} checked={formLoanVehicle.activityType == 6} /> Dirección
-                </div>
-            </div>
-
+                        <label>Tipo de actividad:</label>
+                        <select required className="form-control" name="activityType" value={formLoanVehicle.activityType} onChange={(event) => { setObject(event) }}>
+                            <option value="">Seleccione el estado</option>
+                            <option value="1">Investigación</option>
+                            <option value="2">Docente</option>
+                            <option value="3">Acción Social</option>
+                            <option value="4">Administrador</option>
+                            <option value="5">Vida Estudiantil</option>
+                            <option value="6">Dirección</option>
+                        </select>
+                    </div>
             <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                 <label>Vehículo asignado:</label>
                 <select  className="form-control" name="assignedVehicle" value={formLoanVehicle.assignedVehicle} onChange={(event) => { setObject(event) }}>

@@ -17,7 +17,7 @@ export async function getStudyRoom() {
 
 export async function createStudyRoom(data){
 
-   // console.log('service',data);
+   console.log('service',data);
     const newStudyRoom = {
         "name": data.name,
         "capacity": data.capacity,
@@ -25,7 +25,7 @@ export async function createStudyRoom(data){
         "active": data.active==1?true:false
        
     }
-   
+   console.log(newStudyRoom);
     return await axios.post(link+"api/StudyRooms/createStudyRoom",newStudyRoom)
 }
 export async function getStudyRoomById(id){

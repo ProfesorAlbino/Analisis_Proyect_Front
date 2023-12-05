@@ -191,67 +191,17 @@ function FormViewEditLoanVehicle() {
                     </div>
 
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <div>
-                            <label>Tipo de actividad:</label>
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 1 })}
-                                checked={formLoanVehicle.activityType === 1}
-                            />
-                            <label className="form-check-label">Investigación</label>
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 2 })}
-                                checked={formLoanVehicle.activityType === 2}
-                            />
-                            <label className="form-check-label">Docente</label>
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 3 })}
-                                checked={formLoanVehicle.activityType === 3}
-                            />
-                            <label className="form-check-label">Acción Social</label>
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 4 })}
-                                checked={formLoanVehicle.activityType === 4}
-                            />
-                            <label className="form-check-label">Administrativa</label>
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 5 })}
-                                checked={formLoanVehicle.activityType === 5}
-                            />
-                            <label className="form-check-label">Vida Estudiantil</label>
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 6 })}
-                                checked={formLoanVehicle.activityType === 6}
-                            />
-                            <label className="form-check-label">Dirección</label>
-                        </div>
+                        <label>Tipo de actividad:</label>
+                        <select required className="form-control" name="activityType" value={formLoanVehicle.activityType} onChange={(event) => { setObject(event) }}>
+                            <option value="">Seleccione el estado</option>
+                            <option value="1">Investigación</option>
+                            <option value="2">Docente</option>
+                            <option value="3">Acción Social</option>
+                            <option value="4">Administrador</option>
+                            <option value="5">Vida Estudiantil</option>
+                            <option value="6">Dirección</option>
+                        </select>
                     </div>
-
-
-
 
                     <div className="col-lg-12 col-md-12 col-sm-12 mb-3">
                         <button type="submit" className="btn btn-primary mb-3">Guardar</button>

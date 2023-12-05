@@ -78,7 +78,7 @@ function FormViewEditStudyRoom() {
     const handleReset = () => {
         resetForm();
     }
-    
+
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -99,18 +99,16 @@ function FormViewEditStudyRoom() {
 
                     <div className="col-sm-6 text-start mt-2">
                         <label>Disponibilidad: </label>
-                        <input type="radio" onChange={(event) => { setFormStudyRoom({ ...formStudyRoom, "isAvailable": 1 }) }} checked={formStudyRoom.isAvailable == 1} /> Sí
-                        <input type="radio" className="ml-2" onChange={(event) => { setFormStudyRoom({ ...formStudyRoom, "isAvailable": 0 }) }} checked={formStudyRoom.isAvailable == 0} /> No
-
+                        <select className="form-select" name="active" value={formStudyRoom.isAvailable} onChange={(event) => { setFormStudyRoomSchedule({ ...formStudyRoomSchedule, "active": parseInt(event.target.value) }) }}>
+                            <option value={1}>Sí</option>
+                            <option value={0}>No</option>
+                        </select>
                     </div>
+
 
                     <div className="col-sm-12"></div>
 
-                    <div className="col-sm-6 text-start mt-2">
-                        <label>Activo: </label>
-                        <input type="radio" onChange={(event) => { setFormStudyRoom({ ...formStudyRoom, "active": 1 }) }} checked={formStudyRoom.active == 1} /> Sí
-                        <input type="radio" className="ml-2" onChange={(event) => { setFormStudyRoom({ ...formStudyRoom, "active": 0 }) }} checked={formStudyRoom.active == 0} /> No
-                    </div>
+
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <button type="submit" className="btn btn-primary mb-3">Guardar</button>
