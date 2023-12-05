@@ -17,13 +17,13 @@ function AreaAdd() {
 
         const res = await Swal.fire({
             title: '¿Estás seguro?',
-            text: "¿Desea crear un area?",
+            text: "No es reversible",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#dc3545',
             cancelButtonText: 'No, ¡cancelar!',
-            confirmButtonText: 'Si, ¡crear!'
+            confirmButtonText: 'Si'
         });
 
         if (!res.isConfirmed) return;

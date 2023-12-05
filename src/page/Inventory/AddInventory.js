@@ -66,6 +66,7 @@ function InventoryAdd() {
     const setForm = (inventory) => {
         document.getElementById("units").value = inventory.units;
         document.getElementById("description").value = inventory.description;
+        document.getElementById("type").value = inventory.type;
     }
 
     useEffect(() => {
