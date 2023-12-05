@@ -100,7 +100,7 @@ const Register = () => {
                     </center>
                 </form>
                 <br></br>
-                <Link type="button" className="btn btn-outline-warning " to="/register">Iniciar Sesión</Link>
+                <Link type="button" className="btn btn-outline-warning " to="/login">Iniciar Sesión</Link>
             </div>
             <Toaster richColors />
         </>
