@@ -14,6 +14,18 @@ export async function getLoanStudyRoom() {
         throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en otro lugar.
     }
 }
+export async function getLoanStudyRoomUser(id) {
+    try {
+        console.log(link);
+        const response = await axios.get(link + 'api/LoanStudyRooms/getLoanStudyRoomUser/'+id);
+        //console.log(response.data);
+        return response.data; // Devuelve el contenido JSON de la respuesta
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en otro lugar.
+    }
+}
+
 export async function getLoanStudyRoomByLoan(id) {
     try {
         console.log(link);
@@ -37,6 +49,7 @@ export async function createLoanStudyRoom(data){
         "exitHour": data.exitHour,
         "returnHour": data.returnHour,
         "active": data.active==1?true:false,
+        "state":data.state
        
     }
     console.log('prestamo despues: ',newLoanStudyRoom);
@@ -58,6 +71,7 @@ export async function updateLoanStudyRoom(data){
         "exitHour": data.exitHour,
         "returnHour": data.returnHour,
         "active": data.active==1?true:false,
+        "state":data.state
     }
     return await axios.put(link+"api/LoanStudyRooms/updateLoanStudyRooms/"+data.id,loanVehicle);
 }

@@ -7,11 +7,36 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { decryptAES } from '../../scripts/AES-256';
 function Furniture() {
     const [furniture, setFurniture] = useState([]);
     const [studyRooms, setStudyRooms] = useState([]);
     const navigate = useNavigate();
+    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
     useEffect(() => {
+        if (!user || !user.idLibraryUser) {
+            Swal.fire({
+                title: "No puedes acceder a mobiliario",
+                text: "No eres un usuario administrador",
+                icon: "error",
+                confirmButtonText: "Aceptar",
+              });
+            return;
+        }else if(user.role!="Administrador"){
+            Swal.fire({
+                title: "No puedes realizar esta acción",
+                text: "Debes iniciar sesión",
+                showCancelButton: true,
+                icon: "error",
+                confirmButtonText: "Aceptar",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.href = '/login';
+                  }
+                  });
+           
+            return;
+        }
         (async () => {
             const response = await getFurniture();
             setFurniture(response);

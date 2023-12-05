@@ -10,7 +10,7 @@ export function FormatterDate(date) {
 
 export function FormatterDateToForms(date) {
     const d = new Date(date); // Establecer la hora a medianoche (00:00:00)
-    const day = d.getUTCDate().toString().padStart(2, '0'); // Usar getUTCDate() en lugar de getDate()
+    const day = (d.getUTCDate()).toString().padStart(2, '0'); // Usar getUTCDate() en lugar de getDate()
     const month = (d.getUTCMonth() + 1).toString().padStart(2, '0'); // getUTCMonth() y sumar 1 al mes
     const year = d.getUTCFullYear();
 

@@ -28,7 +28,10 @@ function RegisterLoanFieldSport() {
         lightning: "",
         inactive: 0,
         start_hour: "",
-        end_hour: ""
+        end_hour: "",
+        field: false,
+        materials:""
+
     });
 
     const [loan, setLoan] = useState({
@@ -45,6 +48,16 @@ function RegisterLoanFieldSport() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+
+        if (!loanFieldSport.field && !loanFieldSport.materials.trim()) {
+            Swal.fire(
+                'Error',
+                'Los materiales son obligatorios cuando la cancha no está seleccionada.',
+                'error'
+            );
+            return; 
+        }
         loanFieldSport.id_user = userr.id;
         loan.end_date = loan.start_date;
         try {
@@ -90,6 +103,7 @@ function RegisterLoanFieldSport() {
             start_date: selectedDate,
         });
     };
+  
 
     const handleEndHourChange = (newEndHour) => {
         setFieldSport(prevState => ({
@@ -132,10 +146,8 @@ function RegisterLoanFieldSport() {
                             value={loan.start_date}
                             className="form-control text-center"
                             onInvalid={(e) => e.preventDefault()}
-
                         />
                     </div>
-
 
 
                     <div className="row mb-3">
@@ -153,6 +165,7 @@ function RegisterLoanFieldSport() {
                                 className="form-control text-center"
                             />
                         </div>
+
                         <div className="col-md-6">
                             <label className="form-label fs-5">Hora Final </label>
                             <input
@@ -166,6 +179,26 @@ function RegisterLoanFieldSport() {
                                 className="form-control text-center"
                             />
                         </div>
+                        <div className="mb-3">
+                            <label className="form-label fs-5" style={{ marginRight: '10px' }}>Cancha</label>
+                            <input type="checkbox"
+                                name="field"
+                                className="form-check-input"
+                                onChange={(event) => { setLoanField(event) }}
+                                checked={loanFieldSport.field}
+                            />
+                        </div>
+                    
+                        <div className="mb-3">
+                        <label className="form-label fs-5">Materiales </label>
+                        <textarea
+                            name="materials"
+                            rows="4"
+                            className="form-control"
+                            onChange={(event) => { setLoanField(event) }}
+                            value={loanFieldSport.materials}
+                        />
+                    </div>
                     </div>
 
                     <div>

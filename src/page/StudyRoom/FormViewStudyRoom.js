@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { createStudyRoom, inserta} from "../../service/StudyRoom/StudyRoomService";
+import { createStudyRoom, inserta } from "../../service/StudyRoom/StudyRoomService";
 function FormViewStudyRoom() {
     const navigate = useNavigate();
     const [formStudyRoom, setFormStudyRoom] = useState({
@@ -11,22 +11,22 @@ function FormViewStudyRoom() {
         isAvailable: 1,
         active: 1
     });
-   
+
     const setObject = (event) => {
         setFormStudyRoom({ ...formStudyRoom, [event.target.name]: event.target.value });
     }
-    const handleSubmit = async (event ) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        if (formStudyRoom.name === "" || formStudyRoom.capacity === "" ) {
+        if (formStudyRoom.name === "" || formStudyRoom.capacity === "") {
             Swal.fire(
                 'ERROR!',
                 'Existen campos vacíos',
                 'error'
             )
         } else {
-            if( formStudyRoom.isAvailable === "" || formStudyRoom.active === ""){
-                formStudyRoom.isAvailable=true;
-                formStudyRoom.active=true;
+            if (formStudyRoom.isAvailable === "" || formStudyRoom.active === "") {
+                formStudyRoom.isAvailable = true;
+                formStudyRoom.active = true;
 
             }
             await createStudyRoom(formStudyRoom).then((data) => {
@@ -58,6 +58,11 @@ function FormViewStudyRoom() {
             active: 1
         });
     };
+
+    const handleReset = () => {
+        resetForm();
+    }
+    
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -76,16 +81,16 @@ function FormViewStudyRoom() {
 
                     <div className="col-sm-12"></div>
 
-                    
 
-                    
+
+
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
-                        <button type="submit" className="btn btn-primary" >Guardar</button>
-                        <button type="reset" className="btn btn-warning" onClick={resetForm}>Limpiar</button>
-                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button>
+                        <button type="submit" className="btn btn-primary mb-3">Guardar</button>
+                        <button type="button" className="btn btn-warning mb-3 mx-2" onClick={handleReset}>Limpiar</button>
+                        <button type="button" className="btn btn-danger mb-3" onClick={handleBack}>Regresar</button>
                     </div>
-                    
+
                 </div>
 
             </form>

@@ -1,30 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getClassRooms } from "../../service/ClassRoomApi/ClassRoomService";
-import { getUserr } from '../../service/UsersApi/UserApi';
 import { CheckAvailability, createLoanClassRoom } from "../../service/ClassRoomApi/LoanClassRoomService";
 import { createLoan } from "../../service/ClassRoomApi/LoanService";
 import { createClassroomSchedules } from "../../service/ClassRoomApi/ClassRoomScheduleService";
 import { format, addDays } from 'date-fns';
+import { decryptAES } from '../../scripts/AES-256';
+
 function RegisterLoanClassRoom() {
     const navigate = useNavigate();
+    const userr = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
+    useEffect(() => {
+        // Si el usuario no está autenticado, redirige a la página de inicio de sesión
+        if (userr === null) {
+            Swal.fire({
+                icon: "error",
+                title: "Usuario no autenticado",
+                text: "Por favor, inicie sesión",
+            });
+            navigate('/login');
+        }
+    }, [userr]);
+    
 
     const [classRoom, setClassRoom] = useState([]);
     useEffect(() => {
         (async () => {
             const response = await getClassRooms();
             setClassRoom(response);
-            console.log(response);
-        })();
-    }, []);
-
-    const [userr, setuserr] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            const response = await getUserr(3);
-            setuserr(response);
             console.log(response);
         })();
     }, []);
@@ -276,9 +280,8 @@ function RegisterLoanClassRoom() {
                             value={loanClassRoom.requirements}
                         />
                     </div>
-
                     <div>
-                        <button type="submit" className="btn btn-primary">Guardar</button>
+                        <button  type="submit" className="btn btn-primary">Guardar</button>
                     </div>
                     <div className="mb-5"></div>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { addComputerEquipment } from "../../service/ComputerEquipment/ComputerEquipmentApi";
 import { verifyComponent, verifySerialNumber, verifyPlate } from "./verifyAddComputerEquipments";
@@ -22,6 +22,10 @@ export default function AddComputerEquipments() {
         LoanComputerEquipments: [],
         ReturnComputerEquipments: []
     });
+
+    useEffect(() => {
+        
+    }, []);
 
     const { licensePlate, clas, name, brand, model, state, observations, include, serialNumber } = computerEquipment;
 

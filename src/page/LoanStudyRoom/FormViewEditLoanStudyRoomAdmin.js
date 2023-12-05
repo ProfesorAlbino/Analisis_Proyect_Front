@@ -3,35 +3,26 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
-import { createLoan } from '../../service/LoanApi/LoanApi';
+import { getLoanById, getLoans, updateLoan } from '../../service/LoanApi/LoanApi';
 import { FormatterDateToForms, getTimeActually } from '../../scripts/FormatterDate';
-import { createLoanStudyRoom } from '../../service/LoanStudyRoom/LoanStudyRoom';
+import { getLoanStudyRoom, getLoanStudyRoomById, getLoanStudyRoomByLoan, updateLoanStudyRoom } from '../../service/LoanStudyRoom/LoanStudyRoom';
 import { getStudyRoom } from '../../service/StudyRoom/StudyRoomService';
 import { decryptAES } from '../../scripts/AES-256';
 
 
-function FormViewEditLoanStudyRoom() {
+function FormViewEditLoanStudyRoomAdmin() {
+    const formatDate = (date) => {
+        const d = new Date(date);
+        const day = d.getUTCDate().toString().padStart(2, '0');
+        const month = (d.getUTCMonth() + 1).toString().padStart(2, '0');
+        const year = d.getUTCFullYear();
+
+        return `${year}-${month}-${day}`;
+    };
     const navigate = useNavigate();
+    const { id } = useParams();
+    const [loanStudyRoom, setLoanStudyRoom] = useState([]);
     const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
-    useEffect(() => {
-        (async () => {
-
-            const currentDate = new Date();
-            const formattedDate = currentDate.toISOString().split('T')[0];
-            setFormLoan({ ...formLoan, registerDate: formattedDate });
-        })();
-    }, []);
-
-    const [studyRooms, setStudyRooms] = useState([]);
-    useEffect(() => {
-        (async () => {
-            console.log("ID USER: ", user.idLibraryUser);
-            const response = await getStudyRoom();
-            setStudyRooms(response);
-            console.log(user.id);
-            //console.log(response);
-        })();
-    }, []);
 
     let hoy = FormatterDateToForms(new Date());
     const [formLoan, setFormLoan] = useState({
@@ -40,23 +31,53 @@ function FormViewEditLoanStudyRoom() {
         registerDate: "",
     });
     const [formLoanStudyRoom, setFormLoanStudyRoom] = useState({
-
-        numberPeople: 1,
-        idLoan: 1,
+        numberOfPeople: 1,
+        loanId: 1,
         idUserLibrary: user.idLibraryUser,
-        studyRoom: 0,
+        studyRoomId: 0,
         active: 1,
         exitHour: getTimeActually(),
         returnHour: getTimeActually(),
         state:"Pendiente"
 
     });
+    useEffect(() => {
+        (async () => {
+            const response = await getStudyRoom();
+
+            setLoanStudyRoom(response);
+
+            console.log(response);
+        })();
+    }, []);
+
+    useEffect(() => {
+        (async () => {
+            if (id != undefined) {
+                getLoanStudyRoomById(id).then((data) => {
+
+                    setFormLoanStudyRoom(data);
+                    console.log(data)
+                    getLoanById(data.loanId).then((response) => {
+                        response.startDate = formatDate(response.startDate);
+                        response.endDate = formatDate(response.endDate)
+                        console.log(response);
+                        setFormLoan(response);
+
+
+                    })
+
+                })
+            }
+
+        })();
+    }, []);
 
     const setObject = (event) => {
         setFormLoanStudyRoom({ ...formLoanStudyRoom, [event.target.name]: event.target.value });
         setFormLoan({ ...formLoan, [event.target.name]: event.target.value });
-    }
 
+    }
 
     const initialFormLoan = {
         startDate: hoy,
@@ -65,10 +86,10 @@ function FormViewEditLoanStudyRoom() {
     };
 
     const initialFormLoanStudyRoom = {
-        numberPeople: 1,
+        numberOfPeople: 1,
         idLoan: 1,
         idUserLibrary: user.idLibraryUser,
-        studyRoom: 0,
+        studyRoomId: 0,
         active: 1,
         exitHour: getTimeActually(),
         returnHour: getTimeActually(),
@@ -76,12 +97,12 @@ function FormViewEditLoanStudyRoom() {
 
     };
     const handleReset = () => {
-        console.log("entra");
+
         setFormLoan(initialFormLoan);
         setFormLoanStudyRoom(initialFormLoanStudyRoom);
     }
     const handleBack = () => {
-        navigate('/loanStudyRoom');
+        navigate('/loanStudyRoomAdmin');
     }
 
     const handleSubmit = async (event) => {
@@ -97,18 +118,14 @@ function FormViewEditLoanStudyRoom() {
                 'error'
             )
         } else {
-
-            await createLoan(formLoan).then((data) => {
+            console.log("llega");
+            updateLoan(formLoan).then((data) => {
                 console.log('res', data);
-                console.log('id', data.id);
-                formLoanStudyRoom.idLoan = data.id;
-                createLoanStudyRoom(formLoanStudyRoom).then((data2) => {
+                formLoanStudyRoom.idLoan = (data.id);
+                updateLoanStudyRoom(formLoanStudyRoom).then((data) => {
 
-                    console.log('res', data2)
-                    navigate('/loanStudyRoom ');
-                }).catch((err) => {
-                    console.log('error', err)
-
+                    console.log('res', data)
+                    navigate('/loanStudyRoomAdmin');
                 })
 
             })
@@ -119,34 +136,31 @@ function FormViewEditLoanStudyRoom() {
 
             Swal.fire(
                 '¡Guardado!',
-                'Prestámo de la sala de estudio guardado con éxito',
+                'Prestámo de sala de estudio editado con éxito',
                 'success'
             )
 
         }
     }
 
-
     return (
         <div className="container">
-            <form onSubmit={handleSubmit} className='mb-5'>
-
-                <h1>Solicitud de préstamo de sala de estudio</h1>
+            <form onSubmit={handleSubmit}>
                 <div className="row">
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                    <h1>Solicitud de préstamo de sala de estudio</h1>
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label>N° de personas:</label>
-                        <input required min={1} type="number" className="form-control" name="numberPeople" value={formLoanStudyRoom.numberPeople} onChange={(event) => { setObject(event) }} />
+                        <input type="number" min={1} required className="form-control" name="numberOfPeople" value={formLoanStudyRoom.numberOfPeople} onChange={(event) => { setObject(event) }} />
                     </div>
 
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label>Fecha de inicio:</label>
-                        <input type="date" required className="form-control" name="startDate" min={hoy} value={formLoan.startDate} onChange={(event) => { setObject(event) }} />
+                        <input type="date" required className="form-control" name="startDate" value={formLoan.startDate} min={formLoan.startDate} onChange={(event) => { setObject(event) }} />
                     </div>
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label>Hora de inicio:</label>
                         <input type="time" required className="form-control" name="returnHour" value={formLoanStudyRoom.returnHour} onChange={(event) => { setObject(event) }} />
                     </div>
-
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label>Fecha de finalización:</label>
                         <input type="date" required className="form-control" name="endDate" min={formLoan.startDate} value={formLoan.endDate} onChange={(event) => { setObject(event) }} />
@@ -156,22 +170,29 @@ function FormViewEditLoanStudyRoom() {
                         <input type="time" required className="form-control" name="exitHour" value={formLoanStudyRoom.exitHour} onChange={(event) => { setObject(event) }} />
                     </div>
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <label>Sala de estudio: </label>
-                        <select required className='form-select' name="studyRoom" value={formLoanStudyRoom.studyRoom} onChange={(event) => { setObject(event) }}>
-                            <option value="">Selecciona una sala de estudio</option>
-                            {studyRooms.filter(res => { return res.active == 1 }).map((studyRoom, index) => (
-                                <option key={studyRoom.id} value={studyRoom.id}>
-                                    {studyRoom.name}
+                        <label>Salas de estudio</label>
+                        <select className="form-control" name="studyRoomId" value={formLoanStudyRoom.studyRoomId} onChange={(event) => { setObject(event) }}>
+                            <option value={0}>Seleccione una sala de estudio</option>
+                            {loanStudyRoom.filter(res => { return res.active == 1 }).map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name}
                                 </option>
                             ))}
                         </select>
-
-
-
                     </div>
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                <label>Estado del préstamo:</label>
+                <select required className="form-control" name="state" value={formLoanStudyRoom.state} onChange={(event) => { setObject(event) }}>
+                    <option value="">Seleccione el estado</option>
+                    <option value="Aprobar">Aprobar</option>
+                    <option value="Rechazar">Rechazar</option>
+                    <option value="Pendiente">Pendiente</option>
+                </select>
+            </div>
+
 
                     <div className="col-lg-12 col-md-12 col-sm-12 mb-3">
-                    <button type="submit" className="btn btn-primary mb-3">Guardar</button>
+                        <button type="submit" className="btn btn-primary mb-3">Guardar</button>
                         <button type="button" className="btn btn-warning mb-3 mx-2" onClick={handleReset}>Limpiar</button>
                         <button type="button" className="btn btn-danger mb-3" onClick={handleBack}>Regresar</button>
                     </div>
@@ -184,4 +205,4 @@ function FormViewEditLoanStudyRoom() {
         </div>
     );
 }
-export default FormViewEditLoanStudyRoom;
+export default FormViewEditLoanStudyRoomAdmin;

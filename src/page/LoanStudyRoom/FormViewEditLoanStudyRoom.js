@@ -7,6 +7,7 @@ import { getLoanById, getLoans, updateLoan } from '../../service/LoanApi/LoanApi
 import { FormatterDateToForms, getTimeActually } from '../../scripts/FormatterDate';
 import { getLoanStudyRoom, getLoanStudyRoomById, getLoanStudyRoomByLoan, updateLoanStudyRoom } from '../../service/LoanStudyRoom/LoanStudyRoom';
 import { getStudyRoom } from '../../service/StudyRoom/StudyRoomService';
+import { decryptAES } from '../../scripts/AES-256';
 
 
 function FormViewEditLoanStudyRoom() {
@@ -21,6 +22,7 @@ function FormViewEditLoanStudyRoom() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [loanStudyRoom, setLoanStudyRoom] = useState([]);
+    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
 
     let hoy = FormatterDateToForms(new Date());
     const [formLoan, setFormLoan] = useState({
@@ -31,11 +33,12 @@ function FormViewEditLoanStudyRoom() {
     const [formLoanStudyRoom, setFormLoanStudyRoom] = useState({
         numberOfPeople: 1,
         loanId: 1,
-        idUserLibrary: 2,
+        idUserLibrary: user.idLibraryUser,
         studyRoomId: 0,
         active: 1,
         exitHour: getTimeActually(),
         returnHour: getTimeActually(),
+        state:"Pendiente"
 
     });
     useEffect(() => {
@@ -85,11 +88,12 @@ function FormViewEditLoanStudyRoom() {
     const initialFormLoanStudyRoom = {
         numberOfPeople: 1,
         idLoan: 1,
-        idUserLibrary: 2,
+        idUserLibrary: user.idLibraryUser,
         studyRoomId: 0,
         active: 1,
         exitHour: getTimeActually(),
         returnHour: getTimeActually(),
+        state:"Pendiente"
 
     };
     const handleReset = () => {
@@ -144,36 +148,28 @@ function FormViewEditLoanStudyRoom() {
             <form onSubmit={handleSubmit}>
                 <div className="row">
                     <h1>Solicitud de préstamo de sala de estudio</h1>
-                    <div className="col-sm-6 text-start">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label>N° de personas:</label>
                         <input type="number" min={1} required className="form-control" name="numberOfPeople" value={formLoanStudyRoom.numberOfPeople} onChange={(event) => { setObject(event) }} />
                     </div>
 
-                    <div className="col-sm-12"></div>
-                    <div className="col-sm-6 text-start">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label>Fecha de inicio:</label>
                         <input type="date" required className="form-control" name="startDate" value={formLoan.startDate} min={formLoan.startDate} onChange={(event) => { setObject(event) }} />
                     </div>
-                    <div className="col-sm-12"></div>
-
-                    <div className="col-sm-6 text-start mt-2">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label>Hora de inicio:</label>
                         <input type="time" required className="form-control" name="returnHour" value={formLoanStudyRoom.returnHour} onChange={(event) => { setObject(event) }} />
                     </div>
-
-                    <div className="col-sm-12"></div>
-                    <div className="col-sm-6 text-start">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label>Fecha de finalización:</label>
                         <input type="date" required className="form-control" name="endDate" min={formLoan.startDate} value={formLoan.endDate} onChange={(event) => { setObject(event) }} />
                     </div>
-                    <div className="col-sm-12"></div>
-
-                    <div className="col-sm-6 text-start mt-2">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label>Hora de finalización:</label>
                         <input type="time" required className="form-control" name="exitHour" value={formLoanStudyRoom.exitHour} onChange={(event) => { setObject(event) }} />
                     </div>
-                    <div className="col-sm-12"></div>
-                    <div className="col-sm-6 text-start">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label>Salas de estudio</label>
                         <select className="form-control" name="studyRoomId" value={formLoanStudyRoom.studyRoomId} onChange={(event) => { setObject(event) }}>
                             <option value={0}>Seleccione una sala de estudio</option>
@@ -187,11 +183,10 @@ function FormViewEditLoanStudyRoom() {
 
 
 
-                    <div className="col-sm-12"></div>
-                    <div className="col-sm-6 text-start mt-2">
-                        <button type="submit" className="btn btn-primary" >Guardar</button>
-                        <button type="button" className="btn btn-warning" onClick={handleReset}>Limpiar</button>
-                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button>
+                    <div className="col-lg-12 col-md-12 col-sm-12 mb-3">
+                        <button type="submit" className="btn btn-primary mb-3">Guardar</button>
+                        <button type="button" className="btn btn-warning mb-3 mx-2" onClick={handleReset}>Limpiar</button>
+                        <button type="button" className="btn btn-danger mb-3" onClick={handleBack}>Regresar</button>
                     </div>
 
 
