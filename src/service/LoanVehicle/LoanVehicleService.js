@@ -14,6 +14,18 @@ export async function getLoanVehicle() {
         throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en otro lugar.
     }
 }
+
+export async function getLoanVehicleUser(id) {
+    try {
+        console.log(link);
+        const response = await axios.get(link + 'api/LoanVehicles/getLoanVehicleUser/'+id);
+        //console.log(response.data);
+        return response.data; // Devuelve el contenido JSON de la respuesta
+    } catch (error) {
+        console.error('Error al obtener los datos:', error);
+        throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en otro lugar.
+    }
+}
 export async function getLoanVehicleByLoan(id) {
     try {
         console.log(link);

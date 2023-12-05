@@ -6,10 +6,37 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { decryptAES } from "../../scripts/AES-256";
 function StudyRoom() {
     const [studyRoom, setStudyRoom] = useState([]);
     const navigate = useNavigate();
+    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
+
     useEffect(() => {
+        
+        if (!user || !user.idLibraryUser) {
+            Swal.fire({
+                title: "No puedes acceder salas de estudio",
+                text: "No eres un usuario administrador",
+                icon: "error",
+                confirmButtonText: "Aceptar",
+              });
+            return;
+        }else if(user.role!="Administrador"){
+            Swal.fire({
+                title: "No puedes realizar esta acción",
+                text: "Debes iniciar sesión",
+                showCancelButton: true,
+                icon: "error",
+                confirmButtonText: "Aceptar",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.href = '/login';
+                  }
+                  });
+           
+            return;
+        }
         (async () => {
             const response = await getStudyRoom();
             setStudyRoom(response);
@@ -37,8 +64,7 @@ function StudyRoom() {
                     'success'
                 )
                 await deleteStudyRoom(id).then(async (data) => {
-                    const response = await getStudyRoom();
-                    setStudyRoom(response);
+                    window.location.reload();
                 })
                     .catch((error) => {
                         console.log('error', error)
@@ -56,9 +82,9 @@ function StudyRoom() {
     }
 
     function editStudyRoom(id) {
-        console.log("id=" + id);
+       
         navigate("/studyRooms/edit/" + id);
-        console.log(id);
+        
     }
     return (
 
@@ -78,7 +104,7 @@ function StudyRoom() {
                     </thead>
                     <tbody>
                         {
-                            studyRoom.filter(res => { return res.active == 1 }).map((study, index) => (
+                         studyRoom.length !== 0 && studyRoom.filter(res => { return res.active == 1 }).map((study, index) => (
                                 <tr key={study.id}>
                                     <td>{index + 1}</td>
                                     <td>{study.name}</td>
@@ -109,6 +135,11 @@ function StudyRoom() {
                                 </tr>
                             ))
                         }
+                        {studyRoom.length === 0 && (
+                            <tr>
+                                <td colSpan={11}>No hay datos para mostrar</td>
+                            </tr>
+                        )}
                     </tbody>
                 </Table >
             </div>

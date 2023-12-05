@@ -61,6 +61,11 @@ import LoanStudyRoom from './page/LoanStudyRoom/LoanStudyRoom';
 import FormViewLoanStudyRoom from './page/LoanStudyRoom/FormViewLoanStudyRoom';
 import FormViewEditLoanStudyRoom from './page/LoanStudyRoom/FormViewEditLoanStudyRoom';
 import AdminViewLoanClassRoom from './page/LoanClassRooms/AdminViewLoanClassRoom';
+import LoanVehicleAdmin from './page/LoanVehicle/LoanVehicleAdmin';
+import FormViewEditLoanVehicleAdmin from './page/LoanVehicle/FormViewEditLoanVehicleAdmin';
+import LoanStudyRoomAdmin from './page/LoanStudyRoom/LoanStudyRoomAdmin';
+import FormViewEditLoanStudyRoomAdmin from './page/LoanStudyRoom/FormViewEditLoanStudyRoomAdmin';
+
 
 function App() {
   
@@ -124,13 +129,16 @@ function App() {
           <Route exact path="/reserveLoanComputerEquipment" element={<ReserveLoanComputerEquipment />} />
           <Route exact path="/loanVehicle/create" element={<FormViewLoanVehicle />} />
           <Route exact path="/loanVehicle" element={<LoanVehicle />} />
-          <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle />} />
+          <Route exact path="/loanVehicle/edit/:id" element={<FormViewEditLoanVehicle/>} />
           <Route exact path="/moreInformationComputerEquipment" element={<MoreInformationComputerEquipment />} />
           <Route exact path="/adminListLoan" element={<AdminListLoan />} />
           <Route exact path="/loanStudyRoom" element={<LoanStudyRoom />} />
-          <Route exact path="/loanStudyRoom" element={<LoanStudyRoom/>} />
+          <Route exact path="/loanStudyRoomAdmin" element={<LoanStudyRoomAdmin/>} />
           <Route exact path="/loanStudyRoom/create" element={<FormViewLoanStudyRoom />} />
           <Route exact path="/loanStudyRoom/edit/:id" element={<FormViewEditLoanStudyRoom />} />
+          <Route exact path="/loanVehicleAdmin" element={<LoanVehicleAdmin />} />
+          <Route exact path="/loanVehicleAdmin/edit/:id" element={<FormViewEditLoanVehicleAdmin/>} />
+          <Route exact path="/loanStudyRoomAdmin/edit/:id" element={<FormViewEditLoanStudyRoomAdmin />} />
         </Routes>
         <Footer />
       </Router>

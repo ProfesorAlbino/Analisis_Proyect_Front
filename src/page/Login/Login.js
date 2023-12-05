@@ -33,7 +33,7 @@ function Login() {
     return (
         <>
             <div className="login-box">
-                <form onSubmit={onSubmit}>
+                <form onSubmit={onSubmit} id='loginForm'>
                     <div className="user-box">
                         <input type="text" name="" required id='userId' />
                         <label>Cedula</label>
@@ -50,7 +50,7 @@ function Login() {
                 <br></br>
                 <Link type="button" className="btn btn-outline-primary " to="/register">Registrarse</Link>
             </div>
-            <Toaster richColors />
+            <Toaster className='toaster' richColors />
         </>
     );
 }

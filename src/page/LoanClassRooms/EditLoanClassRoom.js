@@ -70,16 +70,20 @@ function EditLoanClassRoom() {
             console.log(response);
         })();
     }, []);
-
     const [userr, setuserr] = useState([]);
 
+   
     useEffect(() => {
-        (async () => {
-            const response = await getUserr(3);
-            setuserr(response);
-            console.log(response);
-        })();
-    }, []);
+        if (loanClassRoom && loanClassRoom.idUser !== undefined) {
+        getUserr(loanClassRoom.idUser)
+        .then((response) => {
+        setuserr(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+}, [loanClassRoom]);
 
 
 

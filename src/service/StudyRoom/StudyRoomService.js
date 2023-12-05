@@ -29,8 +29,8 @@ export async function createStudyRoom(data){
     return await axios.post(link+"api/StudyRooms/createStudyRoom",newStudyRoom)
 }
 export async function getStudyRoomById(id){
-    let i= await axios.get(link+"api/StudyRooms/getStudyRoom/"+id);
-    
+    let i= await axios.get(link+"api/StudyRooms/getById/"+id);
+    console.log("LLEGA: ",i.data);
     return i.data;
 }
 export async function updateStudyRoom(data){

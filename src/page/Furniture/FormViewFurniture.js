@@ -21,14 +21,14 @@ function FormViewFurniture() {
         furniture: "",
         capacity: 1,
         active: 1
-        
+
     });
     const resetForm = () => {
         setFormFurniture({
-        furniture: "",
-        capacity: 1,
-        active: 1
-        
+            furniture: "",
+            capacity: 1,
+            active: 1
+
         });
     };
 
@@ -43,13 +43,13 @@ function FormViewFurniture() {
                 'Existen campos vacíos',
                 'error'
             )
-        }else  if (formFurniture.capacity === 0) {
+        } else if (formFurniture.capacity === 0) {
             Swal.fire(
                 'ERROR!',
                 'Cantidad debe ser mayor a 0',
                 'error'
             )
-        }  
+        }
         else {
             if (formFurniture.id_study_room === "" || formFurniture.active === "") {
                 formFurniture.id_study_room = 1;
@@ -77,6 +77,10 @@ function FormViewFurniture() {
         navigate('/furnitures');
     }
 
+    const handleReset = () => {
+        resetForm();
+    }
+
     return (
         <div className="container">
             <form onSubmit={handleSubmit}>
@@ -97,7 +101,7 @@ function FormViewFurniture() {
 
                     <div className="col-sm-12"></div>
 
-                   
+
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
                         <label>Sala de estudio a la que pertenece: </label>
@@ -109,17 +113,14 @@ function FormViewFurniture() {
                                 </option>
                             ))}
                         </select>
-                        
+
                     </div>
                     <div className="col-sm-12"></div>
                     <div className="col-sm-6 text-start mt-2">
-                        <button type="submit" className="btn btn-primary" >Guardar</button>
-                        <button type="reset" className="btn btn-warning" onClick={resetForm}>Limpiar</button>
-                        <button type="button" className="btn btn-danger" onClick={handleBack}>Regresar</button>
+                        <button type="submit" className="btn btn-primary mb-3">Guardar</button>
+                        <button type="button" className="btn btn-warning mb-3 mx-2" onClick={handleReset}>Limpiar</button>
+                        <button type="button" className="btn btn-danger mb-3" onClick={handleBack}>Regresar</button>
                     </div>
-
-
-
                 </div>
 
             </form>

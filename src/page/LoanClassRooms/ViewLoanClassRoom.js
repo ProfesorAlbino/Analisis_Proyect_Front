@@ -62,7 +62,6 @@ function ViewLoanClassRoom() {
         }
     }, [loanClassRoom]);
 
-
     useEffect(() => {
         if (loanClassRoom && loanClassRoom.idClassroom !== undefined) {
             getClassRoom(loanClassRoom.idClassroom)
@@ -78,16 +77,17 @@ function ViewLoanClassRoom() {
     const [userr, setuserr] = useState([]);
 
     useEffect(() => {
-        (async () => {
-            const response = await getUserr(3);
+            if (loanClassRoom && loanClassRoom.idUser !== undefined) {
+            getUserr(loanClassRoom.idUser)
+            .then((response) => {
             setuserr(response);
-            console.log(response);
-        })();
-    }, []);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+}, [loanClassRoom]);
 
-
-
-    
 
     const [loan, setLoan] = useState({
         startDate: format(addDays(new Date(), 2), 'yyyy-MM-dd'),

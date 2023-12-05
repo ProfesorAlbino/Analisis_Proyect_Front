@@ -7,13 +7,39 @@ import Swal from "sweetalert2";
 import { deleteLoanClassRoom, getLoanClassRooms, updateLoanClassRoom } from '../../service/ClassRoomApi/LoanClassRoomService';
 import { getLoan, getLoans } from '../../service/ClassRoomApi/LoanService';
 import { getUserrs } from '../../service/UsersApi/UserApi';
+import { decryptAES } from '../../scripts/AES-256';
 
 function AdminLoanClassRoom() {
     const [classRoom, setClassRoom] = useState([]);
     const [loanClass, setLoanClass] = useState([]);
     const [loan, setLoan] = useState([]);
-    const [user, setUser] = useState([]);
+    const [users, setUsers] = useState([]);
     const navigate = useNavigate();
+
+    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
+    useEffect(() => {
+        // Si el usuario no está autenticado, redirige a la página de inicio de sesión
+        if (user === null) {
+            Swal.fire({
+                icon: "error",
+                title: "Usuario no autenticado",
+                text: "Por favor, inicie sesión",
+            });
+            navigate('/login');
+        } if  (user.role !== "Administrador") {
+            Swal.fire({
+                title: "No puedes acceder a esta acción",
+                text: "Debes iniciar sesión",
+                showCancelButton: true,
+                icon: "error",
+                confirmButtonText: "Aceptar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login';
+                }
+            });
+        }
+    }, [user]);
 
     useEffect(() => {
         (async () => {
@@ -40,7 +66,7 @@ function AdminLoanClassRoom() {
     useEffect(() => {
         (async () => {
             const response = await getUserrs();
-            setUser(response);
+            setUsers(response);
         })();
     }, []);
 
@@ -147,7 +173,7 @@ function AdminLoanClassRoom() {
                         const associatedLoan = loan.find(
                             (cr) => cr.id === loanClassRoom.idLoan
                         );
-                        const associatedUser = user.find(
+                        const associatedUser = users.find(
                             (cr) => cr.id === loanClassRoom.idUser
                         );
 
