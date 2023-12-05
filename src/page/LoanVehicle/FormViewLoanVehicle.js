@@ -10,7 +10,7 @@ import { decryptAES } from '../../scripts/AES-256';
 
 function FormViewLoanVehicle() {
     const navigate = useNavigate();
-    const user = JSON.parse( sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
+    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
     useEffect(() => {
         (async () => {
             const currentDate = new Date();
@@ -38,7 +38,7 @@ function FormViewLoanVehicle() {
         unityOrCarrer: "",
         assignedVehicle: "",
         active: 1
-        
+
     });
 
     const setObject = (event) => {
@@ -92,7 +92,7 @@ function FormViewLoanVehicle() {
                 console.log('res', data);
                 console.log('ID LOAN ', data.id);
                 formLoanVehicle.idLoan = data.id;
-                
+
                 createLoanVehicle(formLoanVehicle).then((data2) => {
 
                     console.log('res', data2)
@@ -117,126 +117,76 @@ function FormViewLoanVehicle() {
 
     return (
         <div className="container">
-        <form onSubmit={handleSubmit} className="mb-5">
-            <h1>Solicitud de servicio de transporte</h1>
-            <div className="row">
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                    <label>Unidad o Carrera solicitante:</label>
-                    <input type="text" required className="form-control" name="unityOrCarrer" value={formLoanVehicle.unityOrCarrer} onChange={(event) => { setObject(event) }} />
-                </div>
-    
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                    <label>Responsable:</label>
-                    <input type="text" required className="form-control" name="responsible" value={formLoanVehicle.responsible} onChange={(event) => { setObject(event) }} />
-                </div>
-    
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                    <label>Lugar de destino:</label>
-                    <input type="text" required className="form-control" name="destination" value={formLoanVehicle.destination} onChange={(event) => { setObject(event) }} />
-                </div>
-    
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                    <label>Lugar de salida:</label>
-                    <input type="text" required className="form-control" name="startingPlace" value={formLoanVehicle.startingPlace} onChange={(event) => { setObject(event) }} />
-                </div>
-    
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                    <label>N° de pasajeros:</label>
-                    <input required min={1} type="number" className="form-control" name="personQuantity" value={formLoanVehicle.personQuantity} onChange={(event) => { setObject(event) }} />
-                </div>
-    
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                    <label>Fecha de partida:</label>
-                    <input type="date" required className="form-control" name="startDate" min={hoy} value={formLoan.startDate} onChange={(event) => { setObject(event) }} />
-                </div>
-    
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                    <label>Hora de partida:</label>
-                    <input type="time" required className="form-control" name="exitHour" value={formLoanVehicle.exitHour} onChange={(event) => { setObject(event) }} />
-                </div>
-    
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                    <label>Fecha de regreso:</label>
-                    <input type="date" required className="form-control" name="endDate" min={formLoan.startDate} value={formLoan.endDate} onChange={(event) => { setObject(event) }} />
-                </div>
-    
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                    <label>Hora de regreso:</label>
-                    <input type="time" required className="form-control" name="returnHour" value={formLoanVehicle.returnHour} onChange={(event) => { setObject(event) }} />
-                </div>
-    
-                <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-    <div>
-        <label>Tipo de actividad:</label>
-    </div>
-    <div className="form-check form-check-inline">
-        <input
-            className="form-check-input"
-            type="radio"
-            onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 1 })}
-            checked={formLoanVehicle.activityType === 1}
-        />
-        <label className="form-check-label">Investigación</label>
-    </div>
-    <div className="form-check form-check-inline">
-        <input
-            className="form-check-input"
-            type="radio"
-            onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 2 })}
-            checked={formLoanVehicle.activityType === 2}
-        />
-        <label className="form-check-label">Docente</label>
-    </div>
-    <div className="form-check form-check-inline">
-        <input
-            className="form-check-input"
-            type="radio"
-            onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 3 })}
-            checked={formLoanVehicle.activityType === 3}
-        />
-        <label className="form-check-label">Acción Social</label>
-    </div>
-    <div className="form-check form-check-inline">
-        <input
-            className="form-check-input"
-            type="radio"
-            onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 4 })}
-            checked={formLoanVehicle.activityType === 4}
-        />
-        <label className="form-check-label">Administrativa</label>
-    </div>
-    <div className="form-check form-check-inline">
-        <input
-            className="form-check-input"
-            type="radio"
-            onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 5 })}
-            checked={formLoanVehicle.activityType === 5}
-        />
-        <label className="form-check-label">Vida Estudiantil</label>
-    </div>
-    <div className="form-check form-check-inline">
-        <input
-            className="form-check-input"
-            type="radio"
-            onChange={() => setFormLoanVehicle({ ...formLoanVehicle, "activityType": 6 })}
-            checked={formLoanVehicle.activityType === 6}
-        />
-        <label className="form-check-label">Dirección</label>
-    </div>
-</div>
+            <form onSubmit={handleSubmit} className="mb-5">
+                <h1>Solicitud de servicio de transporte</h1>
+                <div className="row">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label>Unidad o Carrera solicitante:</label>
+                        <input type="text" required className="form-control" name="unityOrCarrer" value={formLoanVehicle.unityOrCarrer} onChange={(event) => { setObject(event) }} />
+                    </div>
 
-    
-                
-    
-                <div className="col-lg-12 col-md-12 col-sm-12 mb-3">
-                    <button type="submit" className="btn btn-primary mb-3">Guardar</button>
-                    <button type="button" className="btn btn-warning mb-3 mx-2" onClick={handleReset}>Limpiar</button>
-                    <button type="button" className="btn btn-danger mb-3" onClick={handleBack}>Regresar</button>
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label>Responsable:</label>
+                        <input type="text" required className="form-control" name="responsible" value={formLoanVehicle.responsible} onChange={(event) => { setObject(event) }} />
+                    </div>
+
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label>Lugar de destino:</label>
+                        <input type="text" required className="form-control" name="destination" value={formLoanVehicle.destination} onChange={(event) => { setObject(event) }} />
+                    </div>
+
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label>Lugar de salida:</label>
+                        <input type="text" required className="form-control" name="startingPlace" value={formLoanVehicle.startingPlace} onChange={(event) => { setObject(event) }} />
+                    </div>
+
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label>N° de pasajeros:</label>
+                        <input required min={1} type="number" className="form-control" name="personQuantity" value={formLoanVehicle.personQuantity} onChange={(event) => { setObject(event) }} />
+                    </div>
+
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label>Fecha de partida:</label>
+                        <input type="date" required className="form-control" name="startDate" min={hoy} value={formLoan.startDate} onChange={(event) => { setObject(event) }} />
+                    </div>
+
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label>Hora de partida:</label>
+                        <input type="time" required className="form-control" name="exitHour" value={formLoanVehicle.exitHour} onChange={(event) => { setObject(event) }} />
+                    </div>
+
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label>Fecha de regreso:</label>
+                        <input type="date" required className="form-control" name="endDate" min={formLoan.startDate} value={formLoan.endDate} onChange={(event) => { setObject(event) }} />
+                    </div>
+
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label>Hora de regreso:</label>
+                        <input type="time" required className="form-control" name="returnHour" value={formLoanVehicle.returnHour} onChange={(event) => { setObject(event) }} />
+                    </div>
+
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label>Tipo de actividad:</label>
+                        <select required className="form-control" name="activityType" value={formLoanVehicle.activityType} onChange={(event) => { setObject(event) }}>
+                            <option value="">Seleccione el estado</option>
+                            <option value="1">Investigación</option>
+                            <option value="2">Docente</option>
+                            <option value="3">Acción Social</option>
+                            <option value="4">Administrador</option>
+                            <option value="5">Vida Estudiantil</option>
+                            <option value="6">Dirección</option>
+                        </select>
+                    </div>
+
+                    <div className="col-lg-12 col-md-12 col-sm-12 mb-3">
+                        <button type="submit" className="btn btn-primary mb-3">Guardar</button>
+                        <button type="button" className="btn btn-warning mb-3 mx-2" onClick={handleReset}>Limpiar</button>
+                        <button type="button" className="btn btn-danger mb-3" onClick={handleBack}>Regresar</button>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    
+            </form>
+        </div>
+
     );
 }
 export default FormViewLoanVehicle;
