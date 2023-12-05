@@ -17,15 +17,7 @@ function LoanStudyRoomAdmin() {
     const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
     const navigate = useNavigate();
     useEffect(() => {
-        if (!user || !user.idLibraryUser) {
-            Swal.fire({
-                icon: "error",
-                title: "Usuario no autenticado",
-                text: "Por favor inicie sesión",
-              });
-            navigate("/login");
-            return;
-        }
+        
         if (user.role != "Administrador") {
             Swal.fire({
                 title: "No puedes realizar esta acción",
