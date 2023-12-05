@@ -18,7 +18,7 @@ function UserAdd() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (event.target.password.value !== event.target.passwordCheck.value) {
+        if (event.target.password && event.target.passwordCheck && event.target.password.value !== event.target.passwordCheck.value) {
             return toast.error('Las contraseñas no coinciden');
         }
 
@@ -59,14 +59,14 @@ function UserAdd() {
 
             try {
                 if (!isEditing) {
-                    const response = await createUser(newUser);
-                    console.log(response);
+                    await createUser(newUser).then((res) => {
+                        toast.success('Usuario creado con éxito');
+                    });
                 } else {
                     newUser.id = idE;
-                    const response = await updateUserr(newUser).catch((err) => {
-                        console.log(err);
+                    await updateUserr(newUser).then((res) => {
+                        toast.success('Usuario actualizado con éxito');
                     });
-                    console.log(response);
                 }
                 window.location.href = !isEditing ? "/users?success" : "/users?editSuccess";
             } catch (error) {

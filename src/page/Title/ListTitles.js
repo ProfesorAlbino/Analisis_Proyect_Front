@@ -15,11 +15,13 @@ function ListTitles() {
     const [show, setShow] = useState(true);
 
     const user = sessionStorage.getItem("user") && JSON.parse(decryptAES(sessionStorage.getItem("user"))).role;
+    const privileges = sessionStorage.getItem("user") && JSON.parse(decryptAES(sessionStorage.getItem("user"))).privileges;
+    const isAdminLibrary = privileges && privileges.some(privilege => privilege.type === "Admin_Library");
     useEffect(() => {
 
         if (user === "Estudiante") {
             setShow(false);
-        } else if (user === "Admin_Library") {
+        } else if (user === "Admin_Library" || isAdminLibrary) {
             setShow(true);
         }else{
             window.location.href = `/`;

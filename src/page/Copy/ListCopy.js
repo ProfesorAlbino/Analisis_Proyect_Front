@@ -13,7 +13,7 @@ export default function ListCopy() {
     const [copiesList, setCopiesList] = useState([]);
     const [show, setShow] = useState(true);
     const seach = useRef();
-    const user = JSON.parse(sessionStorage.getItem("user")).role;
+    const user = sessionStorage.getItem("user") && JSON.parse(decryptAES(sessionStorage.getItem("user"))).role;
     const idTitles = parseInt(decryptAES(idTitle));
 
 

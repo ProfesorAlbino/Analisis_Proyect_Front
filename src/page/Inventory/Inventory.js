@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { Toaster, toast } from 'sonner';
 
 import { getInventories, deleteInventory } from '../../service/InventoryApi/InventoryApi';
-import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
+import { FaList, FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 
 function Inventory() {
 
@@ -117,7 +117,7 @@ function Inventory() {
                                 <td>{inventory.units}</td>
                                 <td>{inventory.description}</td>
                                 <td>{inventory.type}</td>
-                                <td><Button variant="info" onClick={() => viewArea(inventory.id)}>Ver</Button></td>
+                                <td><Button variant="info" onClick={() => viewArea(inventory.id)}><FaList /></Button></td>
                                 <td>
                                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Editar</Tooltip>}>
                                         <Button variant="warning" onClick={() => editInventory(inventory.id)}><FaRegEdit /></Button>
