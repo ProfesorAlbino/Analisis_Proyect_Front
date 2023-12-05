@@ -1,20 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { deleteClassRoom, getClassRooms } from "../../service/ClassRoomApi/ClassRoomService";
+import {  getClassRooms } from "../../service/ClassRoomApi/ClassRoomService";
 import { FaRegEdit, FaRegEye, FaTrashAlt } from 'react-icons/fa';
-import { Button, Col, Form, OverlayTrigger, Row, Table, Tooltip } from 'react-bootstrap';
+import { Button,  OverlayTrigger, Table, Tooltip } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { deleteLoanClassRoom, getLoanClassRoom, getLoanClassRooms, updateLoanClassRoom } from '../../service/ClassRoomApi/LoanClassRoomService';
-import { getLoan, getLoans } from '../../service/ClassRoomApi/LoanService';
-import { getUserrs } from '../../service/UsersApi/UserApi';
-import { Link } from 'react-router-dom';
+import {  getLoanClassRooms, updateLoanClassRoom } from '../../service/ClassRoomApi/LoanClassRoomService';
+import {  getLoans } from '../../service/ClassRoomApi/LoanService';
+import { decryptAES } from '../../scripts/AES-256';
+
 
 function LoanClassRoom() {
     const [classRoom, setClassRoom] = useState([]);
     const [loanClass, setLoanClass] = useState([]);
     const [loan, setLoan] = useState([]);
-    const [user, setUser] = useState([]);
     const navigate = useNavigate();
+
+    const user = JSON.parse(sessionStorage.getItem('user') && decryptAES(sessionStorage.getItem('user')));
+    useEffect(() => {
+        // Si el usuario no está autenticado, redirige a la página de inicio de sesión
+        if (user === null) {
+            Swal.fire({
+                icon: "error",
+                title: "Usuario no autenticado",
+                text: "Por favor, inicie sesión",
+            });
+            navigate('/login');
+        }
+    }, [user]);
+    
+
+
 
     useEffect(() => {
         (async () => {
@@ -38,50 +53,45 @@ function LoanClassRoom() {
         })();
     }, []);
 
-    useEffect(() => {
-        (async () => {
-            const response = await getUserrs();
-            setUser(response);
-        })();
-    }, []);
+   
 
 
 
-    const deleteLoanClassRoom = async (loanClassRoom) => {
-        Swal.fire({
-            title: 'Confirmación de eliminación',
-            text: '¿Estás seguro de que deseas eliminar este registro?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    console.log(loanClassRoom)
-                    loanClassRoom.inactive = 1
-                    updateLoanClassRoom(loanClassRoom)
-                    Swal.fire({
-                        title: 'Registro eliminado',
-                        text: 'El registro se ha eliminado correctamente.',
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar'
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                } catch (error) {
-                    console.log(error)
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Ocurrió un error al eliminar el registro.',
-                        icon: 'error',
-                        confirmButtonText: 'Aceptar'
-                    });
-                }
-            }
-        });
-    };
-
+   
+const deleteLoanClassRoom = async (loanClassRoom) => {
+    Swal.fire({
+      title: 'Confirmación de eliminación',
+      text: '¿Estás seguro de que deseas eliminar este registro?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          console.log(loanClassRoom)
+          loanClassRoom.inactive = 1
+          updateLoanClassRoom(loanClassRoom)
+          Swal.fire({
+            title: 'Registro eliminado',
+            text: 'El registro se ha eliminado correctamente.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            window.location.reload();
+          });
+        } catch (error) {
+          console.log(error)
+          Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un error al eliminar el registro.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+        }
+      }
+    });
+  };
 
     function editLoanClassRoom(id) {
         window.location.href = `/loanClassRooms/editLoanClassRoom/${id}`;
@@ -110,7 +120,7 @@ function LoanClassRoom() {
                 <tbody>
 
                     {loanClass.map((loanClassRoom, index) => {
-                        if (loanClassRoom.idUser === 3 && loanClassRoom.inactive === 0) {
+                        if (loanClassRoom.idUser === user.id && loanClassRoom.inactive === 0) {
                             const associatedClassRoom = classRoom.find(
                                 (cr) => cr.id === loanClassRoom.idClassroom
                             );
@@ -126,15 +136,15 @@ function LoanClassRoom() {
                                     <td>{loanClassRoom.requestState}</td>
                                     <td>
                                         <OverlayTrigger placement="top" overlay={<Tooltip>Ver</Tooltip>}>
-                                            <Button variant="success" onClick={() => viewLoanClassRoom(loanClassRoom.id)}> <FaRegEye />                                            </Button>
+                                            <Button  id="view-button" variant="success" onClick={() => viewLoanClassRoom(loanClassRoom.id)}> <FaRegEye />                                            </Button>
                                         </OverlayTrigger>
 
                                         <OverlayTrigger placement="top" overlay={<Tooltip>Modificar</Tooltip>}>
-                                            <Button variant="primary" onClick={() => editLoanClassRoom(loanClassRoom.id)}> <FaRegEdit />                                            </Button>
+                                            <Button id="edit-button" variant="primary" onClick={() => editLoanClassRoom(loanClassRoom.id)}> <FaRegEdit />                                            </Button>
                                         </OverlayTrigger>
 
                                         <OverlayTrigger placement="top" overlay={<Tooltip>Eliminar</Tooltip>}>
-                                            <Button variant="danger" onClick={() => deleteLoanClassRoom(loanClassRoom)}><FaTrashAlt /></Button>
+                                            <Button id="delete-button" variant="danger" onClick={() => deleteLoanClassRoom(loanClassRoom)}><FaTrashAlt /></Button>
                                         </OverlayTrigger>
 
 

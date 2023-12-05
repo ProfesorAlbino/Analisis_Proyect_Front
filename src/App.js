@@ -60,6 +60,7 @@ import EditFieldSport from './page/LoanSports/EditFieldSport';
 import LoanStudyRoom from './page/LoanStudyRoom/LoanStudyRoom';
 import FormViewLoanStudyRoom from './page/LoanStudyRoom/FormViewLoanStudyRoom';
 import FormViewEditLoanStudyRoom from './page/LoanStudyRoom/FormViewEditLoanStudyRoom';
+import AdminViewLoanClassRoom from './page/LoanClassRooms/AdminViewLoanClassRoom';
 import LoanVehicleAdmin from './page/LoanVehicle/LoanVehicleAdmin';
 import FormViewEditLoanVehicleAdmin from './page/LoanVehicle/FormViewEditLoanVehicleAdmin';
 import LoanStudyRoomAdmin from './page/LoanStudyRoom/LoanStudyRoomAdmin';
@@ -106,6 +107,7 @@ function App() {
           <Route exact path='/LoanFieldSport' element={<LoanFieldSport/>}/>
           <Route exact path='/RegisterLoanFieldSport' element={<RegisterLoanFieldSport/>}/>
           <Route exact path='/LoanSports/EditFieldSport/:id' element={<EditFieldSport/>}/>
+          <Route exact path='/loanClassRooms/AdminViewLoanClassRoom/:id' element={<AdminViewLoanClassRoom/>}/>
 
           <Route exact path="/listTitles" element={<ListTitles />} />
           <Route exact path="/addTitle" element={<AddTitle />} />
