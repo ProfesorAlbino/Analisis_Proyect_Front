@@ -41,7 +41,7 @@ function ClassRoom() {
                     })
             } else {
 
-                //jhuyytuf
+                //jhuyyt
                 Swal.fire
                     (
                         'Error',
