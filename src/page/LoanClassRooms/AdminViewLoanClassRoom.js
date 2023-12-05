@@ -9,7 +9,7 @@ import {  getClassRoomSchedules } from "../../service/ClassRoomApi/ClassRoomSche
 import { format, addDays } from 'date-fns';
 import { Button, Col, Form, OverlayTrigger, Row, Table, Tooltip } from 'react-bootstrap';
 
-function ViewLoanClassRoom() {
+function AdminViewLoanClassRoom() {
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -62,6 +62,7 @@ function ViewLoanClassRoom() {
         }
     }, [loanClassRoom]);
 
+
     useEffect(() => {
         if (loanClassRoom && loanClassRoom.idClassroom !== undefined) {
             getClassRoom(loanClassRoom.idClassroom)
@@ -77,17 +78,16 @@ function ViewLoanClassRoom() {
     const [userr, setuserr] = useState([]);
 
     useEffect(() => {
-            if (loanClassRoom && loanClassRoom.idUser !== undefined) {
-            getUserr(loanClassRoom.idUser)
-            .then((response) => {
+        (async () => {
+            const response = await getUserr(3);
             setuserr(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-}, [loanClassRoom]);
+            console.log(response);
+        })();
+    }, []);
 
+
+
+    
 
     const [loan, setLoan] = useState({
         startDate: format(addDays(new Date(), 2), 'yyyy-MM-dd'),
@@ -190,7 +190,7 @@ function ViewLoanClassRoom() {
                             readOnly
                         />
                     </div>                
-                        <Button variant="primary" href="/loanClassRoom">Regresar</Button>
+                        <Button variant="primary" href="/AdminloanClassRoom">Regresar</Button>
                     </div>
                     <div className="mb-5"></div>
                    
@@ -201,4 +201,4 @@ function ViewLoanClassRoom() {
 
 
 }
-export default ViewLoanClassRoom;
+export default AdminViewLoanClassRoom;

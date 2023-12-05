@@ -134,7 +134,7 @@ export default function ComputerEquipments() {
                                             placement="top"
                                             overlay={<Tooltip>Editar</Tooltip>}
                                         >
-                                            <button onClick={() => ModifyComputerEquipments(computerEquipment)} className="btn btn-warning">
+                                            <button onClick={() => ModifyComputerEquipments(computerEquipment)} className="btn btn-warning" id='btn_modify'>
                                                 <FaRegEdit />
                                             </button>
                                         </OverlayTrigger>
