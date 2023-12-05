@@ -86,18 +86,18 @@ function Inventory() {
                     <Col xs="auto">
                         <Form.Control
                             type="text"
-                            placeholder="Invetario"
+                            placeholder="Inventario"
                             className=" mr-sm-2"
                             id='search'
                             onChange={(e) => isEmptySearch(e.target.value)}
                         />
                     </Col>
                     <Col xs="auto">
-                        <Button type="button" onClick={searchInventory}>Buscar</Button>
+                        <Button type="button" onClick={searchInventory} id='search-btn'>Buscar</Button>
                     </Col>
                 </Row>
             </Form>
-            <Button variant="primary" href="/inventory/create">Crear inventario</Button>
+            <Button variant="primary" href="/inventory/create" id='btn-create'>Crear inventario</Button>
             <Table className='border shadow'>
                 <thead>
                     <tr>
