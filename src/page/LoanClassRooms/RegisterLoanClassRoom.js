@@ -280,9 +280,8 @@ function RegisterLoanClassRoom() {
                             value={loanClassRoom.requirements}
                         />
                     </div>
-
                     <div>
-                        <button type="submit" className="btn btn-primary">Guardar</button>
+                        <button  type="submit" className="btn btn-primary">Guardar</button>
                     </div>
                     <div className="mb-5"></div>
                 </div>

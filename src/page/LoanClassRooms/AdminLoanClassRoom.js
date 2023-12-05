@@ -187,15 +187,15 @@ function AdminLoanClassRoom() {
                                 <td>{loanClassRoom.requestState}</td>
                                 <td>
                                 <OverlayTrigger placement="top" overlay={<Tooltip>Ver</Tooltip>}>
-                                            <Button variant="success" onClick={() => viewLoanClassRoom(loanClassRoom.id)}> <FaRegEye />                                            </Button>
+                                            <Button id="view" variant="success" onClick={() => viewLoanClassRoom(loanClassRoom.id)}> <FaRegEye />                                            </Button>
                                         </OverlayTrigger>
 
                                         <OverlayTrigger placement="top" overlay={<Tooltip>Aprobar</Tooltip>}>
-                                            <Button variant="primary" onClick={() => editLoanClassRoom(loanClassRoom)}> <FaRegCheckCircle />                                            </Button>
+                                            <Button id="aprobar" variant="primary" onClick={() => editLoanClassRoom(loanClassRoom)}> <FaRegCheckCircle />                                            </Button>
                                         </OverlayTrigger>
 
                                         <OverlayTrigger placement="top" overlay={<Tooltip>Denegar</Tooltip>}>
-                                            <Button variant="danger" onClick={() => deleteLoanClassRoom(loanClassRoom)}><FaRegTimesCircle /></Button>
+                                            <Button id="denegar" variant="danger" onClick={() => deleteLoanClassRoom(loanClassRoom)}><FaRegTimesCircle /></Button>
                                         </OverlayTrigger>
 
                                 </td>
