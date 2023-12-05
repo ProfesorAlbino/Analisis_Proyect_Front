@@ -10,7 +10,6 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { encryptAES, decryptAES } from '../../scripts/AES-256';
 import { Toaster, toast } from 'sonner';
 import Swal from "sweetalert2";
-import { tr } from 'date-fns/locale';
 
 
 export default function ListLoanBook() {
